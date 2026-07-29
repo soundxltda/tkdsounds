@@ -82,6 +82,43 @@
     document.addEventListener('cart:refresh', refresh);
   }
 
+  /* Contador de urgência das landing pages de produto (tkd-landing-pricing) */
+  function initCountdowns() {
+    var els = document.querySelectorAll('[data-tkd-countdown]:not([data-armed])');
+    if (!els.length) return;
+    els.forEach(function (el) {
+      el.setAttribute('data-armed', 'true');
+      var end = new Date(el.dataset.end).getTime();
+      if (!end || isNaN(end)) {
+        el.hidden = true;
+        return;
+      }
+      var dEl = el.querySelector('[data-tkd-countdown-d]');
+      var hEl = el.querySelector('[data-tkd-countdown-h]');
+      var mEl = el.querySelector('[data-tkd-countdown-m]');
+      var sEl = el.querySelector('[data-tkd-countdown-s]');
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      var tick = function () {
+        var diff = end - Date.now();
+        if (diff <= 0) {
+          el.hidden = true;
+          clearInterval(timer);
+          return;
+        }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        if (dEl) dEl.textContent = pad(d);
+        if (hEl) hEl.textContent = pad(h);
+        if (mEl) mEl.textContent = pad(m);
+        if (sEl) sEl.textContent = pad(s);
+      };
+      tick();
+      var timer = setInterval(tick, 1000);
+    });
+  }
+
   /* Produtos relacionados — busca via API nativa de recomendações da
      Shopify quando a seção entra na viewport (mesmo padrão do Dawn). */
   function initRecommendations() {
@@ -125,6 +162,7 @@
     initReveal();
     initCartCount();
     initRecommendations();
+    initCountdowns();
   }
 
   if (document.readyState === 'loading') {

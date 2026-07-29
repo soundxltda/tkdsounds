@@ -1,0 +1,79 @@
+{% comment %}
+  TKD Landing — Reviews. Prova social em blocks (handle, link, citação
+  opcional). Reutilizável.
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="tkd-landing-reviews tkd-section">
+    <div class="tkd-section__inner tkd-section__inner--w1200">
+      {%- if section.settings.title != blank -%}
+        <div class="tkd-eyebrow text-amber tkd-landing-reviews__eyebrow">{{ section.settings.title | escape }}</div>
+      {%- endif -%}
+      <div class="tkd-landing-reviews__grid">
+        {%- for block in section.blocks -%}
+          <div class="win tkd-landing-review" {{ block.shopify_attributes }}>
+            <div class="tkd-landing-review__pad">
+              {%- if block.settings.quote != blank -%}
+                <p class="tkd-landing-review__quote">&ldquo;{{ block.settings.quote | escape }}&rdquo;</p>
+              {%- endif -%}
+              {%- if block.settings.url != blank -%}
+                <a href="{{ block.settings.url }}" target="_blank" rel="noreferrer" class="tkd-landing-review__handle">
+                  {{ block.settings.handle | escape }}
+                </a>
+              {%- else -%}
+                <span class="tkd-landing-review__handle">{{ block.settings.handle | escape }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "TKD Landing — Reviews",
+  "tag": "section",
+  "class": "section-tkd-landing-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "REVIEWS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Nome/handle",
+          "default": "@handle"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (Instagram etc.)"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Citação (opcional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "TKD Landing — Reviews",
+      "blocks": [{ "type": "review" }, { "type": "review" }]
+    }
+  ]
+}
+{% endschema %}

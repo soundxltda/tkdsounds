@@ -1,0 +1,53 @@
+{% comment %}
+  TKD Landing — Credibility. Selos curtos de confiança (block: ícone +
+  texto). Mais enxuto que tkd-credibility.liquid (que tem embed Spotify).
+{% endcomment %}
+
+<div class="tkd-landing-credibility tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    <div class="tkd-landing-credibility__row">
+      {%- for block in section.blocks -%}
+        <div class="tkd-landing-credibility__badge" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="tkd-landing-credibility__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Landing — Credibility",
+  "tag": "section",
+  "class": "section-tkd-landing-credibility",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Selo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ícone (emoji, opcional)"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "TKD Landing — Credibility",
+      "blocks": [{ "type": "badge" }, { "type": "badge" }]
+    }
+  ]
+}
+{% endschema %}

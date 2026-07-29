@@ -1,0 +1,240 @@
+{
+  "sections": {
+    "landing_hero": {
+      "type": "tkd-landing-hero",
+      "settings": {
+        "headline": "Stop Using Generic Sounds. Make Beats and Samples That Stand Out.",
+        "subheadline": "Lost Echoes delivers real, organic textures and dark melodic phrases — recorded with real instruments for modern trap producers.",
+        "trust_line": "🎧 Listen to the sounds before you buy — real instruments, no recycled samples.",
+        "cta_label": "GET LOST ECHOES",
+        "accent_color": "#e6a635"
+      }
+    },
+    "landing_how": {
+      "type": "tkd-landing-how-it-works",
+      "blocks": {
+        "step1": {
+          "type": "item",
+          "settings": {
+            "text": "<p>Just drag and drop the files! (All of them with BPM and key)</p>"
+          }
+        },
+        "step2": {
+          "type": "item",
+          "settings": {
+            "text": "<p>All samples come with full stems and are royalty-free for sales.</p>"
+          }
+        },
+        "step3": {
+          "type": "item",
+          "settings": {
+            "text": "<p>Explore new experiences by blending our sounds and master the art of music creation!</p>"
+          }
+        }
+      },
+      "block_order": ["step1", "step2", "step3"],
+      "settings": {
+        "title": "HOW IT WORKS"
+      }
+    },
+    "landing_contents": {
+      "type": "tkd-landing-contents",
+      "blocks": {
+        "phrases": {
+          "type": "folder",
+          "settings": {
+            "folder_name": "PHRASES",
+            "description": "<p>The \"Phrases\" folder contains 100 unique phrases, all crafted to elevate your melodic workflow. Each phrase was recorded using real instruments, professional vocalists, and premium analog gear—delivering authenticity, emotion, and instant inspiration for your tracks.</p>",
+            "tracklist": "Crowsnest 156 Dmin\nTake care 128 Dmaj\nProphet1 129 Amin\nPianeer 169 Cmin\nFakefriends 107 Amin\nJesper 144 Bmin\nReditions 131 D#min\nWarpedpluck 90 Fmin"
+          }
+        },
+        "samples": {
+          "type": "folder",
+          "settings": {
+            "folder_name": "SAMPLES",
+            "description": "<p>The \"Samples\" folder contains 35 fully original compositions, each delivered with stems to give you complete control, flexibility, and creative freedom in your production process.</p>",
+            "tracklist": "Disclaimer 144\nHad Enough 123\nAlive 140\nBubbly 128 Dm\nMoncler 147 D#m\nBrokeboys 147 Dm\nLoveisdeadl 142 A#m\nMist 143"
+          }
+        },
+        "drumkit": {
+          "type": "folder",
+          "settings": {
+            "folder_name": "DRUM KIT",
+            "description": "<p>The \"Drum Kit\" folder contains 6 subfolders filled with authentic, fresh, and uniquely crafted drum sounds—designed to bring character, punch, and originality to your production workflow.</p>",
+            "tracklist": ""
+          }
+        }
+      },
+      "block_order": ["phrases", "samples", "drumkit"],
+      "settings": {
+        "eyebrow": "WHAT'S INSIDE",
+        "title": "Contents",
+        "total_sounds": "228 TOTAL SOUNDS"
+      }
+    },
+    "landing_previews": {
+      "type": "tkd-product-previews",
+      "settings": {
+        "player_title": "FULL KIT PREVIEW"
+      }
+    },
+    "landing_credibility": {
+      "type": "tkd-landing-credibility",
+      "blocks": {
+        "badge1": {
+          "type": "badge",
+          "settings": {
+            "icon": "🏆",
+            "text": "<p>Created by a multi-platinum producer with nearly 1 billion streams worldwide.</p>"
+          }
+        },
+        "badge2": {
+          "type": "badge",
+          "settings": {
+            "icon": "🎚️",
+            "text": "<p>Industry-level sound design</p>"
+          }
+        },
+        "badge3": {
+          "type": "badge",
+          "settings": {
+            "icon": "💻",
+            "text": "<p>Works in every DAW</p>"
+          }
+        }
+      },
+      "block_order": ["badge1", "badge2", "badge3"],
+      "settings": {}
+    },
+    "landing_reviews": {
+      "type": "tkd-landing-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "handle": "@emitebeats",
+            "url": "https://www.instagram.com/emitebeats/?hl=en"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "handle": "@by.llouis",
+            "url": "https://www.instagram.com/by.llouis/?hl=en"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "handle": "@sonnimade",
+            "url": "https://www.instagram.com/sonnimade/?hl=en"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "handle": "@tekillabeats",
+            "url": "https://www.instagram.com/tekillabeats/?hl=en"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {
+        "title": "REVIEWS"
+      }
+    },
+    "landing_pricing": {
+      "type": "tkd-landing-pricing",
+      "blocks": {
+        "li1": {
+          "type": "line_item",
+          "settings": {
+            "label": "SAMPLE PACK (WITH STEMS)",
+            "value": 5000
+          }
+        },
+        "li2": {
+          "type": "line_item",
+          "settings": {
+            "label": "DRUM KIT",
+            "value": 5000
+          }
+        },
+        "li3": {
+          "type": "line_item",
+          "settings": {
+            "label": "PHRASE KIT",
+            "value": 5000
+          }
+        }
+      },
+      "block_order": ["li1", "li2", "li3"],
+      "settings": {
+        "window_title": "PRICING",
+        "pay_label": "WHAT YOU PAY",
+        "total_label": "TOTAL VALUE",
+        "cta_label": "START CREATING NOW!",
+        "urgency_text": "Secure the pack now with an exclusive discount.",
+        "show_countdown": false
+      }
+    },
+    "landing_faq": {
+      "type": "tkd-faq",
+      "blocks": {
+        "faq1": {
+          "type": "item",
+          "settings": {
+            "question": "IS THIS KIT ROYALTY FREE?",
+            "answer": "<p>All sounds and samples in this kit are royalty free under 1,000,000 streams or unless major placement.</p>"
+          }
+        },
+        "faq2": {
+          "type": "item",
+          "settings": {
+            "question": "HOW DO I GET THE FILES?",
+            "answer": "<p>After purchasing, you're taken to a page where you can download the files, and you will also receive an email with a link to download all the files. The link in your email never expires. If you run into any issues, you can contact us.</p>"
+          }
+        },
+        "faq3": {
+          "type": "item",
+          "settings": {
+            "question": "DOES IT WORK IN ANY DAW?",
+            "answer": "<p>Yes, the files within the kit are either audio files or MIDI files that can be opened in any DAW.</p>"
+          }
+        },
+        "faq4": {
+          "type": "item",
+          "settings": {
+            "question": "WHAT'S YOUR REFUND POLICY?",
+            "answer": "<p>Since this is a digital product, it cannot be returned or refunded.</p>"
+          }
+        }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4"],
+      "settings": {
+        "window_title": "FAQ",
+        "eyebrow": "HELP INDEX",
+        "heading": "Frequently asked questions"
+      }
+    },
+    "landing_related": {
+      "type": "tkd-related-products",
+      "settings": {
+        "eyebrow": "// RELATED FILES",
+        "title": "More from the archive",
+        "products_to_show": 5
+      }
+    }
+  },
+  "order": [
+    "landing_hero",
+    "landing_how",
+    "landing_contents",
+    "landing_previews",
+    "landing_credibility",
+    "landing_reviews",
+    "landing_pricing",
+    "landing_faq",
+    "landing_related"
+  ]
+}
