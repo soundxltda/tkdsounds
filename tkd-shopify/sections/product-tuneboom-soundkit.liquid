@@ -1,0 +1,87 @@
+{% assign soundkit = product.metafields.tuneboom.soundkit %}
+
+<div class="soundkit">
+  {% render 'tuneboom-product-single', product: product, resource: soundkit %}
+</div>
+
+<script>
+  /**
+   * Track Template Script
+   * ------------------------------------------------------------------------------
+   * A file that contains scripts highly couple code to the tracj template.
+   *
+   * @namespace product.tuneboom.track
+   */
+
+  const wavesurfer = WaveSurfer.create({
+    container: document.querySelector('#waveform'),
+    waveColor: '#69727b',
+    progressColor: 'black',
+    cursorColor: 'none',
+    barWidth: 5,
+    barRadius: 4,
+    cursorWidth: 0,
+    barGap:3,
+    minPxPerSec: 20,
+    backend: 'MediaElement',
+    height: 0,
+    responsive: true,
+    backgroundColor:'none',
+
+  });
+
+  $("#add-to-cart-id-{{ soundkit.id }}").click(function (event) {
+      event.stopPropagation();
+      addSoundKitToCart('{{ soundkit.id }}', '{{ product.variants.first.id }}');
+    }
+  );
+
+
+  // Player events
+  wavesurfer.on('ready', function () {
+    wavesurfer.setVolume(.5); // default to half volume
+  });
+  wavesurfer.on('finish', function () {
+    document.getElementById("play-artwork").style.display = "block";
+    document.getElementById("pause-artwork").style.display = "none";
+  });
+  wavesurfer.on('play', function() {
+    document.getElementById('play-artwork').style.display = 'none';
+    document.getElementById('pause-artwork').style.display = 'block';
+    document.getElementById('play-modal').style.display = 'none';
+    document.getElementById('pause-modal').style.display = 'block';
+  });
+  wavesurfer.on('pause', function() {
+    document.getElementById('play-artwork').style.display = 'block';
+    document.getElementById('pause-artwork').style.display = 'none';
+    document.getElementById('play-modal').style.display = 'block';
+    document.getElementById('pause-modal').style.display = 'none';
+  });
+
+  const playPause = () => {
+    wavesurfer.playPause();
+  };
+
+  const setup = () => {
+    wavesurfer.load('{{ soundkit.previewLink }}');
+  };
+
+  const navigateToProduct = (event, productUrl) => {
+    event.stopPropagation();
+    window.location.href = productUrl;
+  };
+
+  const addSoundKitToCart = (trackId, variantId) => {
+    $.post('/cart/add.json', { quantity: 1, id: variantId },
+      function(variant) {
+        document.getElementById(`add-to-cart-id-${trackId}`).classList.add('light');
+        document.getElementById(`add-to-cart-id-${trackId}`).innerHTML = '<i class="fas fa-check-circle animated pulse"></i> In cart';
+
+      }).fail(function() {
+      alert('Failed to add track to cart!');
+    });
+  };
+
+  setup();
+
+</script>

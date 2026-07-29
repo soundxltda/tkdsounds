@@ -1,0 +1,19 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "tkd_header": {
+      "type": "tkd-header",
+      "settings": {
+        "title_text": "TKD_SOUNDS.EXE — SAMPLE ARCHIVE",
+        "show_clock": true,
+        "logo_text": "TKD SOUNDS",
+        "menu": "main-menu",
+        "show_cart": true
+      }
+    }
+  },
+  "order": [
+    "tkd_header"
+  ]
+}

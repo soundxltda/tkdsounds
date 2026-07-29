@@ -1,0 +1,99 @@
+{% comment %}
+  TKD Credibility — janela CREDENTIALS.LOG (portado de CredibilityStrip.tsx).
+  Texto de credibilidade + playlist Spotify compacta.
+{% endcomment %}
+
+<div class="tkd-credibility tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="win">
+      <div class="win-title">
+        <span>{{ section.settings.window_title | escape }}</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+      <div class="tkd-credibility__grid">
+        <div>
+          <div class="tkd-credibility__eyebrow">&gt; {{ section.settings.eyebrow | escape }}</div>
+          <p class="tkd-credibility__text">{{ section.settings.text | escape }}</p>
+        </div>
+        {%- if section.settings.show_embed and section.settings.embed_url != blank -%}
+          <div class="tkd-credibility__embed">
+            <iframe
+              title="{{ section.settings.embed_title | escape }}"
+              src="{{ section.settings.embed_url }}"
+              width="100%"
+              height="{{ section.settings.embed_height }}"
+              frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Credibilidade",
+  "tag": "section",
+  "class": "section-tkd-credibility",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "CREDENTIALS.LOG"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "VERIFIED"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "TKD — multi-platinum producer from Brazil, 1B+ streams across his catalog. His sound has been used by major artists and producers around the globe."
+    },
+    {
+      "type": "header",
+      "content": "Playlist embutida"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_embed",
+      "label": "Mostrar playlist",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "embed_url",
+      "label": "URL do embed (Spotify)",
+      "default": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0"
+    },
+    {
+      "type": "text",
+      "id": "embed_title",
+      "label": "Título acessível do embed",
+      "default": "Produced by TKD — Spotify playlist"
+    },
+    {
+      "type": "range",
+      "id": "embed_height",
+      "label": "Altura do embed",
+      "min": 80,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 152
+    }
+  ],
+  "presets": [
+    {
+      "name": "TKD Credibilidade"
+    }
+  ]
+}
+{% endschema %}

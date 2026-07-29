@@ -1,0 +1,59 @@
+{% comment %}
+  TKD Landing — How It Works. Título + lista de passos/benefícios em
+  blocks (checklist retrô). Reutilizável.
+{% endcomment %}
+
+<div class="tkd-landing-how tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    {%- if section.settings.title != blank -%}
+      <h2 class="tkd-landing-how__title">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="tkd-landing-how__list">
+        {%- for block in section.blocks -%}
+          <li class="tkd-landing-how__item" {{ block.shopify_attributes }}>
+            <span class="tkd-landing-how__check" aria-hidden="true">&#10003;</span>
+            <span>{{ block.settings.text }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Landing — How-To",
+  "tag": "section",
+  "class": "section-tkd-landing-how",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "HOW IT WORKS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "TKD Landing — How It Works",
+      "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }]
+    }
+  ]
+}
+{% endschema %}

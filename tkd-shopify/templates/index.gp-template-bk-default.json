@@ -1,0 +1,384 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_H8FtMy": {
+      "type": "image-banner",
+      "custom_css": [
+        "@media (min-width: 768px) {.banner {margin-bottom: 200px; margin-top: 100px; max-width: 100%; width: 40%; margin-left: auto; margin-right: auto; }}",
+        "@media screen and (max-width: 750px) {.banner, slideshow-component {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/3D-1920x1080_430x_1.gif",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "custom_liquid_K8btFQ": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        ".search {margin: -10px auto 0 auto; width: 30%; display: block; border-radius: -1px;}"
+      ],
+      "settings": {
+        "custom_liquid": "<div class=\"template-search template-search--empty section-template--23165099770131__main-padding\">\n    <div class=\"template-search__header page-width scroll-trigger animate--fade-in\">\n      <h1 class=\"h2 center\"><\/h1>\n      <div class=\"template-search__search\"><predictive-search data-loading-text=\"Carregando...\"><main-search>\n          <form action=\"\/search?\" method=\"get\" role=\"search\" class=\"search\" data-editor-form-attribute=\"\">\n            <div class=\"field\">\n              <input class=\"search__input field__input\" id=\"Search-In-Template\" type=\"search\" name=\"q\" value=\"\" placeholder=\"Pesquisar\" role=\"combobox\" aria-expanded=\"false\" aria-owns=\"predictive-search-results\" aria-controls=\"predictive-search-results\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" autocorrect=\"off\" autocomplete=\"off\" autocapitalize=\"off\" spellcheck=\"false\" aria-activedescendant=\"\">\n              <label class=\"field__label\" for=\"Search-In-Template\">Search<\/label>\n              <input name=\"options[prefix]\" type=\"hidden\" value=\"last\"><div class=\"predictive-search predictive-search--search-template\" tabindex=\"-1\" data-predictive-search=\"\">\n\n<div class=\"predictive-search__loading-state\">\n  <svg aria-hidden=\"true\" focusable=\"false\" class=\"spinner\" viewBox=\"0 0 66 66\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\n    <circle class=\"path\" fill=\"none\" stroke-width=\"6\" cx=\"33\" cy=\"33\" r=\"30\"><\/circle>\n  <\/svg>\n<\/div>\n<\/div>\n\n                <span class=\"predictive-search-status visually-hidden\" role=\"status\" aria-hidden=\"true\"><\/span><button type=\"reset\" class=\"reset__button field__button hidden\" aria-label=\"Limpar termo de pesquisa\">\n                <svg class=\"icon icon-close\" aria-hidden=\"true\" focusable=\"false\">\n                  <use xlink:href=\"#icon-reset\">\n                <\/use><\/svg>\n              <\/button>\n              <button type=\"submit\" class=\"search__button field__button\" aria-label=\"Pesquisar\">\n                <svg class=\"icon icon-search\" aria-hidden=\"true\" focusable=\"false\">\n                  <use xlink:href=\"#icon-search\">\n                <\/use><\/svg>\n              <\/button>\n            <\/div>\n          <input type=\"hidden\" name=\"oseid\" value=\"ezY2JpG1wAtHPkZAZJpdgng9\"><\/form>\n        <\/main-search><\/predictive-search><\/div><\/div><\/div>",
+        "color_scheme": "",
+        "padding_top": 44,
+        "padding_bottom": 4
+      }
+    },
+    "image_banner_VXJ8HL": {
+      "type": "image-banner",
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner, slideshow-component {display: none; }}"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/3D-1920x1080.gif",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "custom_liquid_6GjkUe": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "custom_liquid": "<main id=\"MainContent\" class=\"content-for-layout focus-none\" role=\"main\" tabindex=\"-1\">\n      <section id=\"shopify-section-template--22260694286610__main\" class=\"shopify-section section\"><link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/template-collection.css?v=58558206033505836701709570595\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n<link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/component-card.css?v=170127402091165654191709570593\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n<link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/component-price.css?v=70172745017360139101709570594\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n<link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/component-search.css?v=165164710990765432851709570594\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n<link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/component-facets.css?v=58939960381279492111709570594\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n  <script src=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/facets.js?v=101165364661030721481709570594\" defer=\"defer\"><\/script><script src=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/main-search.js?v=42397476564096725661709570594\" defer=\"defer\"><\/script>\n\n<style>\n  .template-search__header {\n    margin-bottom: 3rem;\n  }\n\n  .template-search__search {\n    margin: 0 auto 3.5rem;\n    max-width: 74.1rem;\n    background-color: transparent;\n  }\n\n  .template-search__search .search {\n    margin-top: 3rem;\n  }\n\n  .template-search--empty {\n    padding-bottom: 18rem;\n  }\n\n  @media screen and (min-width: 750px) {\n    .template-search__header {\n      margin-bottom: 0rem;\n      margin-top: -32rem;\n      margin-left: 80rem;\n    }\n  }\n\n @media screen and (max-width: 767px) {\n    .template-search__header {\n      margin-bottom: -20rem;\n      margin-top: -38rem;\n    }\n  }\n\n  .search__button .icon {\n    height: 1.8rem;\n  }\n<\/style><style data-shopify=\"\">.section-template--22260694286610__main-padding {\n    padding-top: 45px;\n    padding-bottom: 45px;\n  }\n\n  @media screen and (min-width: 750px) {\n    .section-template--22260694286610__main-padding {\n      padding-top: 60px;\n      padding-bottom: 60px;\n    }\n  }<\/style>\n  <div class=\"template-search template-search--empty section-template--22260694286610__main-padding\">\n    <div class=\"template-search__header page-width scroll-trigger animate--fade-in\">\n      <h1 class=\"h2 center\">Search<\/h1>\n      <div class=\"template-search__search\"><predictive-search data-loading-text=\"Loading...\"><main-search>\n          <form action=\"\/search\" method=\"get\" role=\"search\" class=\"search\">\n            <div class=\"field\">\n              <input class=\"search__input field__input\" id=\"Search-In-Template\" type=\"search\" name=\"q\" value=\"\" placeholder=\"Search\" role=\"combobox\" aria-expanded=\"false\" aria-owns=\"predictive-search-results\" aria-controls=\"predictive-search-results\" aria-haspopup=\"listbox\" aria-autocomplete=\"list\" autocorrect=\"off\" autocomplete=\"off\" autocapitalize=\"off\" spellcheck=\"false\" aria-activedescendant=\"\">\n              <label class=\"field__label\" for=\"Search-In-Template\">Search<\/label>\n              <input name=\"options[prefix]\" type=\"hidden\" value=\"last\"><div class=\"predictive-search predictive-search--search-template\" tabindex=\"-1\" data-predictive-search=\"\">\n\n<link href=\"\/\/wavi.audio\/cdn\/shop\/t\/11\/assets\/component-loading-spinner.css?v=116724955567955766481709570594\" rel=\"stylesheet\" type=\"text\/css\" media=\"all\">\n\n<div class=\"predictive-search__loading-state\">\n  <svg aria-hidden=\"true\" focusable=\"false\" class=\"spinner\" viewBox=\"0 0 66 66\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\n    <circle class=\"path\" fill=\"none\" stroke-width=\"6\" cx=\"33\" cy=\"33\" r=\"30\"><\/circle>\n  <\/svg>\n<\/div>\n<\/div>\n\n                <span class=\"predictive-search-status visually-hidden\" role=\"status\" aria-hidden=\"true\"><\/span><button type=\"reset\" class=\"reset__button field__button hidden\" aria-label=\"Clear search term\">\n                <svg class=\"icon icon-close\" aria-hidden=\"true\" focusable=\"false\">\n                  <use xlink:href=\"#icon-reset\">\n                <\/use><\/svg>\n              <\/button>\n              <button type=\"submit\" class=\"search__button field__button\" aria-label=\"Search\">\n                <svg class=\"icon icon-search\" aria-hidden=\"true\" focusable=\"false\">\n                  <use xlink:href=\"#icon-search\">\n                <\/use><\/svg>\n              <\/button>\n            <\/div>\n          <\/form>\n        <\/main-search><\/predictive-search><\/div><\/div><\/div>\n\n\n<\/section>\n    <\/main>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured-collection-0": {
+      "type": "featured-collection",
+      "disabled": true,
+      "custom_css": [
+        "@media screen and (max-width: 768px) {.player audio {position: relative; height: 32px; width: 60%; margin-top: -1px; margin-bottom: 0px; margin-left: 7px; }}",
+        ".collection__title {text-align: center;}",
+        ".price {text-align: center;}",
+        ".card__information {text-align: center;}"
+      ],
+      "settings": {
+        "title": "BEST SELLERS",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "loop-kits",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "link",
+        "enable_desktop_slider": true,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 84,
+        "padding_bottom": 76
+      }
+    },
+    "collection_list_kWmrqM": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_tPggTe": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "loop-kits"
+          }
+        },
+        "featured_collection_ptr8nC": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bundles"
+          }
+        },
+        "featured_collection_Q6Ax9w": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "best-selling"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_tPggTe",
+        "featured_collection_ptr8nC",
+        "featured_collection_Q6Ax9w"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".card__media {border-radius: 6px;}",
+        "@media (min-width: 768px) {.collection-list {display: flex; width: 1800px; justify-content: center; flex-wrap: wrap; margin-bottom: -120px; margin-left: -105px; margin-right: px; margin-top: -30px; }}",
+        "@media (max-width: 767px) {.collection-list {margin-bottom: -90px; }"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "color_scheme": "scheme-3",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 60,
+        "padding_bottom": 100
+      }
+    },
+    "featured_product_Kmbpe3": {
+      "type": "featured-product",
+      "blocks": {
+        "title_nNCEhV": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_C9dNRg": {
+          "type": "price",
+          "settings": {}
+        },
+        "custom_liquid_7tGPWE": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-iframe {\n    width: 100%;\n    height: 100%;\n    border: none; \/* Remove qualquer borda padrão *\/\n    display: block; \/* Remove espaço em branco causado pelo comportamento inline *\/\n    margin: 0; \/* Remove margens padrão *\/\n    padding: 0; \/* Remove padding padrão *\/\n  }\n\n  \/* Estilo para desktop *\/\n  @media (min-width: 768px) {\n    .custom-iframe {\n      margin-bottom: -450px;\n      margin-left: -110px;\n    }\n  }\n\n  \/* Estilo para celular *\/\n  @media (max-width: 767px) {\n    .custom-iframe {\n      margin-bottom: -330px;\n    }\n  }\n<\/style>\n\n<iframe \n  class=\"custom-iframe\" \n  src=\"https:\/\/widgets.commoninja.com\/iframe\/f50ffb8c-50b9-4b95-9c8d-78e09d3afb06\">\n<\/iframe>"
+          }
+        },
+        "variant_picker_rNKHBb": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons_3hFmU7": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "text_dAVxw6": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "title_nNCEhV",
+        "price_C9dNRg",
+        "custom_liquid_7tGPWE",
+        "variant_picker_rNKHBb",
+        "buy_buttons_3hFmU7",
+        "text_dAVxw6"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 769px) {.price {margin-bottom: 0px; }}",
+        "@media screen and (max-width: 768px) {.player {margin-bottom: 48px; } .media {margin-bottom: 20px; }}"
+      ],
+      "settings": {
+        "product": "cerberus-vol-1",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "collection_list_9Q666r": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_JYfaUj": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bundles"
+          }
+        },
+        "featured_collection_EGezWY": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "loop-kits"
+          }
+        },
+        "featured_collection_exeY3N": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "best-selling"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_JYfaUj",
+        "featured_collection_EGezWY",
+        "featured_collection_exeY3N"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".collection-list-title {text-align: center; \/* Centraliza o texto do título *\/ display: block; margin: 0 auto; \/* Garante que o elemento seja centralizado *\/}"
+      ],
+      "settings": {
+        "title": "COLLECTIONS",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 28,
+        "padding_bottom": 80
+      }
+    },
+    "rich_text_dhYXNj": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_HMQV6M": {
+          "type": "heading",
+          "settings": {
+            "heading": "OUR LOOPS ARE 100% ROYALTY FREE FOR ONLINE BEAT LEASING!",
+            "heading_size": "h1"
+          }
+        },
+        "text_fGMNQU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The kits on our site are royalty free for online beat leasing and small (under 1 million stream) releases. However, once a release has reached over 1 million streams, the loop must be cleared and the royalties \/ publishing will be split fairly.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_HMQV6M",
+        "text_fGMNQU"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "featured_product_VzMMNx": {
+      "type": "featured-product",
+      "blocks": {
+        "title_g4FJKd": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_LD4Fyk": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_MH8U6M": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons_KMkFG7": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "text_KQxMif": {
+          "type": "text",
+          "settings": {
+            "text": "The kit includes 10 vocal samples recorded by Grammy-nominated vocalists, adding authenticity and high-quality vocal tones to your tracks. Additionally, it features 20 real guitar phrases, perfect for injecting a live feel into your productions. With 50 starters and 200 one-shots, this kit has everything you need to elevate your music to the next level.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "title_g4FJKd",
+        "price_LD4Fyk",
+        "variant_picker_MH8U6M",
+        "buy_buttons_KMkFG7",
+        "text_KQxMif"
+      ],
+      "disabled": true,
+      "settings": {
+        "product": "tkd-bundle-library-vol-1",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 88
+      }
+    },
+    "slideshow_a3694L": {
+      "type": "slideshow",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "medium",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": false,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    }
+  },
+  "order": [
+    "image_banner_H8FtMy",
+    "custom_liquid_K8btFQ",
+    "image_banner_VXJ8HL",
+    "custom_liquid_6GjkUe",
+    "featured-collection-0",
+    "collection_list_kWmrqM",
+    "featured_product_Kmbpe3",
+    "collection_list_9Q666r",
+    "rich_text_dhYXNj",
+    "featured_product_VzMMNx",
+    "slideshow_a3694L"
+  ]
+}

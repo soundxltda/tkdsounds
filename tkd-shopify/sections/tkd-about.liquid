@@ -1,0 +1,142 @@
+{% comment %}
+  TKD About — sobre o produtor (portado da seção ABOUT de routes/index.tsx).
+  Retrato flutuado à esquerda, bio em fonte "documento datilografado" e
+  playlist do Spotify embutida (créditos/produções).
+{% endcomment %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-about {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-about {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="tkd-about tkd-section tkd-section--wide-gutters" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | escape }}"{% endif %}>
+  <div class="tkd-section__inner tkd-section__inner--w980">
+    <div class="tkd-about__body">
+      {%- if section.settings.portrait != blank -%}
+        {{
+          section.settings.portrait
+          | image_url: width: 480
+          | image_tag:
+            widths: '160,320,480',
+            sizes: '160px',
+            class: 'tkd-about__portrait',
+            loading: 'lazy',
+            alt: section.settings.portrait.alt
+        }}
+      {%- endif -%}
+
+      {{ section.settings.bio }}
+
+      {%- if section.settings.show_embed and section.settings.embed_url != blank -%}
+        <div class="tkd-about__embed">
+          <iframe
+            title="{{ section.settings.embed_title | escape }}"
+            src="{{ section.settings.embed_url }}"
+            width="100%"
+            height="{{ section.settings.embed_height }}"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD About",
+  "tag": "section",
+  "class": "section-tkd-about",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Âncora (id para links #)",
+      "default": "about"
+    },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Retrato",
+      "info": "Exibido flutuado à esquerda, proporção 4:5, 160px de largura."
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "Bio",
+      "default": "<p>TKD is a multi-platinum producer from Brazil with over 1 billion streams across his catalog.</p><p>Known for crafting dark, soulful and cinematic compositions, his sound has been used by some of the biggest artists and producers in the music scene.</p><p>TKD Archives was created as a private collection of original samples, textures and compositions — built with real instruments, synthesizers, pedals and outboard gear.</p><p>These packs are not generic loop kits. They are selected pieces from TKD's personal archive, designed for producers looking for emotion, character and a sound that feels alive.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Playlist embutida"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_embed",
+      "label": "Mostrar playlist",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "embed_url",
+      "label": "URL do embed (Spotify)",
+      "default": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0"
+    },
+    {
+      "type": "text",
+      "id": "embed_title",
+      "label": "Título acessível do embed",
+      "default": "Produced by TKD — Spotify playlist"
+    },
+    {
+      "type": "range",
+      "id": "embed_height",
+      "label": "Altura do embed",
+      "min": 80,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 350
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaço acima (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaço abaixo (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    }
+  ],
+  "presets": [
+    {
+      "name": "TKD About"
+    }
+  ]
+}
+{% endschema %}

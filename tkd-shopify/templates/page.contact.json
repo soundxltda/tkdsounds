@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "tkd_contact": {
+      "type": "tkd-contact",
+      "blocks": {
+        "email": {
+          "type": "email",
+          "settings": {
+            "label": "Email",
+            "email": "prodbytkd@gmail.com"
+          }
+        },
+        "instagram": {
+          "type": "link",
+          "settings": {
+            "label": "Instagram",
+            "value": "@tkdprod",
+            "url": "https://instagram.com/tkdprod",
+            "external": true
+          }
+        }
+      },
+      "block_order": [
+        "email",
+        "instagram"
+      ],
+      "settings": {
+        "terminal_text": "> OPEN CONTACT.TXT",
+        "heading": "Contact",
+        "intro": "For licensing, custom work, press or general inquiries — reach out below.",
+        "window_title": "CONTACT.TXT",
+        "status_text": "READY"
+      }
+    }
+  },
+  "order": [
+    "tkd_contact"
+  ]
+}

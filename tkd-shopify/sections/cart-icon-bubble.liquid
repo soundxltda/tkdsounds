@@ -1,0 +1,8 @@
+{% comment %}
+  Renderizada pela Section Rendering API do Refresh (cart.js, cart-drawer.js,
+  cart-notification.js, quick-order-list.js) para atualizar o conteúdo de
+  #cart-icon-bubble após mudanças no carrinho. Reescrita no formato retrô
+  do tema TKD: [CART (n)] em vez do ícone SVG do Dawn/Refresh.
+{% endcomment %}
+[CART{%- if cart.item_count > 0 %} ({{ cart.item_count }}){% endif -%}]
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }} - {{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>

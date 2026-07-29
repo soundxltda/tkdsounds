@@ -1,0 +1,107 @@
+{% comment %}
+  TKD Landing — Contents. "O que vem dentro do kit": uma pasta por block
+  (nome, descrição, tracklist opcional). Reutilizável para qualquer kit.
+{% endcomment %}
+
+<div class="tkd-landing-contents tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    <div class="tkd-landing-contents__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="tkd-eyebrow text-amber">{{ section.settings.eyebrow | escape }}</div>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="tkd-landing-contents__title">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.total_sounds != blank -%}
+        <div class="stamp stamp-mustard">{{ section.settings.total_sounds | escape }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="tkd-landing-contents__grid">
+      {%- for block in section.blocks -%}
+        <div class="win tkd-landing-folder" {{ block.shopify_attributes }}>
+          <div class="win-title">
+            <span>{{ block.settings.folder_name | escape }}</span>
+            <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+          </div>
+          <div class="tkd-landing-folder__pad">
+            {%- if block.settings.description != blank -%}
+              <p class="tkd-landing-folder__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+            {%- if block.settings.tracklist != blank -%}
+              <ul class="tkd-landing-folder__tracks">
+                {%- assign tracks = block.settings.tracklist | newline_to_br | strip_newlines | split: '<br />' -%}
+                {%- for track in tracks -%}
+                  {%- assign trimmed = track | strip -%}
+                  {%- if trimmed != blank -%}
+                    <li>{{ trimmed }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Landing — Contents",
+  "tag": "section",
+  "class": "section-tkd-landing-contents",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHAT'S INSIDE"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Contents"
+    },
+    {
+      "type": "text",
+      "id": "total_sounds",
+      "label": "Selo de total de sons",
+      "info": "Ex.: \"228 TOTAL SOUNDS\". Deixe vazio para ocultar."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "folder",
+      "name": "Pasta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "folder_name",
+          "label": "Nome da pasta",
+          "default": "SAMPLES"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descrição"
+        },
+        {
+          "type": "textarea",
+          "id": "tracklist",
+          "label": "Faixas (uma por linha)",
+          "info": "Ex.: \"Crowsnest 156 Dmin\" — uma linha por faixa."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "TKD Landing — Contents",
+      "blocks": [{ "type": "folder" }, { "type": "folder" }]
+    }
+  ]
+}
+{% endschema %}

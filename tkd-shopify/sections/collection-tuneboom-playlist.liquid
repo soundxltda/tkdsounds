@@ -1,0 +1,294 @@
+{% assign playlist = collection.metafields.tuneboom.playlist %}
+<div class="tuneboom" style="{% if theme.name == 'Debut' %}margin-bottom: -53px; margin-top: -55px;{% endif %}"
+     id="tuneboom-container"
+     data-shop-name="{{ shop.permanent_domain }}"
+     data-collection-handle="{{  collection.handle }}"
+>
+  <div class="collection-list__searchbar align-items-center">
+    <div class="row">
+      <div class="col d-flex align-items-center">
+        <div class="collection-list__tab" onclick="toggleFilterMenu()">
+          <i class="fas fa-filter"></i>
+        </div>
+        <div class="collection-list_search-input-wrapper ml-4">
+          <div class="collection-list_search-inner-wrapper" id="collection-list_search-inner-wrapper">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-search ml-3"></i>
+              <input id="collection-list_search-input" class="collection-list_search-input" placeholder="Search by Mood, Tag, Genre..." data-shop-name="{{ shop.permanent_domain }}"/>
+              <span class="collection-list_search-input-enter">Enter</span>
+            </div>
+            <div class="collection-list_search-item-container" id="collection-list_search-item-container">
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col align-items-center">
+        <div class="collection-list_collections" id="collection-list_collections">
+          <i class="fas fa-list mr-2">
+          </i>
+          <h5 class="m-0">
+            COLLECTIONS
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="collection-list__playlists align-items-center" id="collection-list__playlists">
+
+  </div>
+
+  <div class="d-flex ml-0">
+    <div
+            class="collection-filters-menu pt-4 d-none d-md-block"
+            id="collection-filter-menu"
+            data-shop-name="{{ shop.permanent_domain }}">
+    </div>
+    <div class="collection-list_main-content pl-0" style="min-height: 100vh;">
+      <div class="collection-list-hero my-0" id="collection-list-hero">
+        <div class="collection-list-hero__gradient-overlay">
+
+        </div>
+        <div class="collection-list-hero_content">
+          <div class="collection-list-hero_play-button mb-4" id="play-artwork">
+            <i class="fas fa-play"></i>
+          </div>
+          <div class="collection-list-hero_play-button mb-4" id="pause-artwork">
+            <i class="fas fa-pause"></i>
+          </div>
+          <h1>
+            {% if collection.handle == "tuneboom" %}
+              Digital Tracks
+            {% else %}
+              {{ collection.title }}
+            {% endif %}
+          </h1>
+
+          <h4>
+            {{ collection.description }}
+          </h4>
+        </div>
+        {% if collection.handle != "tuneboom" %}
+          <div class="collection-list-hero__image-bg lazyload" style="background-image:url({{ collection.image | img_url: 'medium' }})">
+            <div class="collection-list-hero__image-blur lazyload" style="background-image:url({{ collection.image | img_url: 'medium' }})">
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <div class="collection-list__sort p-4">
+        <div class="collection-list__tag-wrapper" id="collection-list__tag-wrapper">
+        </div>
+
+        <div class="collection-list__sort-item-child ml-auto">
+          <div class="filters-toolbar__input-wrapper">
+            <select name="sort_by"
+                    class="collection-list__sort_input py-0 m-0"
+                    id="collection-list__sort_input"
+            >
+            </select>
+            <i class="fas fa-chevron-down collection-list__sort-input-icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="collection-list__tracks">
+        <div class="collection-list__tracks-headers">
+          <div class="row flex-sm-nowrap flex-lg-nowrap">
+            <div class="col-auto" style="width: 75px;">
+
+            </div>
+            <div class="col-6">
+              Title
+            </div>
+            <div class="col-1 d-none d-md-block text-right">
+              Duration
+            </div>
+            <div class="col-1 d-none d-md-block text-right">
+              BPM
+            </div>
+            <div class="col-auto">
+
+            </div>
+          </div>
+        </div>
+        <div class="collection-list__tracks-content" id="collection-list__tracks-content">
+        </div>
+        <div class="d-flex justify-content-center align-items-center my-4">
+          <div class="collection-list-pagination-button" id="collection-list-pagination-button">
+            Load More
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  window.tuneboom.collections.setup();
+  window.tuneboom.player.setup();
+  window.tuneboom.playlist.setup();
+  window.tuneboom.api.searchApi();
+  window.tuneboom.api.suggestTerm();
+
+  function openMenu(section) {
+    if(window.tuneboom.cache[section] === true || window.tuneboom.cache[section] === false){
+      window.tuneboom.cache[section] = !window.tuneboom.cache[section];
+    } else {
+      window.tuneboom.cache[section] = true;
+    }
+  }
+</script>
+<script>
+  const filterMenu = document.getElementById("collection-filter-menu");
+
+  let filterMenuOpen = true;
+
+  function toggleFilterMenu() {
+    if (filterMenuOpen) {
+      filterMenuOpen = false;
+      filterMenu.style.width = '0';
+      filterMenu.style.padding = '0';
+    } else {
+      filterMenuOpen = true;
+      filterMenu.style.width = '300px';
+      filterMenu.style.padding = '20px';
+    }
+  }
+</script>
+
+{% schema %}
+  {
+  "locales": {
+  "en": {
+  "filters": {
+  "genre": "Genre",
+  "mood": "Mood",
+  "bpm": "BPM",
+  "key": "Musical Key",
+  "artist": "Artist"
+  },
+  "genre": {
+  "all": "All",
+  "r-b": "R&B",
+  "none": "None",
+  "classic-soul": "Classic Soul",
+  "funk": "Funk",
+  "new-soul": "New Soul",
+  "soul": "Soul",
+  "hip-hop": "Hip Hop",
+  "club": "Club",
+  "dirty-south": "Dirty South",
+  "old-school": "Old School",
+  "east-coast": "East Coast",
+  "gangster": "Gangster",
+  "raggaeton": "Raggaeton",
+  "underground": "Underground",
+  "west-coast": "West Coast",
+  "crunk": "Crunk",
+  "orchestral": "Orchestral",
+  "trap": "Trap",
+  "pop": "Pop",
+  "rock": "Rock",
+  "electronic": "Electronic",
+  "country": "Country",
+  "k-pop": "K-Pop",
+  "alternative": "Alternative",
+  "indie-rock": "Indie rock",
+  "classic-rock": "Classic Rock",
+  "dance": "Dance",
+  "techno": "Techno",
+  "house": "House",
+  "dub-step": "Dub Step",
+  "break": "Break",
+  "drum-bass": "Drum & Bass",
+  "2-step": "2 Step",
+  "trip-hop": "Trip Hop",
+  "tropical-house": "Tropical House",
+  "reggae": "Reggae",
+  "afrobeat": "Afrobeat",
+  "dancehall": "Dancehall",
+  "dub": "Dub",
+  "roots": "Roots",
+  "bluegrass": "Bluegrass",
+  "christian": "Christian",
+  "country-rock": "Country Rock",
+  "cowpunk": "Cowpunk",
+  "progressive": "Progressive",
+  "western": "Western",
+  "ambient": "Ambient",
+  "world": "World"
+  },
+  "mood": {
+  "none": "None",
+  "accomplished": "Accomplished",
+  "adored": "Adored",
+  "angry": "Angry",
+  "annoyed": "Annoyed",
+  "anxious": "Anxious",
+  "bouncy": "Bouncy",
+  "calm": "Calm",
+  "confident": "Confident",
+  "Crazy": "Crazy",
+  "crunk": "Crunk",
+  "depressed": "Depressed",
+  "dirty": "Dirty",
+  "disappointed": "Disappointed",
+  "eccentric": "Eccentric",
+  "energetic": "Energetic",
+  "enraged": "Enraged",
+  "epic": "Epic",
+  "evil": "Evil",
+  "flirty": "Flirty",
+  "frantic": "Frantic",
+  "giddy": "Giddy",
+  "gloomy": "Gloomy",
+  "grateful": "Grateful",
+  "happy": "Happy",
+  "hyper": "Hyper",
+  "inspiring": "Inspiring",
+  "intense": "Intense",
+  "lazy": "Lazy",
+  "lonely": "Lonely",
+  "loved": "Loved",
+  "mellow": "Mellow",
+  "peaceful": "Peaceful",
+  "rebellious": "Rebellious",
+  "relaxed": "Relaxed",
+  "sad": "Sad",
+  "sacred": "Sacred",
+  "silly": "Silly"
+  },
+  "key": {
+  "none": "None",
+  "a-flat-minor": "A-flat minor",
+  "a-flat-major": "A-flat major",
+  "a-minor": "A minor",
+  "a-major": "A Major",
+  "a-sharp-minor": "A-sharp minor",
+  "a-sharp-major": "A-sharp major",
+  "b-flat-minor": "B-flat minor",
+  "b-flat-major": "B-flat major",
+  "b-minor": "B minor",
+  "b-major": "B major",
+  "c-flat-minor": "C-flat minor",
+  "c-flat-major": "C-flat major",
+  "d-flat-major": "D-flat major",
+  "d-minor": "D minor",
+  "d-major": "D major",
+  "d-sharp-minor": "D-sharp minor",
+  "e-flat-minor": "E-flat minor",
+  "e-flat-major": "E-flat major",
+  "e-minor": "E minor",
+  "e-major": "E major",
+  "f-minor": "F minor",
+  "f-major": "F major",
+  "f-sharp-minor": "F-sharp minor",
+  "f-sharp-major": "F-sharp major",
+  "g-flat-major": "G-flat major",
+  "g-minor": "G minor",
+  "g-major": "G major",
+  "g-sharp-minor": "G-sharp minor"
+  }
+  }
+  }
+  }
+{% endschema %}

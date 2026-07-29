@@ -1,0 +1,16 @@
+{% comment %}
+  TKD Sounds — pilha de overlays CRT (portado de __root.tsx).
+  Renderizado no theme.liquid quando settings.tkd_enable_crt está ativo.
+  Camadas: glow, vinheta, grain animado, scanlines, flicker.
+{% endcomment %}
+{%- if settings.tkd_enable_crt -%}
+  <div class="crt-glow" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
+  {%- if settings.tkd_enable_grain -%}
+    <div class="grain-overlay" aria-hidden="true"></div>
+  {%- endif -%}
+  <div class="crt-scanlines" aria-hidden="true"></div>
+  {%- if settings.tkd_enable_flicker -%}
+    <div class="crt-flicker" aria-hidden="true"></div>
+  {%- endif -%}
+{%- endif -%}

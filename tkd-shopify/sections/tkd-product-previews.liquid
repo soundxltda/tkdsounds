@@ -1,0 +1,102 @@
+{% comment %}
+  TKD Product Previews — painel "TKD PLAYER v1.0" (portado de AUDIO PREVIEWS
+  de pack.$id.tsx + AudioCard.tsx). Lista as faixas de preview do produto
+  (metafields tkd.preview_files / tkd.preview_titles), exceto a master.
+{% endcomment %}
+
+{%- liquid
+  assign accent = product.metafields.tkd.accent_color.value | default: '#e6a635'
+  assign previews = product.metafields.tkd.preview_files.value
+  assign titles = product.metafields.tkd.preview_titles.value
+
+  assign psize = 0
+  if previews
+    assign psize = previews.size
+  endif
+
+  assign midx = product.metafields.tkd.master_preview_index.value | default: 0 | at_least: 0
+  if midx >= psize
+    assign midx = 0
+  endif
+
+  assign cover_small = ''
+  if product.featured_image
+    assign cover_small = product.featured_image | image_url: width: 144
+  endif
+-%}
+
+{%- if psize > 1 -%}
+  <div class="tkd-product-previews tkd-section" id="preview">
+    <div class="tkd-section__inner tkd-section__inner--w900">
+      <div class="player-shell">
+        <div class="player-title-bar">
+          <span class="tkd-player-title__label">
+            <span class="dot" aria-hidden="true"></span>
+            {{ section.settings.player_title | escape }} — NOW LOADED: {{ product.title | upcase | escape }}
+          </span>
+          <span class="tkd-player-title__transport" aria-hidden="true">■ ◀◀ ▶ ▶▶</span>
+        </div>
+
+        <div class="tkd-product-previews__list">
+          {%- for preview in previews -%}
+            {%- liquid
+              assign i = forloop.index0
+              if i == midx
+                continue
+              endif
+              assign track_name = titles[i]
+              if track_name == blank
+                assign track_name = 'Preview ' | append: forloop.index
+              endif
+            -%}
+            <div class="audio-row" data-tkd-row>
+              <button
+                type="button"
+                class="audio-play-btn"
+                data-tkd-play
+                data-track-id="{{ product.id }}-{{ i }}"
+                data-track-src="{{ preview.url }}"
+                data-track-name="{{ track_name | escape }}"
+                data-pack-name="{{ product.title | escape }}"
+                data-pack-url="{{ product.url }}"
+                data-accent="{{ accent }}"
+                {% if cover_small != blank %}data-cover="{{ cover_small }}"{% endif %}
+                aria-label="Play {{ track_name | escape }}"
+              >
+                <svg class="tkd-icon-play" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="tkd-icon-pause" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+              </button>
+
+              <div class="audio-row__num font-tkd-pixel">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</div>
+
+              <div class="audio-row__main">
+                <div class="audio-row__name truncate">{{ track_name | escape }}</div>
+                <div class="audio-row__wave">
+                  <div class="waveform" data-tkd-waveform data-for="{{ product.id }}-{{ i }}" data-bars="40" data-seek="playing"></div>
+                </div>
+              </div>
+
+              <div class="audio-row__time font-tkd-pixel" data-tkd-time data-for="{{ product.id }}-{{ i }}" data-mode="both" data-default="--:--">--:--</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "TKD Produto — Previews",
+  "tag": "section",
+  "class": "section-tkd-product-previews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "player_title",
+      "label": "Título do player",
+      "default": "TKD PLAYER v1.0"
+    }
+  ]
+}
+{% endschema %}

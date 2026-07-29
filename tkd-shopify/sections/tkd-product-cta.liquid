@@ -1,0 +1,108 @@
+{% comment %}
+  TKD Product CTA — janela PURCHASE.DLG (portado do BUY CTA de pack.$id.tsx).
+  Segundo ponto de compra da página, usando o product form nativo.
+{% endcomment %}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="tkd-product-cta tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w720">
+    <div class="win tkd-product-cta__win">
+      <div class="win-title">
+        <span>{{ section.settings.window_title | escape }}</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+      <div class="tkd-product-cta__pad">
+        <div class="tkd-eyebrow text-amber tkd-product-cta__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        <h2 class="tkd-product-cta__title">{{ section.settings.heading_prefix | escape }} {{ product.title | escape }}</h2>
+
+        <div class="tkd-price-row tkd-price-row--center font-tkd-pixel">
+          <span class="tkd-price-row__price tkd-price-row__price--lg">{{ product.price | money_without_trailing_zeros }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="tkd-price-row__was">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+          {%- if section.settings.stamp_text != blank -%}
+            <span class="stamp stamp-olive">{{ section.settings.stamp_text | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="tkd-product-cta__action">
+          <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
+            {%- form 'product', product, id: 'tkd-product-form-cta', class: 'tkd-product-form tkd-product-form--center', novalidate: 'novalidate' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button
+                type="submit"
+                name="add"
+                class="tkd-btn tkd-btn-solid tkd-buy-btn tkd-buy-btn--wide"
+                {% unless product.available %}disabled aria-disabled="true"{% endunless %}
+              >
+                <span>
+                  {%- if product.available -%}
+                    {{ section.settings.buy_label | escape }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
+              <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
+                <span class="product-form__error-message"></span>
+              </div>
+            {%- endform -%}
+          </product-form>
+        </div>
+
+        {%- if section.settings.trust_text != blank -%}
+          <div class="tkd-trust-line tkd-trust-line--center">{{ section.settings.trust_text | escape }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Produto — CTA",
+  "tag": "section",
+  "class": "section-tkd-product-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "PURCHASE.DLG"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "\/\/ AVAILABLE NOW"
+    },
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Prefixo do título (seguido do nome do produto)",
+      "default": "Get"
+    },
+    {
+      "type": "text",
+      "id": "buy_label",
+      "label": "Texto do botão de compra",
+      "default": "▶ Buy Here"
+    },
+    {
+      "type": "text",
+      "id": "stamp_text",
+      "label": "Carimbo ao lado do preço",
+      "default": "Royalty-Free for Sales"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Linha de confiança",
+      "default": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "tkd_collection": {
+      "type": "tkd-collection",
+      "settings": {
+        "terminal_text": "> DIR C:\\ARCHIVE\\",
+        "decor_text": "SORT: [ RECENT ] · VIEW: [ GRID ]",
+        "window_title": "ARCHIVE_INDEX.DB",
+        "products_per_page": 24
+      }
+    }
+  },
+  "order": [
+    "tkd_collection"
+  ]
+}

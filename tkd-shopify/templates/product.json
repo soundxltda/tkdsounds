@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "tkd_hero": {
+      "type": "tkd-product-hero",
+      "settings": {
+        "back_label": "back to archive",
+        "buy_label": "▶ Buy Here",
+        "previews_label": "More Previews",
+        "stamp_text": "Royalty-Free for Sales",
+        "trust_text": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+      }
+    },
+    "tkd_previews": {
+      "type": "tkd-product-previews",
+      "settings": {
+        "player_title": "TKD PLAYER v1.0"
+      }
+    },
+    "tkd_properties": {
+      "type": "tkd-product-properties",
+      "settings": {
+        "window_title": "PROPERTIES.INF",
+        "eyebrow": "// METADATA",
+        "royalty_sales_text": "Yes",
+        "royalty_placements_text": "No — clearance required",
+        "show_description": true
+      }
+    },
+    "tkd_credibility": {
+      "type": "tkd-credibility",
+      "settings": {
+        "window_title": "CREDENTIALS.LOG",
+        "eyebrow": "VERIFIED",
+        "show_embed": true,
+        "embed_url": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0",
+        "embed_title": "Produced by TKD — Spotify playlist",
+        "embed_height": 152
+      }
+    },
+    "tkd_cta": {
+      "type": "tkd-product-cta",
+      "settings": {
+        "window_title": "PURCHASE.DLG",
+        "eyebrow": "// AVAILABLE NOW",
+        "heading_prefix": "Get",
+        "buy_label": "▶ Buy Here",
+        "stamp_text": "Royalty-Free for Sales",
+        "trust_text": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+      }
+    },
+    "tkd_newsletter": {
+      "type": "tkd-newsletter",
+      "settings": {
+        "window_title": "SIGNUP.EXE",
+        "eyebrow": "JOIN THE LIST",
+        "heading": "Free loops, new pack alerts, early access",
+        "placeholder": "you@email.com",
+        "button_label": "▶ SIGN UP",
+        "success_text": "You're on the list. Check your inbox soon."
+      }
+    },
+    "tkd_related": {
+      "type": "tkd-related-products",
+      "settings": {
+        "eyebrow": "// RELATED FILES",
+        "title": "More from the archive",
+        "products_to_show": 5
+      }
+    }
+  },
+  "order": [
+    "tkd_hero",
+    "tkd_previews",
+    "tkd_properties",
+    "tkd_credibility",
+    "tkd_cta",
+    "tkd_newsletter",
+    "tkd_related"
+  ]
+}

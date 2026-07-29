@@ -1,0 +1,48 @@
+{% comment %}
+  TKD 404 — janela "ERROR — FILE_NOT_FOUND.SYS" (portado do
+  NotFoundComponent de __root.tsx).
+{% endcomment %}
+
+<div class="tkd-404 tkd-section">
+  <div class="win tkd-404__win">
+    <div class="win-title">
+      <span>{{ section.settings.window_title | escape }}</span>
+      <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+    </div>
+    <div class="tkd-404__pad">
+      <h1 class="tkd-404__code chroma">404</h1>
+      <p class="tkd-404__msg">&gt; {{ section.settings.message | escape }}</p>
+      <div class="tkd-404__action">
+        <a href="{{ routes.root_url }}" class="tkd-btn tkd-btn-solid">{{ section.settings.button_label | escape }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD 404",
+  "tag": "section",
+  "class": "section-tkd-404",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "ERROR — FILE_NOT_FOUND.SYS"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Mensagem",
+      "default": "The requested resource could not be located on this volume."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "Return to Index"
+    }
+  ]
+}
+{% endschema %}

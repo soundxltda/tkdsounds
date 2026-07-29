@@ -1,0 +1,94 @@
+{% comment %}
+  TKD FAQ — seção opcional (não existia no site Lovable; criada no padrão
+  visual TKD a pedido do cliente). Janela retrô com perguntas/respostas
+  em blocks colapsáveis (details/summary, sem JavaScript).
+{% endcomment %}
+
+<div class="tkd-faq tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    <div class="win">
+      <div class="win-title">
+        <span>{{ section.settings.window_title | escape }}</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+      <div class="tkd-faq__pad">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow text-amber tkd-faq__eyebrow">&gt; {{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="tkd-faq__title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+
+        <div class="tkd-faq__list">
+          {%- for block in section.blocks -%}
+            <details class="tkd-faq__item" {{ block.shopify_attributes }}>
+              <summary class="tkd-faq__q">
+                <span class="tkd-faq__q-text">{{ block.settings.question | escape }}</span>
+                <span class="tkd-faq__toggle" aria-hidden="true"></span>
+              </summary>
+              <div class="tkd-faq__a">{{ block.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD FAQ",
+  "tag": "section",
+  "class": "section-tkd-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "FAQ.HLP"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "HELP INDEX"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Frequently asked questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Pergunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pergunta",
+          "default": "How do I download my pack?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Resposta",
+          "default": "<p>After checkout you'll receive an instant download link by email.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "TKD FAQ",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

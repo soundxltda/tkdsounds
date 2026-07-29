@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "tkd_404": {
+      "type": "tkd-404",
+      "settings": {
+        "window_title": "ERROR — FILE_NOT_FOUND.SYS",
+        "message": "The requested resource could not be located on this volume.",
+        "button_label": "Return to Index"
+      }
+    }
+  },
+  "order": [
+    "tkd_404"
+  ]
+}

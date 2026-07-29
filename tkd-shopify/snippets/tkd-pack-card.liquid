@@ -1,0 +1,118 @@
+{% comment %}
+  TKD Pack Card — fichário de arquivo retrô (portado de PackCard.tsx).
+
+  Uso:
+    {% render 'tkd-pack-card', card_product: product %}
+    {% render 'tkd-pack-card', card_product: product, lazy: false %}
+
+  Dados dinâmicos: título, preço, capa, URL e disponibilidade vêm do
+  produto Shopify. Preview de áudio, gênero, formatos, tagline e cor de
+  destaque vêm dos metafields tkd.* (opcionais — o card degrada bem).
+{% endcomment %}
+
+{%- liquid
+  assign accent = card_product.metafields.tkd.accent_color.value | default: '#e6a635'
+  assign previews = card_product.metafields.tkd.preview_files.value
+  assign titles = card_product.metafields.tkd.preview_titles.value
+  assign genre = card_product.metafields.tkd.genre.value
+  assign formats = card_product.metafields.tkd.formats.value
+  assign tagline = card_product.metafields.tkd.tagline.value
+
+  assign psize = 0
+  if previews
+    assign psize = previews.size
+  endif
+
+  assign midx = card_product.metafields.tkd.master_preview_index.value | default: 0 | at_least: 0
+  if midx >= psize
+    assign midx = 0
+  endif
+
+  assign preview_url = ''
+  assign preview_name = card_product.title
+  if psize > 0
+    assign preview_file = previews[midx]
+    assign preview_url = preview_file.url
+    if titles[midx] != blank
+      assign preview_name = titles[midx]
+    endif
+  endif
+
+  if lazy == false
+    assign img_loading = 'eager'
+  else
+    assign img_loading = 'lazy'
+  endif
+-%}
+
+<a href="{{ card_product.url }}" class="pack-tile">
+  <div class="pack-art">
+    {%- if card_product.featured_image -%}
+      <div class="pack-art-fallback">
+        {{
+          card_product.featured_image
+          | image_url: width: 630
+          | image_tag:
+            widths: '210,420,630',
+            sizes: '(min-width: 990px) 210px, (min-width: 750px) 200px, (min-width: 640px) 180px, 50vw',
+            class: 'pack-art-img',
+            loading: img_loading,
+            alt: card_product.featured_image.alt
+        }}
+      </div>
+    {%- else -%}
+      <div
+        class="pack-art-fallback pack-art-fallback--gradient"
+        style="background: radial-gradient(circle at 30% 30%, {{ accent }}66, #0d0906 75%);"
+      >
+        <div class="pack-tile__fallback-name">{{ card_product.title | escape }}</div>
+      </div>
+    {%- endif -%}
+
+    {%- if preview_url != blank -%}
+      <button
+        type="button"
+        class="audio-play-btn pack-tile__play"
+        data-tkd-play
+        data-track-id="{{ card_product.id }}-preview"
+        data-track-src="{{ preview_url }}"
+        data-track-name="{{ preview_name | escape }}"
+        data-pack-name="{{ card_product.title | escape }}"
+        data-pack-url="{{ card_product.url }}"
+        data-accent="{{ accent }}"
+        {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 144 }}"{% endif %}
+        aria-label="Play {{ card_product.title | escape }}"
+      >
+        <svg class="tkd-icon-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg class="tkd-icon-pause" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+          <rect x="6" y="5" width="4" height="14"/>
+          <rect x="14" y="5" width="4" height="14"/>
+        </svg>
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="pack-tile__meta">
+    <div class="pack-tile__row">
+      <span class="pack-tile__genre truncate">{{ genre }}</span>
+      <span class="pack-tile__fmt truncate">{{ formats }}</span>
+    </div>
+    <div class="pack-tile__name truncate" title="{{ card_product.title | escape }}">
+      {{ card_product.title | escape }}
+    </div>
+    {%- if tagline != blank -%}
+      <div class="pack-tile__tagline truncate">{{ tagline }}</div>
+    {%- endif -%}
+    <div class="pack-tile__price">
+      <span class="tkd-btn tkd-btn-solid pack-tile__price-btn">
+        {%- if card_product.available -%}
+          {{ card_product.price | money_without_trailing_zeros }}
+        {%- else -%}
+          SOLD OUT
+        {%- endif -%}
+      </span>
+    </div>
+  </div>
+</a>

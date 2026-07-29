@@ -1,0 +1,38 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "tkd_footer": {
+      "type": "tkd-footer",
+      "blocks": {
+        "instagram": {
+          "type": "link",
+          "settings": {
+            "label": "INSTAGRAM @TKDPROD",
+            "url": "https://instagram.com/tkdprod",
+            "external": true
+          }
+        },
+        "email": {
+          "type": "email",
+          "settings": {
+            "email": "prodbytkd@gmail.com"
+          }
+        }
+      },
+      "block_order": [
+        "instagram",
+        "email"
+      ],
+      "settings": {
+        "brand_text": "TKD SOUNDS",
+        "tagline": "> ARCHIVE.SYS · EST. 2019 · WAV/24-BIT",
+        "copyright_text": "TKD SOUNDS · ALL RIGHTS RESERVED",
+        "status_text": "READY"
+      }
+    }
+  },
+  "order": [
+    "tkd_footer"
+  ]
+}

@@ -1,0 +1,122 @@
+{% comment %}
+  TKD Landing Hero — cabeçalho de página de vendas (substitui o hero do
+  GemPages). Headline forte, subheadline, linha de confiança e CTA via
+  product form nativo. Reutilizável para qualquer kit.
+{% endcomment %}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="tkd-landing-hero tkd-section tkd-section--wide-gutters">
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    <div class="tkd-landing-hero__grid">
+      <div class="tkd-landing-hero__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow text-amber">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+
+        <h1 class="tkd-landing-hero__headline chroma">{{ section.settings.headline | default: product.title | escape }}</h1>
+
+        {%- if section.settings.subheadline != blank -%}
+          <p class="tkd-landing-hero__sub">{{ section.settings.subheadline | escape }}</p>
+        {%- endif -%}
+
+        <div class="tkd-landing-hero__actions">
+          <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
+            {%- form 'product', product, id: 'tkd-landing-form-hero', class: 'tkd-product-form', novalidate: 'novalidate' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button
+                type="submit"
+                name="add"
+                class="tkd-btn tkd-btn-solid tkd-buy-btn tkd-buy-btn--wide"
+                {% unless product.available %}disabled aria-disabled="true"{% endunless %}
+              >
+                <span>
+                  {%- if product.available -%}
+                    {{ section.settings.cta_label | escape }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
+              <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
+                <span class="product-form__error-message"></span>
+              </div>
+            {%- endform -%}
+          </product-form>
+        </div>
+
+        {%- if section.settings.trust_line != blank -%}
+          <p class="tkd-landing-hero__trust">{{ section.settings.trust_line | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="tkd-landing-hero__art">
+        <div
+          class="tkd-vinyl"
+          data-tkd-vinyl
+          data-track-prefix="{{ product.id }}-"
+          style="
+            {%- if product.featured_image -%}
+              background: center / cover no-repeat url('{{ product.featured_image | image_url: width: 880 }}');
+            {%- else -%}
+              background: radial-gradient(circle at 30% 30%, {{ section.settings.accent_color | default: '#e6a635' }}66, #0a0704 72%);
+            {%- endif -%}
+          "
+          role="img"
+          aria-label="{{ product.featured_image.alt | default: product.title | escape }}"
+        >
+          {%- unless product.featured_image -%}
+            <div class="tkd-vinyl__name">{{ product.title | escape }}</div>
+          {%- endunless -%}
+          <div class="tkd-vinyl__hole" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Landing — Hero",
+  "tag": "section",
+  "class": "section-tkd-landing-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "info": "Se vazio, usa o título do produto."
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Subheadline"
+    },
+    {
+      "type": "text",
+      "id": "trust_line",
+      "label": "Linha de confiança",
+      "info": "Ex.: \"🎧 Listen to the sounds before you buy\""
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do botão",
+      "default": "GET IT NOW"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque (fallback sem imagem)",
+      "default": "#e6a635"
+    }
+  ]
+}
+{% endschema %}

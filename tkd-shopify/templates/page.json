@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "collapsible_content_aBzbGb": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_dgU7te": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "FILES?",
+            "icon": "silhouette",
+            "row_content": "<p>You'll be provided with a download link right after purchase. In addition, we send you a confirmation email with your download link so you can download it later if you want.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_dtdh36": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "ROYALTY FREE?",
+            "icon": "lightning_bolt",
+            "row_content": "<p>The kits on our site are royalty free for online beat leasing and small (under 1 million stream) releases. However, once a release has reached over 1 million streams, the loop must be cleared and the royalties / publishing will be split fairly.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_cnKGrh": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "COMPATIBLE DAW?",
+            "icon": "star",
+            "row_content": "<p>All of our loop kits, drum kits, one shot kits, and midi kits will work in any DAW that accepts MP3, WAV, and MIDI forms</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_APyJxH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "REFUNDS?",
+            "icon": "lock",
+            "row_content": "<p>All purchases are final and no refunds will be issued under any circumstances. By purchasing, you are agreeing to these terms. The reason we cannot provide a refund is that once a digital good has been downloaded, it cannot be revoked</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_dgU7te",
+        "collapsible_row_dtdh36",
+        "collapsible_row_cnKGrh",
+        "collapsible_row_APyJxH"
+      ],
+      "settings": {
+        "caption": "Get all your answers here",
+        "heading": "FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 24,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collapsible_content_aBzbGb"
+  ]
+}

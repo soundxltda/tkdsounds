@@ -1,0 +1,96 @@
+{% comment %}
+  TKD Newsletter — janela SIGNUP.EXE (portado de EmailCaptureBlock.tsx).
+  Usa o formulário nativo de cliente da Shopify (aceita marketing por
+  e-mail), substituindo a tabela email_leads do Supabase.
+{% endcomment %}
+
+<div class="tkd-newsletter tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w720">
+    <div class="win">
+      <div class="win-title">
+        <span>{{ section.settings.window_title | escape }}</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+      <div class="tkd-newsletter__pad">
+        <div class="tkd-eyebrow text-amber tkd-newsletter__eyebrow">&gt; {{ section.settings.eyebrow | escape }}</div>
+        <h3 class="tkd-newsletter__title">{{ section.settings.heading | escape }}</h3>
+
+        {%- form 'customer', class: 'tkd-newsletter__form-wrap' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="tkd-newsletter__success">&gt; {{ section.settings.success_text | escape }}</p>
+          {%- else -%}
+            {%- if form.errors -%}
+              <p class="tkd-newsletter__error">&gt; {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+            {%- endif -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="tkd-newsletter__form">
+              <input
+                type="email"
+                name="contact[email]"
+                id="tkd-newsletter-email-{{ section.id }}"
+                class="tkd-input"
+                value="{{ form.email }}"
+                required
+                autocomplete="email"
+                placeholder="{{ section.settings.placeholder | escape }}"
+                aria-label="{{ section.settings.placeholder | escape }}"
+              >
+              <button type="submit" class="tkd-btn tkd-btn-solid">{{ section.settings.button_label | escape }}</button>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Newsletter",
+  "tag": "section",
+  "class": "section-tkd-newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "SIGNUP.EXE"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "JOIN THE LIST"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Free loops, new pack alerts, early access"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder do e-mail",
+      "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "▶ SIGN UP"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Mensagem de sucesso",
+      "default": "You're on the list. Check your inbox soon."
+    }
+  ],
+  "presets": [
+    {
+      "name": "TKD Newsletter"
+    }
+  ]
+}
+{% endschema %}
