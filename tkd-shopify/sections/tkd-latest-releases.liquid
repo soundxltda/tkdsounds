@@ -1,0 +1,147 @@
+{% comment %}
+  TKD Latest Releases (portado da seção LATEST de routes/index.tsx).
+  Grade de pack cards alimentada por uma coleção escolhida no Theme Editor.
+{% endcomment %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-latest {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-latest {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{%- liquid
+  assign col = section.settings.collection
+  if col == blank
+    assign col = collections.all
+  endif
+  assign limit = section.settings.products_to_show
+-%}
+
+<div class="tkd-latest tkd-section tkd-section--wide-gutters">
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    <div class="tkd-latest__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow text-amber">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        <h2 class="tkd-latest__title">{{ section.settings.title | escape }}</h2>
+      </div>
+      {%- if section.settings.show_view_all -%}
+        <a href="{{ col.url }}" class="tkd-latest__viewall">{{ section.settings.view_all_label | escape }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if col.products.size == 0 -%}
+      <div class="tkd-empty-note">&gt; No packs published yet.</div>
+    {%- else -%}
+      <div class="tkd-grid-packs">
+        {%- for product in col.products limit: limit -%}
+          <div class="tkd-grid-packs__item">
+            {% render 'tkd-pack-card', card_product: product %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_view_all and col.products.size > limit -%}
+      <div class="tkd-latest__more">
+        <a href="{{ col.url }}" class="tkd-btn tkd-btn-solid">{{ section.settings.bottom_button_label | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Latest Releases",
+  "tag": "section",
+  "class": "section-tkd-latest",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "\/\/ LATEST RELEASES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Latest releases"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Coleção",
+      "info": "Se vazia, usa todos os produtos da loja."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Packs exibidos",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Ver todos"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Mostrar links \"ver todos\"",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Link do topo",
+      "default": "[VIEW ALL →]"
+    },
+    {
+      "type": "text",
+      "id": "bottom_button_label",
+      "label": "Botão inferior (aparece quando há mais packs que o limite)",
+      "default": "View all packs"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaço acima (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaço abaixo (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    }
+  ],
+  "presets": [
+    {
+      "name": "TKD Latest Releases"
+    }
+  ]
+}
+{% endschema %}
