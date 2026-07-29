@@ -601,14 +601,21 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 /* ============================================================
    HEADER — TKD_SOUNDS.EXE (Navbar.tsx)
    ============================================================ */
-.tkd-header {
+/* O sticky vai no wrapper da section (o header ocupa a altura toda do
+   wrapper; sticky no elemento interno não teria onde "grudar"). */
+.section-tkd-header {
   position: sticky;
   top: 0;
   z-index: 50;
+}
+.tkd-header {
   background: linear-gradient(to bottom, #4a3418, #2a1e0e);
   border-bottom: 1px solid #6b4a10;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(230, 166, 53, 0.08);
 }
+
+/* Âncoras (#preview, #about) não podem sumir atrás do header sticky */
+[id] { scroll-margin-top: 96px; }
 
 .tkd-header__titlebar {
   width: 100%;
@@ -1184,8 +1191,11 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 }
 .tkd-product-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
 .tkd-product-form--center { justify-content: center; }
-.tkd-buy-btn { position: relative; min-width: 220px; }
+.tkd-buy-btn { position: relative; min-width: 220px; max-width: 100%; }
 .tkd-buy-btn--wide { min-width: 260px; }
+@media screen and (max-width: 400px) {
+  .tkd-buy-btn, .tkd-buy-btn--wide { min-width: 100%; }
+}
 .tkd-buy-btn .loading__spinner {
   position: absolute;
   inset: 0;

@@ -311,10 +311,13 @@
     }
   }
 
-  /* loop de animação: wobble das waveforms ativas + progresso */
+  /* loop de animação: wobble das waveforms ativas a 60fps; progresso,
+     tempos e demais estados a ~4fps (mesma cadência do timeupdate do
+     site original) para não varrer o DOM a cada frame */
+  var lastRender = 0;
   function startLoop() {
     cancelAnimationFrame(rafId);
-    var tick = function () {
+    var tick = function (now) {
       var playing = currentId !== null && audio && !audio.paused;
       if (playing) {
         wobbleT += 0.08;
@@ -327,7 +330,10 @@
             barsEls[i].style.transform = 'scaleY(' + Math.min(1, h) + ')';
           }
         });
-        render();
+        if (now - lastRender > 250) {
+          lastRender = now;
+          render();
+        }
         rafId = requestAnimationFrame(tick);
       }
     };

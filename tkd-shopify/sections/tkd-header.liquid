@@ -48,8 +48,10 @@
           {% if link.current %}aria-current="page"{% endif %}
         >[{{ link.title | escape }}]</a>
       {%- endfor -%}
-      {%- # cart-drawer.js exige #cart-icon-bubble no DOM; se o link estiver
-          desativado, mantém o elemento oculto para não quebrar o drawer -%}
+      {%- comment -%}
+        cart-drawer.js exige #cart-icon-bubble no DOM; se o link estiver
+        desativado, mantém o elemento oculto para não quebrar o drawer.
+      {%- endcomment -%}
       <a
         href="{{ routes.cart_url }}"
         class="tkd-header__link"

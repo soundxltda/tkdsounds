@@ -19,7 +19,7 @@
     assign midx = 0
   endif
 
-  assign cover_small = blank
+  assign cover_small = ''
   if product.featured_image
     assign cover_small = product.featured_image | image_url: width: 144
   endif

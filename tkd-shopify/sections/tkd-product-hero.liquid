@@ -12,7 +12,6 @@
   assign tagline = product.metafields.tkd.tagline.value
   assign formats = product.metafields.tkd.formats.value
   assign previews = product.metafields.tkd.preview_files.value
-  assign titles = product.metafields.tkd.preview_titles.value
 
   assign psize = 0
   if previews
@@ -24,7 +23,7 @@
     assign midx = 0
   endif
 
-  assign master_url = blank
+  assign master_url = ''
   if psize > 0
     assign master_file = previews[midx]
     assign master_url = master_file.url
@@ -39,7 +38,7 @@
     endif
   endif
 
-  assign cover_small = blank
+  assign cover_small = ''
   if product.featured_image
     assign cover_small = product.featured_image | image_url: width: 144
   endif
