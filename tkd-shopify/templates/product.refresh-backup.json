@@ -1,0 +1,142 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "custom_liquid_qKyLL6": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<style>\n  .custom-iframe {\n    width: 100%;\n    height: 100%;\n    border: none; /* Remove qualquer borda padrão */\n    display: block; /* Remove espaço em branco causado pelo comportamento inline */\n    margin: 0; /* Remove margens padrão */\n    padding: 0; /* Remove padding padrão */\n  }\n\n  /* Estilo para desktop */\n  @media (min-width: 768px) {\n    .custom-iframe {\n      margin-bottom: -520px;\n      margin-left: -160px;\n    }\n  }\n\n  /* Estilo para celular */\n  @media (max-width: 767px) {\n    .custom-iframe {\n      margin-bottom: -170px;\n    }\n  }\n</style>\n\n<iframe \n  class=\"custom-iframe\" \n  src=\"https://widgets.commoninja.com/iframe/f50ffb8c-50b9-4b95-9c8d-78e09d3afb06\">\n</iframe>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "custom_liquid_qKyLL6",
+        "variant_picker",
+        "buy_buttons",
+        "description"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 769px) {.button {margin-top: 80px; } .player {margin-top: 22px; }}",
+        "@media screen and (max-width: 768px) {.player {margin-bottom: 55px; } .media {margin-bottom: 30px; }}"
+      ],
+      "settings": {
+        "enable_sticky_info": false,
+        "color_scheme": "scheme-1",
+        "media_size": "small",
+        "constrain_to_viewport": false,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "none",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 44,
+        "padding_bottom": 48
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "custom_css": [
+        ".related-products {border-radius: 6px;}"
+      ],
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 5,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 20,
+        "padding_bottom": 28
+      }
+    },
+    "featured_collection_CxPKhQ": {
+      "type": "featured-collection",
+      "custom_css": [
+        ".media {border-radius: 0px;}",
+        ".collection__title {text-align: center;}",
+        ".price {text-align: center;}",
+        ".card__information {text-align: center;}",
+        ".player audio {margin-left: 50px;}",
+        "@media screen and (min-width: 769px) {.player audio {margin-left: 86px; }}",
+        "@media screen and (max-width: 768px) {.player audio {margin-left: 54px; }}"
+      ],
+      "settings": {
+        "title": "You also may like",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "you-also-may-like",
+        "products_to_show": 5,
+        "columns_desktop": 5,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "featured_collection_CxPKhQ"
+  ]
+}

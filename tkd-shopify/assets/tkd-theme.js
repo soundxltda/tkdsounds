@@ -82,11 +82,49 @@
     document.addEventListener('cart:refresh', refresh);
   }
 
+  /* Produtos relacionados — busca via API nativa de recomendações da
+     Shopify quando a seção entra na viewport (mesmo padrão do Dawn). */
+  function initRecommendations() {
+    var els = document.querySelectorAll('[data-tkd-recommendations]:not([data-loaded])');
+    if (!els.length) return;
+    function load(el) {
+      el.setAttribute('data-loaded', 'true');
+      fetch(el.dataset.url)
+        .then(function (r) { return r.text(); })
+        .then(function (text) {
+          var html = document.createElement('div');
+          html.innerHTML = text;
+          var fresh = html.querySelector('[data-tkd-recommendations]');
+          if (fresh && fresh.innerHTML.trim().length) {
+            el.innerHTML = fresh.innerHTML;
+          }
+        })
+        .catch(function () {});
+    }
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(load);
+      return;
+    }
+    var obs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            obs.unobserve(entry.target);
+            load(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px 400px 0px' }
+    );
+    els.forEach(function (el) { obs.observe(el); });
+  }
+
   function init() {
     initClock();
     initMobileMenu();
     initReveal();
     initCartCount();
+    initRecommendations();
   }
 
   if (document.readyState === 'loading') {

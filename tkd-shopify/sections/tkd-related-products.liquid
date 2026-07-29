@@ -1,0 +1,57 @@
+{% comment %}
+  TKD Related Products — "More from the archive" (portado de RELATED de
+  pack.$id.tsx). Usa a API nativa de recomendações da Shopify: o conteúdo
+  é buscado por tkd-theme.js via routes.product_recommendations_url e
+  renderizado com o mesmo pack card do restante do site.
+{% endcomment %}
+
+<div class="tkd-related tkd-section">
+  <div
+    class="tkd-section__inner tkd-section__inner--w1400"
+    data-tkd-recommendations
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
+  >
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      <div class="tkd-eyebrow text-amber tkd-related__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      <h2 class="tkd-related__title">{{ section.settings.title | escape }}</h2>
+      <div class="tkd-grid-packs">
+        {%- for recommendation in recommendations.products -%}
+          <div class="tkd-grid-packs__item">
+            {% render 'tkd-pack-card', card_product: recommendation %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Produto — Relacionados",
+  "tag": "section",
+  "class": "section-tkd-related",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "\/\/ RELATED FILES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "More from the archive"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Produtos exibidos",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ]
+}
+{% endschema %}
