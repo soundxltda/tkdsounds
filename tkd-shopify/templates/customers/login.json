@@ -1,0 +1,97 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+
+
+{
+  "sections": {
+    "main": {
+      "type": "main-login",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "custom_liquid_Q9GwhU": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "image_banner_EY9waK": {
+      "type": "image-banner",
+      "custom_css": [
+        ".banner {margin-top: -350px; max-width: 100%; width: 10%; margin: 0 auto;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/3D-1920x1080.gif",
+        "image_overlay_opacity": 50,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "newsletter_mL7PVR": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_zmdCfF": {
+          "type": "heading",
+          "settings": {
+            "heading": "Get notified",
+            "heading_size": "h2"
+          }
+        },
+        "email_form_BrTnHX": {
+          "type": "email_form",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "heading_zmdCfF",
+        "email_form_BrTnHX"
+      ],
+      "custom_css": [
+
+      ],
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
+    },
+    "custom_liquid_L8nFBH": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_Q9GwhU",
+    "image_banner_EY9waK",
+    "newsletter_mL7PVR",
+    "custom_liquid_L8nFBH"
+  ]
+}

@@ -1,0 +1,13 @@
+<div class="tuneboom">
+    <div class="d-flex align-items-center justify-content-center">
+        <div id="playlist" class="album-tracklist">
+            {% for trackProduct in products %}
+                {% assign track = trackProduct.metafields.tuneboom.track %}
+                {% render 'tuneboom-track', product: trackProduct, track: track, order: forloop.index %}
+                {% if forloop.last == false %}
+                    <div class="divider col-md-12 col-sm-12 col-xs-12" style="border-color: rgb(179, 179, 179);"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

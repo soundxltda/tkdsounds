@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "gp_section_558758304399295592": {
+      "settings": {
+        "checksum": "16d9d6be0d83181a4d0a32ae866bab2d69038625a179aabfdc8faf9650979c08_1_1_1_0__1",
+        "ggK2oN2LSCU_text": "<p>Lost Echoes is a multi-kit developed by TKD, featuring a refined collection of analog tones and organic textures.</p><p>All elements were recorded through real instruments and hardware units, preserving detail, dynamics, and authentic character.</p><p>Created for Dark and Melodic Trap with hints of experimentation, this kit delivers clarity, mood, and depth to your production palette.</p>",
+        "ggtvQndotAz_text": "LOST ECHOES IS OUT!&nbsp;",
+        "gguelB6QmRw_label": "<p>GET IT HERE!</p>",
+        "section_preload": "true"
+      },
+      "type": "gp-section-558758304399295592"
+    },
+    "gp_section_596957653301723703": {
+      "settings": {
+        "checksum": "6afe395e8b8c05edf0782237d4907e73bfaa2e7c281cd6a804af12f15581e929_1_1_1_0__1",
+        "gg0JETJH7uC_text": "CERBERUS",
+        "gg7dy94v1O2_text": "<p>Circuits is a multi-kit created by TKD &amp; Arthur Vaccari, designed to take your productions to the next level with a unique fusion of organic and analog sounds.<br><br>Each element was carefully recorded using real instruments, bringing an authentic and modern essence with a nostalgic touch from the past. Focused on Dark and Melodic Trap, with experimental influences in some sounds, this kit delivers an innovative sonic experience with the rich texture of analog.</p>",
+        "ggHrhBiRphk_label": "<p>GET IT HERE FOR FREE!</p>",
+        "ggl1zGIYNUF_label": "<p>GET IT HERE!</p>",
+        "ggphqMKwsCJ_text": "CIRCUITS",
+        "ggyOgNvPNuv_text": "<p>A FREE collection of 12 original compositions crafted by Sonni, TKD, and H4lfmeasures using analog synths and pedals. Expect dark textures and rich harmonics. Perfect for trap, drill, or experimental production.</p><p>&nbsp;</p><p>With the <strong>premium version</strong> , you will also get <strong>15 one-shots</strong> , <strong>25 phrases/runs</strong> , <strong>stems for all the 12 compositions</strong> and a little surprise! This version gives you a lot more creative freedom, so you can switch everything up or make something completely new.</p>"
+      },
+      "type": "gp-section-596957653301723703"
+    }
+  },
+  "order": [
+    "gp_section_558758304399295592",
+    "gp_section_596957653301723703"
+  ]
+}

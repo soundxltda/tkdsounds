@@ -1,0 +1,599 @@
+
+
+<style {% if section.settings.section_preload == "false" %} class="gps-link gps-style" type="text/disabled-css" {% endif %}>.gps-558322943411618665.gps.gpsil [style*="--bg:"]{background:var(--bg)}.gps-558322943411618665.gps.gpsil [style*="--bga:"]{background-attachment:var(--bga)}.gps-558322943411618665.gps.gpsil [style*="--bgc:"]{background-color:var(--bgc)}.gps-558322943411618665.gps.gpsil [style*="--bgi:"]{background-image:var(--bgi)}.gps-558322943411618665.gps.gpsil [style*="--bgp:"]{background-position:var(--bgp)}.gps-558322943411618665.gps.gpsil [style*="--bgr:"]{background-repeat:var(--bgr)}.gps-558322943411618665.gps.gpsil [style*="--bgs:"]{background-size:var(--bgs)}.gps-558322943411618665.gps.gpsil [style*="--b:"]{border:var(--b)}.gps-558322943411618665.gps.gpsil [style*="--bc:"]{border-color:var(--bc)}.gps-558322943411618665.gps.gpsil [style*="--bs:"]{border-style:var(--bs)}.gps-558322943411618665.gps.gpsil [style*="--bw:"]{border-width:var(--bw)}.gps-558322943411618665.gps.gpsil [style*="--shadow:"]{box-shadow:var(--shadow)}.gps-558322943411618665.gps.gpsil [style*="--c:"]{color:var(--c)}.gps-558322943411618665.gps.gpsil [style*="--cg:"]{-moz-column-gap:var(--cg);column-gap:var(--cg)}.gps-558322943411618665.gps.gpsil [style*="--gtc:"]{grid-template-columns:var(--gtc)}.gps-558322943411618665.gps.gpsil [style*="--h:"]{height:var(--h)}.gps-558322943411618665.gps.gpsil [style*="--jc:"]{justify-content:var(--jc)}.gps-558322943411618665.gps.gpsil [style*="--left:"]{left:var(--left)}.gps-558322943411618665.gps.gpsil [style*="--m:"]{margin:var(--m)}.gps-558322943411618665.gps.gpsil [style*="--mt:"]{margin-top:var(--mt)}.gps-558322943411618665.gps.gpsil [style*="--op:"]{opacity:var(--op)}.gps-558322943411618665.gps.gpsil [style*="--o:"]{order:var(--o)}.gps-558322943411618665.gps.gpsil [style*="--pc:"]{place-content:var(--pc)}.gps-558322943411618665.gps.gpsil [style*="--p:"]{padding:var(--p)}.gps-558322943411618665.gps.gpsil [style*="--pb:"]{padding-bottom:var(--pb)}.gps-558322943411618665.gps.gpsil [style*="--pl:"]{padding-left:var(--pl)}.gps-558322943411618665.gps.gpsil [style*="--pr:"]{padding-right:var(--pr)}.gps-558322943411618665.gps.gpsil [style*="--pt:"]{padding-top:var(--pt)}.gps-558322943411618665.gps.gpsil [style*="--pos:"]{position:var(--pos)}.gps-558322943411618665.gps.gpsil [style*="--ta:"]{text-align:var(--ta)}.gps-558322943411618665.gps.gpsil [style*="--tt:"]{text-transform:var(--tt)}.gps-558322943411618665.gps.gpsil [style*="--top:"]{top:var(--top)}.gps-558322943411618665.gps.gpsil [style*="--t:"]{transform:var(--t)}.gps-558322943411618665.gps.gpsil [style*="--w:"]{width:var(--w)}.gps-558322943411618665.gps.gpsil [style*="--z:"]{z-index:var(--z)}@media only screen and (max-width:1024px){.gps-558322943411618665.gps.gpsil [style*="--bgi-tablet:"]{background-image:var(--bgi-tablet)}.gps-558322943411618665.gps.gpsil [style*="--h-tablet:"]{height:var(--h-tablet)}.gps-558322943411618665.gps.gpsil [style*="--pc-tablet:"]{place-content:var(--pc-tablet)}.gps-558322943411618665.gps.gpsil [style*="--pl-tablet:"]{padding-left:var(--pl-tablet)}.gps-558322943411618665.gps.gpsil [style*="--pr-tablet:"]{padding-right:var(--pr-tablet)}.gps-558322943411618665.gps.gpsil [style*="--pos-tablet:"]{position:var(--pos-tablet)}.gps-558322943411618665.gps.gpsil [style*="--top-tablet:"]{top:var(--top-tablet)}.gps-558322943411618665.gps.gpsil [style*="--w-tablet:"]{width:var(--w-tablet)}}@media only screen and (max-width:767px){.gps-558322943411618665.gps.gpsil [style*="--bgc-mobile:"]{background-color:var(--bgc-mobile)}.gps-558322943411618665.gps.gpsil [style*="--bgi-mobile:"]{background-image:var(--bgi-mobile)}.gps-558322943411618665.gps.gpsil [style*="--bgp-mobile:"]{background-position:var(--bgp-mobile)}.gps-558322943411618665.gps.gpsil [style*="--bgr-mobile:"]{background-repeat:var(--bgr-mobile)}.gps-558322943411618665.gps.gpsil [style*="--bgs-mobile:"]{background-size:var(--bgs-mobile)}.gps-558322943411618665.gps.gpsil [style*="--gtc-mobile:"]{grid-template-columns:var(--gtc-mobile)}.gps-558322943411618665.gps.gpsil [style*="--h-mobile:"]{height:var(--h-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pc-mobile:"]{place-content:var(--pc-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pb-mobile:"]{padding-bottom:var(--pb-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pl-mobile:"]{padding-left:var(--pl-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pr-mobile:"]{padding-right:var(--pr-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pt-mobile:"]{padding-top:var(--pt-mobile)}.gps-558322943411618665.gps.gpsil [style*="--pos-mobile:"]{position:var(--pos-mobile)}.gps-558322943411618665.gps.gpsil [style*="--top-mobile:"]{top:var(--top-mobile)}.gps-558322943411618665.gps.gpsil [style*="--w-mobile:"]{width:var(--w-mobile)}}.gps-558322943411618665 .gp-g-heading-3{font-family:var(--g-h3-ff);font-size:var(--g-h3-size);font-style:var(--g-h3-fs);font-weight:var(--g-h3-weight);letter-spacing:var(--g-h3-ls);line-height:var(--g-h3-lh)}.gps-558322943411618665 .gp-absolute{position:absolute}.gps-558322943411618665 .gp-relative{position:relative}.gps-558322943411618665 .gp-inset-0{inset:0}.gps-558322943411618665 .gp-left-\[var\(--left\)\]{left:var(--left)}.gps-558322943411618665 .gp-top-\[var\(--top\)\]{top:var(--top)}.gps-558322943411618665 .gp-z-1{z-index:1}.gps-558322943411618665 .gp-mx-auto{margin-left:auto;margin-right:auto}.gps-558322943411618665 .gp-mb-0{margin-bottom:0}.gps-558322943411618665 .gp-flex{display:flex}.gps-558322943411618665 .gp-grid{display:grid}.gps-558322943411618665 .\!gp-hidden{display:none!important}.gps-558322943411618665 .gp-hidden{display:none}.gps-558322943411618665 .gp-h-full{height:100%}.gps-558322943411618665 .gp-w-full{width:100%}.gps-558322943411618665 .gp-max-w-full{max-width:100%}.gps-558322943411618665 .gp-flex-col{flex-direction:column}.gps-558322943411618665 .gp-items-center{align-items:center}.gps-558322943411618665 .\!gp-justify-center{justify-content:center!important}.gps-558322943411618665 .gp-gap-y-0{row-gap:0}.gps-558322943411618665 .gp-overflow-hidden{overflow:hidden}.gps-558322943411618665 .gp-text-g-bg-3{color:var(--g-c-bg-3)}.gps-558322943411618665 .gp-transition-all{transition-duration:.15s;transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-558322943411618665 .gp-transition-colors{transition-duration:.15s;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1)}.gps-558322943411618665 .gp-duration-200{transition-duration:.2s}.gps-558322943411618665 .gp-duration-300{transition-duration:.3s}.gps-558322943411618665 .gp-ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}@media (hover:hover) and (pointer:fine){.gps-558322943411618665 .gp-group\/hero:hover .group-hover\/hero\:gp-bg-\[color\:var\(--hvr-bgc\2c _var\(--bgc\)\)\]{background-color:var(--hvr-bgc,var(--bgc))}.gps-558322943411618665 .gp-group\/hero:hover .group-hover\/hero\:gp-opacity-\[var\(--hvr-op\2c _var\(--op\)\)\]{opacity:var(--hvr-op,var(--op))}}@media (max-width:1024px){.gps-558322943411618665 .tablet\:gp-relative{position:relative}.gps-558322943411618665 .tablet\:\!gp-hidden{display:none!important}.gps-558322943411618665 .tablet\:gp-hidden{display:none}.gps-558322943411618665 .tablet\:\!gp-content-stretch{align-content:stretch!important}.gps-558322943411618665 .tablet\:\!gp-justify-center{justify-content:center!important}}@media (max-width:767px){.gps-558322943411618665 .mobile\:gp-relative{position:relative}.gps-558322943411618665 .mobile\:\!gp-hidden{display:none!important}.gps-558322943411618665 .mobile\:gp-hidden{display:none}.gps-558322943411618665 .mobile\:\!gp-content-stretch{align-content:stretch!important}.gps-558322943411618665 .mobile\:\!gp-justify-center{justify-content:center!important}}@media (max-width:1024px){.gps-558322943411618665 .tablet\:\[\&\>\*\]\:\!gp-justify-center>*{justify-content:center!important}}@media (max-width:767px){.gps-558322943411618665 .mobile\:\[\&\>\*\]\:\!gp-justify-center>*{justify-content:center!important}}.gps-558322943411618665 .\[\&_\*\]\:gp-max-w-full *{max-width:100%}.gps-558322943411618665 .\[\&_p\]\:gp-inline p{display:inline}.gps-558322943411618665 .\[\&_p\]\:after\:gp-whitespace-pre-wrap p:after{content:var(--tw-content);white-space:pre-wrap}.gps-558322943411618665 .\[\&_p\]\:after\:gp-content-\[\'\\A\'\] p:after{--tw-content:"\A";content:var(--tw-content)}</style>
+
+       
+      
+            <section
+              class="gp-mx-auto gp-max-w-full {% if section.settings.section_preload == "false" %}gps-lazy {% endif %}"
+              style="--w:100%;--w-tablet:100%;--w-mobile:100%;--pl:0px;--pl-tablet:0px;--pl-mobile:0px;--pr:0px;--pr-tablet:0px;--pr-mobile:0px"
+            >
+              
+    <div
+      enableLazyloadImage="true" id="gnpvXOaf2Z" data-id="gnpvXOaf2Z"
+        style="--bs:none;--bw:0px;--bc:transparent;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pt:auto;--pb:auto;--cg:var(--g-s-2xl);--pc:start;--gtc:minmax(0, 12fr);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gnpvXOaf2Z gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-gap-y-0 gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full"
+    >
+    <div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gmwEqCTlTQ gp-relative gp-flex gp-flex-col"
+    >
+      
+    <div class="gp-flex gp-w-full" style="--h:fit-content;--h-tablet:668px;--h-mobile:fit-content;--d:flex;--d-mobile:flex;--d-tablet:flex">
+      <gp-hero-banner
+        gp-data='{"target":"_blank","background":{"desktop":{"attachment":"scroll","color":"bg-2","image":{"src":"https://cdn.shopify.com/s/files/1/0768/7166/3890/files/gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","width":1080,"height":1080,"backupFileKey":"gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","storage":"FILE_CONTENT"},"position":{"x":50,"y":0},"repeat":"no-repeat","size":"cover","type":"image"},"tablet":{"attachment":"scroll","color":"bg-2","image":{"src":"https://cdn.shopify.com/s/files/1/0768/7166/3890/files/gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","width":1080,"height":1080,"backupFileKey":"gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","storage":"FILE_CONTENT"},"position":{"x":50,"y":0},"repeat":"no-repeat","size":"cover","type":"image"},"mobile":{"attachment":"scroll","color":"bg-2","image":{"src":"https://cdn.shopify.com/s/files/1/0768/7166/3890/files/gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","width":1080,"height":1080,"backupFileKey":"gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg","storage":"FILE_CONTENT"},"position":{"x":50,"y":50},"repeat":"no-repeat","size":"cover","type":"image"}},"uid":"gi-JxUmyDE","enableParallax":false,"speedParallax":0,"hoverEffect":false,"hoverEffectScale":1.1,"layout":{"desktop":{"cols":[12],"display":"fill"},"mobile":{"cols":[12]}},"contentPosition1Col":{"desktop":"center"},"contentPosition2Col":{"desktop":"center"}}'
+        gp-href=""
+        
+        class="gi-JxUmyDE gp-group/hero gp-flex gp-flex-col gp-transition-colors gp-duration-200 gp-ease-in-out gp-w-full"
+        style="--bs:none;--bw:0px;--bc:transparent;--shadow:none;--d:flex;--d-mobile:flex;--d-tablet:flex;--op:100%;--pt-mobile:0px;--h:fit-content;--h-tablet:668px;--h-mobile:fit-content;--w:100%;--w-tablet:100%;--w-mobile:100%"
+        data-id="gi-JxUmyDE"
+      >
+        
+      <div
+        class="gp-relative gp-flex gp-flex-col gp-items-center gp-overflow-hidden gp_haslazybg !gp-justify-center tablet:!gp-justify-center mobile:!gp-justify-center"
+        style="--h:fit-content;--h-tablet:668px;--h-mobile:fit-content;--bgc:var(--g-c-bg-2);--bgc-mobile:var(--g-c-bg-2)"
+      >
+        
+  <picture style="border-radius: inherit" class="gp-w-full">
+  
+      <source media="(max-width: 767px)" srcset="{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6_768x.jpg" | file_url }}" />
+      <source media="(max-width: 1024px)" srcset="{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6_1024x.jpg" | file_url }}" />
+      <img
+        title
+        class="adaptive-hero-banner"
+        src="{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg" | file_url }}"
+        alt=""
+        fetchpriority="high"
+        style="--d:none;--d-tablet:none;--d-mobile:none;--h:fit-content;--h-tablet:668px;--h-mobile:fit-content;--w:100%;--w-tablet:100%;--w-mobile:100%;--op:0;--z:-1"
+      />
+    
+  </picture>
+        <div class="gp-absolute gp-w-full gp-h-full">
+          <div
+            class="gp-overflow-hidden gp-relative gp-w-full gp-h-full"
+            >
+            <div
+              aria-label="Background Image"
+              role="banner"
+              class='gp-hero-banner-bg gp-absolute gp-overflow-hidden gp-w-full gp-h-full top-0 left-0'
+              style="clip-path:inset(0 0 0)"
+            > 
+            <div class="hero-banner-bg-parallax gp-hero-banner-image-background"
+              style="--bgc:var(--g-c-bg-2);--bgc-mobile:var(--g-c-bg-2);--bgp:50% 0%;--bgp-mobile:50% 50%;--bgs:cover;--bgs-mobile:cover;--bgr:no-repeat;--bgr-mobile:no-repeat;--bgi:url('{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6.jpg" | file_url }}');--bgi-tablet:url('{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6_1024x.jpg" | file_url }}');--bgi-mobile:url('{{ "gempages_541851769953584176-f7ccd7e8-a894-4719-8610-10f313e46ed6_768x.jpg" | file_url }}');--duration:0.5s;--scale:1.1;--pos:absolute;--pos-tablet:absolute;--pos-mobile:absolute;--h:100%;--h-tablet:100%;--h-mobile:100%;--w:100%;--w-tablet:100%;--w-mobile:100%;--top:;--top-tablet:;--top-mobile:"
+            >
+            
+            
+            </div></div>
+          </div>
+          <div
+              aria-label="Overlay"
+              role="banner"
+              class="gp-absolute gp-inset-0 gp-left-[var(--left)] gp-top-[var(--top)] gp-transition-all gp-duration-300 group-hover/hero:gp-bg-[color:var(--hvr-bgc,_var(--bgc))] group-hover/hero:gp-opacity-[var(--hvr-op,_var(--op))]"
+            style="--bgc:#121212;--top:0;--left:0;--op:95%"> 
+            </div>
+          </div>
+          
+       
+      
+    <div
+      id data-id
+        style="--cg:var(--g-s-2xl);--pc:center;--pc-tablet:center;--pc-mobile:center;--gtc:minmax(0, 12fr);--gtc-mobile:minmax(0, 12fr);--w:100%;--w-tablet:100%;--w-mobile:100%"
+        class="gp-hero-banner-row gp-z-1 gp-w-full tablet:gp-relative mobile:gp-relative tablet:[&>*>*]:!gp-justify-undefined mobile:[&>*>*]:!gp-justify-undefined tablet:!gp-content-stretch tablet:[&>*]:!gp-justify-center mobile:!gp-content-stretch mobile:[&>*]:!gp-justify-center gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-gap-y-0 gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full"
+    >
+    <div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="goX-c0AZD4 gp-relative gp-flex gp-flex-col"
+    >
+      
+       
+      
+    <div
+      enableLazyloadImage="true" parentTag="Col" id="gV2Aj2NZLh" data-id="gV2Aj2NZLh"
+        style="--bs:none;--bw:0px;--bc:transparent;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--mt:auto;--pt:100px;--pb:500px;--pt-mobile:40px;--pl-mobile:15px;--pb-mobile:300px;--pr-mobile:15px;--pl-tablet:15px;--pr-tablet:15px;--cg:var(--g-s-2xl);--pc:start;--gtc:minmax(0, 12fr);--gtc-mobile:minmax(0, 12fr);--w:1000px;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gV2Aj2NZLh gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-gap-y-0 gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full"
+    >
+    <div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="g7zwChPjNw gp-relative gp-flex gp-flex-col"
+    >
+      
+  {% assign locationOrigin = request.origin | append: routes.root_url | split: '/' | join: '/' %}
+  <gp-text data-id="g1iZYMMpwz">
+    <div
+      enableLazyloadImage="true" parentTag="Col"
+        class="g1iZYMMpwz "
+        style="--tt:default;--ta:center;--bs:none;--bw:0px;--bc:transparent;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%"
+      >
+      <div class="gp-flex" style="--jc:center">
+        <h2
+          
+          data-gp-text
+          class="[&_p]:gp-inline [&_p]:after:gp-whitespace-pre-wrap [&_p]:after:gp-content-['\A'] gp-text-g-bg-3 gp-g-heading-3 gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ta:center;--c:#FFFFFF;word-break:break-word;overflow:hidden"
+        >{{ section.settings.gg1iZYMMpwz_text | replace: '$locationOrigin', locationOrigin }}</h2>
+      </div>
+    </div>
+    </gp-text>
+    
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gDHm7m0_j1 "
+    ><div><div class="klaviyo-form-UH2WaA"></div></div></div>
+  
+       
+      
+    <div
+      enableLazyloadImage="true" parentTag="Col" id="g7Y3Ttu4lc" data-id="g7Y3Ttu4lc"
+        style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pt:30px;--pt-mobile:30px;--pl-mobile:10px;--pr-mobile:10px;--cg:30px;--pc:start;--gtc:minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr);--gtc-mobile:minmax(0, 12fr);--w:800px;--w-tablet:var(--g-ct-w, 100%);--w-mobile:var(--g-ct-w, 100%);--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="g7Y3Ttu4lc gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-gap-y-0 gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full"
+    >
+    <div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gQ0vf7QaFq gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gsEbHoEeG1 "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause1 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container1"></div>
+<img height="20px" width="20px" id="playPause1" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Arp Phrase - Double Trouble</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause1 = document.querySelector("#playPause1");
+
+    var wavesurfer1 = WaveSurfer.create({
+        container: '#wavesurfer-container1',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer1.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Arp_Phrase_-_Double_Trouble_132_A_min_Tkd_Av.wav?v=1742317405');
+
+    playPause1.addEventListener("click", function (e) {
+        if (wavesurfer1.isPlaying()) {
+            wavesurfer1.pause();
+            playPause1.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer1.play();
+            playPause1.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div><div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gsresfTwHo gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pt-mobile:10px;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gYbvt4dEAJ "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause2 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container2"></div>
+<img height="20px" width="20px" id="playPause2" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Flute Phrases - Plavon 114 Gmin</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause2 = document.querySelector("#playPause2");
+
+    var wavesurfer2 = WaveSurfer.create({
+        container: '#wavesurfer-container2',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer2.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Flute_Phrases_-_Plavon_114_Gmin_Tkd_Av.wav?v=1742317417');
+
+    playPause2.addEventListener("click", function (e) {
+        if (wavesurfer2.isPlaying()) {
+            wavesurfer2.pause();
+            playPause2.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer2.play();
+            playPause2.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div><div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="g8lnaPElqI gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pt-mobile:10px;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="g8vfqESd0v "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause3 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container3"></div>
+<img height="20px" width="20px" id="playPause3" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Synth Phrase - Tranquility 151 Ebmin</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause3 = document.querySelector("#playPause3");
+
+    var wavesurfer3 = WaveSurfer.create({
+        container: '#wavesurfer-container3',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer3.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Synth_Phrase_-_Tranquility_151_Ebmin_Tkd_Av.wav?v=1742317442');
+
+    playPause3.addEventListener("click", function (e) {
+        if (wavesurfer3.isPlaying()) {
+            wavesurfer3.pause();
+            playPause3.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer3.play();
+            playPause3.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div>
+    </div>
+   
+    
+       
+      
+    <div
+      enableLazyloadImage="true" parentTag="Col" id="g-kfKRBEaw" data-id="g-kfKRBEaw"
+        style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--pt:10px;--pt-mobile:10px;--pl-mobile:10px;--pr-mobile:10px;--cg:30px;--pc:start;--gtc:minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr);--gtc-mobile:minmax(0, 12fr);--w:800px;--w-tablet:var(--g-ct-w, 100%);--w-mobile:var(--g-ct-w, 100%);--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="g-kfKRBEaw gp-mx-auto gp-mb-0 gp-grid gp-max-w-full gp-gap-y-0 gp-transition-colors gp-duration-200 gp-ease-in-out [&_*]:gp-max-w-full"
+    >
+    <div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gkUrWj-yjz gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gfYhZeA9Sw "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause4 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container4"></div>
+<img height="20px" width="20px" id="playPause4" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Violin - Genio 131 Dmin</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause4 = document.querySelector("#playPause4");
+
+    var wavesurfer4 = WaveSurfer.create({
+        container: '#wavesurfer-container4',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer4.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Violin_-_Genio_131_Dmin_Tkd_Av.wav?v=1742317472');
+
+    playPause4.addEventListener("click", function (e) {
+        if (wavesurfer4.isPlaying()) {
+            wavesurfer4.pause();
+            playPause4.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer4.play();
+            playPause4.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div><div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gvVJZ-rpKI gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pt-mobile:10px;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gNcKeHtw2u "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause5 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container5"></div>
+<img height="20px" width="20px" id="playPause5" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Accent - Man Down 130 Cmin</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause5 = document.querySelector("#playPause5");
+
+    var wavesurfer5 = WaveSurfer.create({
+        container: '#wavesurfer-container5',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer5.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Accent_-_Man_Down_130_Cmin_Tkd_Av_d58934fd-6798-45b8-8c09-b95df2440391.wav?v=1742317527');
+
+    playPause5.addEventListener("click", function (e) {
+        if (wavesurfer5.isPlaying()) {
+            wavesurfer5.pause();
+            playPause5.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer5.play();
+            playPause5.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div><div
+      enableLazyloadImage="true" label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="ghZZ5dbu_0 gp-relative gp-flex gp-flex-col"
+    >
+      
+  
+    <div
+      
+      style="--bs:none;--bw:1px 1px 1px 1px;--bc:#121212;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--pt-mobile:10px;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll;--ta:left"
+      data-keep-class="true"
+      class="gyr0l7SmkV "
+    ><div><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>
+
+<style>
+    #playPause6 {
+        margin-top: 5px;
+    }
+    .description {
+        text-align: left;
+        font-size: 12px !important; 
+        font-family: 'Poppins', sans-serif !important;
+        color: #FFFFFF !important;
+    }
+</style>
+</head>
+<body>
+<div id="wavesurfer-container6"></div>
+<img height="20px" width="20px" id="playPause6" 
+src="https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png"
+class="control_button">
+<p class="description">Key - Texture Hammer</p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var playPause6 = document.querySelector("#playPause6");
+
+    var wavesurfer6 = WaveSurfer.create({
+        container: '#wavesurfer-container6',
+        waveColor: '#FFFFFF',
+        progressColor: '#FFFFFF',
+        height: '40',
+        cursorWidth: '0',
+        hideScrollbar: 'true',
+        backend: 'MediaElement'
+    });
+
+    wavesurfer6.load('https://cdn.shopify.com/s/files/1/0768/7166/3890/files/Key_-_Texture_Hammer_Tkd_Av_eeb34726-3e7a-4d80-9531-7cbaea21f067.wav?v=1742317555');
+
+    playPause6.addEventListener("click", function (e) {
+        if (wavesurfer6.isPlaying()) {
+            wavesurfer6.pause();
+            playPause6.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/white_play_button.png';
+        } else {
+            wavesurfer6.play();
+            playPause6.src = 'https://cdn.shopify.com/s/files/1/0381/5188/0835/files/pause-icon-18-256.png?v=1679989410';
+        }
+    });
+});
+</script>
+</body>
+</html></div></div>
+  
+    </div>
+    </div>
+   
+    
+    </div>
+    </div>
+   
+    
+    </div>
+    </div>
+   
+    
+      </div>
+    
+        
+      </gp-hero-banner>
+    </div>
+    <script {% if section.settings.section_preload == "false" %}class="gps-link" delay {% else %}src{% endif %}="https://d2ls1pfffhvy22.cloudfront.net/assets-v2/gp-hero-banner.js?v={{ shop.metafields.GEMPAGES.ASSETS_VERSION }}" defer="defer"></script>
+
+  
+    </div>
+    </div>
+  
+            </section>
+           
+    
+
+
+{% schema %}
+  {
+    
+    "name": "Section 1",
+    "tag": "section",
+    "class": "gps-558322943411618665 gps gpsil",
+    "settings": [{"type":"paragraph","content":"Section design by GemPages. [Click here to start design](https://admin.shopify.com/store/e96491/apps/gempages-cro/app/shopify/edit?pageType=GP_STATIC&editorId=558322943378064233&sectionId=558322943411618665)"},{"type":"select","label":"Section Preload","id":"section_preload","options":[{"label":"On","value":"true"},{"label":"Off","value":"false"},{"label":"Off Lazy Script","value":"off_lazy_script"}],"default":"false"},{"type":"text","label":"Checksum","id":"checksum"},{"type":"html","id":"gg1iZYMMpwz_text","label":"gg1iZYMMpwz_text","default":"CIRCUITS FREE DEMO!"}],
+    "blocks": [{"type": "@app"}],
+    "locales": {}
+  }
+{% endschema %}

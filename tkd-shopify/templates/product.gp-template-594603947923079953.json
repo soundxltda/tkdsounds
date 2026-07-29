@@ -1,0 +1,173 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "gp_section_594603948107825937": {
+      "settings": {
+        "checksum": "b00387556021ccdc7b16bf06b56c3708ca5b47e0adbe9b3fb34bedf988fe0a18_1_1_1_0__1",
+        "gg78hnCgake_text": "<p>Works in every DAW</p>"
+      },
+      "type": "gp-section-594603948107825937"
+    },
+    "gp_section_594603948107891473": {
+      "settings": {
+        "checksum": "fd3422bb2aeae1e078f45eb19f609c7f30e80ffead2be58cdce2ebdab08e256f_1_1_1_0__1",
+        "ggPE6PGxAa9_text": "<p>Lost Echoes delivers real, organic textures and dark melodic phrases — recorded with real instruments for modern trap producers.</p>",
+        "ggXw5S96fgD_label": "<p>GET LOST ECHOES</p>",
+        "ggnbvoNgvOC_text": "Stop Using Generic Sounds.<br>&nbsp;Make Beats and Samples That Stand Out.&nbsp;",
+        "ggvbLPtzAgP_label": "<p>🎧 <strong>Listen to the sounds before you buy — real instruments, no recycled samples.</strong></p>",
+        "section_preload": "true"
+      },
+      "type": "gp-section-594603948107891473"
+    },
+    "gp_section_594603948108219153": {
+      "settings": {
+        "checksum": "20fd7b93056fa141d9f26fb0281f8445bf40405d9dbbbab40661950c07f77356_1_1_1_0__1",
+        "gg0PSuiw1qO_text": "<p>Crowsnest 156 Dmin&nbsp;</p>",
+        "gg1-HHMI4c5_text": "<p>Take care 128 Dmaj</p>",
+        "gg1wV5dRwri_text": "<p>Prophet1 129 Amin</p>",
+        "gg2wDk-_BBF_text": "<p>Pianeer 169 Cmin</p>",
+        "ggA0m0_LUu5_text": "<p>Fakefriends 107 Amin</p>",
+        "ggIMfT62t5t_text": "<p>Jesper 144 Bmin</p>",
+        "ggIcmHbPx4Y_text": "<p>The “Phrases” folder contains <strong>100 unique phrases</strong>, all crafted to elevate your melodic workflow. Each phrase was recorded using real instruments, professional vocalists, and premium analog gear—delivering authenticity, emotion, and instant inspiration for your tracks.</p>",
+        "ggLz23OQaol_text": "PHRASES",
+        "ggXyRpUNEyJ_text": "<p>Reditions 131 D#min</p>",
+        "ggjILmxkvBB_text": "<p>Warpedpluck 90 Fmin</p>"
+      },
+      "type": "gp-section-594603948108219153"
+    },
+    "gp_section_594603948108415761": {
+      "settings": {
+        "checksum": "d14e2a6f6445794252a2df3c36fcae7eebda858de48640235db6cc997b6434a5_1_1_1_0__1",
+        "gg7Ll3ZbhBM_text": "<p>After purchasing, you’re taken to a page where you can download the files, as well as you will receive an email with a link to download all the files. The link you receive in your email will never expire. If for whatever reason you run into any issues, you can contact us&nbsp;</p>",
+        "ggTj0U03nB-_text": "<p>All sounds and samples in this kit are royalty free under 1,000,000 streams or unless major placement.</p>",
+        "ggeGOexksJh_text": "FAQ",
+        "ggkIj_E9q5t_text": "<p>Yes, the files within the kit are either audio files or MIDI files that can be opened in any DAW.</p>",
+        "ggqsoVghweB_childItem_0": "<p><strong>IS THIS KIT ROYALTY FREE?</strong></p>",
+        "ggqsoVghweB_childItem_1": "<p><strong>HOW DO I GET THE FILES?</strong></p>",
+        "ggqsoVghweB_childItem_2": "<p><strong>DOES IT WORK IN ANY DAW?</strong></p>",
+        "ggqsoVghweB_childItem_3": "<p><strong>WHATS YOUR REFUND POLICY?</strong></p>",
+        "ggt_VF1aapl_text": "<p>Since this is a digital product, it cannot be returned or refunded.</p>"
+      },
+      "type": "gp-section-594603948108415761"
+    },
+    "gp_section_594603948108546833": {
+      "settings": {
+        "checksum": "3a002cce38981c798c86c04eb8b4218004706e3d09cf1ae9eb9f7a36ee736a3c_1_1_1_0__1",
+        "gg2e0_ByMov_text": "<p>You have&nbsp;</p>",
+        "gg4n-udDmi1_text": "<p>$ 50</p>",
+        "gg63P6S1Oio_text": "<p>$ 50</p>",
+        "gg6CgOjez9C_text": "<p>SAMPLE PACK (WITH STEMS)</p>",
+        "gg9kuD0aBBv_text": "<p>DRUM KIT</p>",
+        "ggOLqQJJ5Vo_label": "START CREATING NOW!",
+        "ggOLqQJJ5Vo_outOfStockLabel": "Out of stock",
+        "ggOLqQJJ5Vo_unavailableLabel": "Unavailable",
+        "ggOLqQJJ5Vo_variantSelectionRequiredMessage": "Please select a variant to add product to cart",
+        "ggTLUpkK9aq_text": "<p>$ 50</p>",
+        "ggW95UO42X-_text": "<p>to secure the pack with an <strong>exclusive discount</strong>.</p>",
+        "ggcFjHCZxMj_text": "<p>WHAT YOU PAY</p>",
+        "ggh8DIGhDCM_text": "<p>TOTAL VALUE</p>",
+        "ggk7oiU8j3H_dayLabel": "Day",
+        "ggk7oiU8j3H_hourLabel": "Hour",
+        "ggk7oiU8j3H_minuteLabel": "Minute",
+        "ggk7oiU8j3H_secondLabel": "Second",
+        "ggk7oiU8j3H_weekLabel": "Week",
+        "ggrDzBlEVPt_text": "<p>228 TOTAL SOUNDS</p>",
+        "ggv8zYFw-BE_text": "<p>PHRASE KIT</p>"
+      },
+      "type": "gp-section-594603948108546833"
+    },
+    "gp_section_594614402829779644": {
+      "settings": {
+        "checksum": "ac11bc2582871a2fa0d4d30043b74b70a74089c42c92b09650e07fc39d24d95c_1_1_1_0__1",
+        "gg-7J29hpMc_text": "<p>The “Samples” folder contains <strong>35 fully original compositions</strong>, each delivered with stems to give you complete control, flexibility, and creative freedom in your production process.</p>",
+        "gg-Lq-O4saX_text": "DRUM KIT",
+        "ggD-s3RNqfY_text": "<p>DIsclaimer 144</p>",
+        "ggJmuNIkFHN_text": "<p>Had Enough 123&nbsp;</p>",
+        "ggMQjVjxWM7_text": "<p>Alive 140</p>",
+        "ggRT10DWYsP_text": "<p>The “Drum Kit” folder contains <strong>6 subfolders</strong> filled with authentic, fresh, and uniquely crafted drum sounds—designed to bring character, punch, and originality to your production workflow.</p>",
+        "ggVSRLiOQ_p_text": "<p>Bubbly 128 Dm&nbsp;</p>",
+        "gg_wOcRrfYm_text": "<p>Moncler 147 D#m&nbsp;</p>",
+        "gghECUuVk4C_text": "<p>Brokeboys 147 Dm</p>",
+        "gghbnd3liuR_text": "<p>Loveisdeadl 142 A#m</p>",
+        "gglA1SabbSn_text": "SAMPLES",
+        "ggxMXcNXSak_text": "<p>Mist 143</p>"
+      },
+      "type": "gp-section-594614402829779644"
+    },
+    "gp_section_598790432683459161": {
+      "settings": {
+        "checksum": "ee84ca5ec325b046174af59f5b4e034052e8392746f5d0ba2aa39c27a739e410_1_1_1_0__1",
+        "ggLjb4X3HKk_text": "HOW IT WORKS",
+        "ggLnYeky9Ls_childItem_0": "<p><span style=\"background-color:rgb(1,1,0);color:rgb(255,255,255);font-size:16px;\"><strong>Just drag and drop the files! (All of them with BPM and key)</strong></span></p>",
+        "ggLnYeky9Ls_childItem_1": "<p>All samples come with full stems and are <strong>royalty-free for sales</strong>.</p>",
+        "ggLnYeky9Ls_childItem_2": "<p><span style=\"background-color:rgb(1,1,0);color:rgb(255,255,255);font-size:16px;\"><strong>Explore new experiences by blending our sounds and master the art of music creation!</strong></span></p>"
+      },
+      "type": "gp-section-598790432683459161"
+    },
+    "gp_section_598790985610167228": {
+      "settings": {
+        "checksum": "eb69017668b8f7f5ad8afdb244d23570ecdddeaa3c82de0f03f2408194e082c8_1_1_1_0__1",
+        "gg0xn2Oe0C6_text": "REVIEWS",
+        "ggNfJ7hP74e_text": "<p><a href=\"https://www.instagram.com/emitebeats/?hl=en\" target=\"_blank\"><u>@emitebeats</u></a></p>",
+        "ggRMNoNeqn-_text": "<p><a href=\"https://www.instagram.com/by.llouis/?hl=enhttps://www.instagram.com/by.llouis/?hl=en\" target=\"_blank\"><u>@by.llouis</u></a></p>",
+        "ggS_BhaSaub_text": "<p><a href=\"https://www.instagram.com/sonnimade/?hl=en\" target=\"_blank\"><u>@sonnimade</u></a></p>",
+        "ggmQ9QN_V2d_text": "<p><a href=\"https://www.instagram.com/tekillabeats/?hl=en\" target=\"_blank\"><u>@tekillabeats</u></a></p>"
+      },
+      "type": "gp-section-598790985610167228"
+    },
+    "gp_section_598791958000828983": {
+      "settings": {
+        "checksum": "c3fcc9634296fc0860ce644eb08778f7011350d4e16f5a8f6c8d89ea839ae749_1_1_1_0__1",
+        "ggJV8l5-IWc_label": "<p>PRICING</p>",
+        "ggp1q4LzCPY_label": "<p>PREVIEW SOUNDS</p>",
+        "ggpGSBFIfw0_label": "<p>REVIEWS</p>",
+        "section_preload": "true"
+      },
+      "type": "gp-section-598791958000828983"
+    },
+    "gp_section_598793123715351129": {
+      "settings": {
+        "checksum": "b8e6a3a98ef2c49b83bd7cbb538b0d99b740053672261af2939f20107a1e276d_1_1_1_0__1"
+      },
+      "type": "gp-section-598793123715351129"
+    },
+    "gp_section_598793217667761084": {
+      "settings": {
+        "checksum": "4d4ac84972f56f7f180552641c8d831fc16b5c7b8d3e145fa7582c432fa33dd7_1_1_1_0__1",
+        "gg5E_7dwrb5_text": "Full Kit Preview — Hear Every Sound Before You Buy"
+      },
+      "type": "gp-section-598793217667761084"
+    },
+    "gp_section_601529791362892751": {
+      "settings": {
+        "checksum": "f23cf1025948f5cd4da76c8bbe7d8fb3f37a0358ca6e31c125a26d00ea25c666_1_1_1_0__1",
+        "ggCNsOV7sI6_text": "Created by a multi-platinum producer with nearly <strong>1 billion streams worldwide</strong>.",
+        "ggLY4LcSJBc_text": "<p>Industry-level sound design</p>"
+      },
+      "type": "gp-section-601529791362892751"
+    }
+  },
+  "order": [
+    "gp_section_598791958000828983",
+    "gp_section_594603948107891473",
+    "gp_section_598790432683459161",
+    "gp_section_594603948108219153",
+    "gp_section_594614402829779644",
+    "gp_section_598793217667761084",
+    "gp_section_598793123715351129",
+    "gp_section_601529791362892751",
+    "gp_section_598790985610167228",
+    "gp_section_594603948108546833",
+    "gp_section_594603948107825937",
+    "gp_section_594603948108415761"
+  ],
+  "layout": "theme.gempages.blank"
+}

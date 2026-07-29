@@ -1,0 +1,84 @@
+{% assign trackID = track.value.id %}
+{% assign previewLink = track.value.previewLink %}
+{% assign artwork = product.featured_image.src | img_url: " medium" %}
+{% assign collaborators = track.value.collaborators %}
+{% assign title = track.value.title | default: product.title %}
+{% assign genre = track.value.genre %}
+{% assign duration = track.value.duration %}
+{% assign bpm = track.value.bpm %}
+{% assign tags = product.tags %}
+{% assign price = product.price | money %}
+{% assign isNotForSale = track.value.isNotForSale | default: false %}
+{% assign isPreviewEnabled = track.value.preview %}
+{% assign isTagEnabled = renderTags %}
+<a id="data-track-id-{{ trackID }}" onclick="
+{% if isPreviewEnabled == "true" %} togglePlaySong('{{ trackID }}', '{{ previewLink }}') {% endif %}
+        "
+   class="row
+    track-item
+     justify-content-between
+      mx-0
+">
+    <div class="col d-flex flex-row track-info align-items-center">
+        <div class="track-artwork">
+            {% if isPreviewEnabled == "true" %} <div class="shadow"></div> {% endif %}
+            <div class="item-media-content"
+                 style="background-image: url({{ artwork }});">
+            </div>
+            {% if isPreviewEnabled == "true" %}
+                <div class="item-overlay center tracks-content-item_play-button">
+                    <div id="circle-container">
+                        <div class="quarter top-right"
+                             style="background: rgb(10, 10, 15); border-color: rgb(10, 10, 15); color: rgb(253, 192, 38);"></div>
+                        <div class="quarter bottom-left"
+                             style="background: rgb(10, 10, 15); border-color: rgb(10, 10, 15); color: rgb(253, 192, 38);"></div>
+                        <button id="play-{{ trackID }}" class="btn-play">
+                            <i class="fas fa-play fa-play"></i>
+                        </button>
+                        <button id="pause-{{ trackID }}" class="btn-pause">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="track-title">
+            <div id="tuneboom-title" class="title
+{% if track.value.isNotForSale == true %}no-cursor no-underline{% endif %}"
+                 {% if track.value.isNotForSale == false %}onclick="navigateToProduct(event, '{{ product.url }}')" {% endif %}>
+
+                {{ title }}
+            </div>
+            {% if collaborators %}
+                <div class="item-text">
+                    {{ collaborators }} • <span>{{ duration }}</span>
+                </div>
+                {% elsif genre %}
+                <div class="item-text">
+                    {{ genre }} • <span>{{ duration }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {%  if tags.size > 0 and isTagEnabled == 'true' %}
+        <div class="col item-text px-0 hidden-sm">
+            <div class="tags mt-0">
+                {% for tag in tags %}
+                    <div class="tag">
+                        #{{ tag }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="col-auto px-0">
+        {% if isNotForSale == false %}
+            <div id="add-to-cart-id-{{ trackID }}" class="float-right d-flex flex-row align-items-center track-cart tuneboom-buy-button">
+                {{ price }}
+                <i class="fas fa-cart-plus ml-2"></i>
+            </div>
+        {% else %}
+            Album Only
+        {% endif %}
+    </div>
+</a>

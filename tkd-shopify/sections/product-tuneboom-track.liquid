@@ -1,0 +1,633 @@
+{% assign track = product.metafields.tuneboom.track %}
+<div class="tuneboom product-template__container page-width pt-5"
+     id="ProductSection-{{ section.id }}"
+     data-section-id="{{ section.id }}"
+     data-section-type="Digital Track"
+     data-product-id="{{ product.id }}"
+     data-limit="4"
+     data-enable-history-state="true"
+     data-ajax-enabled="{{ settings.enable_ajax }}"
+>
+  {% comment %}
+    Get first variant, or deep linked one
+  {% endcomment %}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign product_image_zoom_size = '1024x1024' -%}
+  {%- assign product_image_scale = '2' -%}
+  {%- assign enable_image_zoom = section.settings.enable_image_zoom -%}
+  {%- assign compare_at_price = current_variant.compare_at_price -%}
+  {%- assign price = current_variant.price -%}
+  {%- assign track = product.metafields.tuneboom.track -%}
+  {%- assign tuneboomID = track.value.id -%}
+
+  {%- assign product_media_width = 'medium-up--one-half' -%}
+  {%- assign product_description_width = 'medium-up--one-half' -%}
+  {%- assign height = 530 -%}
+
+
+  <div class="tuneboom-grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.media_size }}-media{% endif %}">
+    <div class="tuneboom-grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
+      {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+
+      {%- for media in product.media -%}
+        {% include 'media-tuneboom', media: media, featured_media: featured_media, height: height, enable_image_zoom: enable_image_zoom, image_zoom_size: product_image_zoom_size, image_scale: product_image_scale %}
+      {%- endfor -%}
+
+      <noscript>
+        {% capture product_image_size %}{{ height }}x{% endcapture %}
+        <img src="{{ featured_media | img_url: product_image_size, scale: product_image_scale }}" alt="{{ featured_media.alt }}" id="FeaturedMedia-{{ section.id }}" class="product-featured-media-tuneboom" style="max-width: {{ height }}px;">
+      </noscript>
+
+      <div class="thumbnails-wrapper">
+        <h2 class="my-4">YOU MAY ALSO LIKE</h2>
+        <div class="product-recommendations__list product-single__thumbnails"
+             data-base-url="{{ routes.product_recommendations_url }}"
+             data-product-id="{{ product.id }}"
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="tuneboom-grid__item {{ product_description_width }}">
+      <div class="product-single__meta">
+        <h1 class="product-single__title m-0">{{ product.title }}</h1>
+        <h2 class="product-single__subtitle mb-2">
+          {% if track.value.collaborators %} {{ track.value.collaborators }}{% else %} {{ track.value.type }} {% endif %} • {{ track.value.duration }} {% if track.value.bpm %} • {{ track.value.bpm }} BPM{% endif %}
+        </h2>
+        <script>window.performance.mark('debut:product:title_visible');</script>
+
+        <div class="product__price mb-4">
+          {% include 'product-price-tuneboom', variant: current_variant, show_vendor: section.settings.show_vendor %}
+        </div>
+        {% if product.tags.size > 0 %}
+          <div class="product__genre mb-4">
+            <h6 class="m-0">Tags</h6>
+            <div class="tags">
+              {% for tag in product.tags %}
+                <a class="tag" href="/collections/tuneboom?q={{ tag }}">
+                  {{ tag }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if track.value.genres.size > 0 %}
+          <div class="product__genre mb-4">
+            <h6 class="m-0">Genres</h6>
+            <div class="tags">
+              {% for genre in track.value.genres %}
+                <a class="tag" href="/collections/tuneboom?genres={{ genre.slug }}">
+                  {{ genre.name }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if track.value.moods.size > 0 %}
+          <div class="product__genre mb-4">
+            <h6 class="m-0">Moods</h6>
+            <div class="tags">
+              {% for mood in track.value.moods %}
+                <a class="tag" href="/collections/tuneboom?moods={{ mood.slug }}">
+                  {{ mood.name }}
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% capture "form_classes" -%}
+          product-form product-form-{{ section.id }}
+          {%- if section.settings.enable_payment_button and product.has_only_default_variant %} product-form--payment-button-no-variants {%- endif -%}
+          {%- if current_variant.available == false %} product-form--variant-sold-out {%- endif -%}
+        {%- endcapture %}
+
+        {% form 'product', product, class:form_classes, novalidate: 'novalidate', data-product-form: '' %}
+          <select name="id" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}"
+                      {%- if variant == current_variant %} selected="selected" {%- endif -%}
+              >
+                {{ variant.title }}  {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+              </option>
+            {% endfor %}
+          </select>
+
+
+          <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden{% if section.settings.enable_payment_button %} product-form__error-message-wrapper--has-payment-button{% endif %}"
+               data-error-message-wrapper
+               role="alert"
+          >
+            <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+            {% include 'icon-error' %}
+            <span class="product-form__error-message" data-error-message>{{ 'products.product.quantity_minimum_message' | t }}</span>
+          </div>
+
+          <span style="display: flex;">
+            {% if track.value.preview == "true" %}
+              <div id="play-artwork" class="btn product-single__play-button" onclick="tuneboomPlay()">
+                        <i class="fas fa-play fa-play"></i>
+                        <div class="ml-2">
+                            Play
+                        </div>
+                    </div>
+              <div id="pause-artwork" class="btn product-single__play-button" onclick="tuneboomPause()">
+                        <i class="fas fa-pause"></i>
+                        <div class="ml-2">
+                            Pause
+                        </div>
+                    </div>
+            {% endif %}
+            {% if track.value.isNotForSale == false %}
+              <div class="product-form__controls-group product-form__controls-group--submit">
+                        <div class="product-form__tuneboom-item product-form__item product-form__item--submit
+                {%- if section.settings.enable_payment_button %} product-form__item--payment-button {%- endif -%}
+                {%- if product.has_only_default_variant %} product-form__item--no-variants {%- endif -%}"
+                        >
+                            <div
+                                    id="add-to-cart-id-{{ tuneboomID }}"
+                                    {% unless current_variant.available %} aria-disabled="true"{% endunless %}
+                                        aria-label="{% unless current_variant.available %}Sold out{% else %}Add to cart{% endunless %}"
+                                    class="btn product-form__cart-submit"
+                                    {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
+                                            data-add-to-cart>
+                                      <span data-add-to-cart-text>
+                                        {% unless current_variant.available %}
+                                          Sold out
+                                          {% else %}
+                                          Add to cart
+                                        {% endunless %}
+                                      </span>
+                            </div>
+                        </div>
+                    </div>
+            {% endif %}
+                    </span>
+
+
+        {% endform %}
+      </div>
+
+      {%- comment -%}
+        Live region for announcing updated price and availability to screen readers
+      {%- endcomment -%}
+      <p class="visually-hidden" data-product-status
+         aria-live="polite"
+         role="status"
+      ></p>
+
+      {%- comment -%}
+        Live region for announcing that the product form has been submitted and the
+        product is in the process being added to the cart
+      {%- endcomment -%}
+      <div class="product-single__tabs mt-4 mb-2">
+        <nav>
+          <div class="tab-container">
+          </div>
+        </nav>
+      </div>
+      {% if product.description %}
+        <div class="product-single__description rte">
+          {{ product.description }}
+        </div>
+      {% endif %}
+      {% include 'tuneboom-social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_media %}
+    </div>
+  </div>
+</div>
+
+
+<script>
+  window.tuneboom.api.recommendations();
+</script>
+
+
+
+<script>
+  /**
+   * Track Template Script
+   * ------------------------------------------------------------------------------
+   * A file that contains scripts highly couple code to the tracj template.
+   *
+   * @namespace product.tuneboom.track
+   */
+
+          // Page specfic variables
+  const products = {};
+  const trackProducts = {};
+  const tracksArray = new Array(1);
+  const variants = {};
+  const tracksMap = {};
+
+  {% assign track = product.metafields.tuneboom.track %}
+
+  products['{{ product.metafields.tuneboom.track.value.id }}'] = {{ product | json }};
+  tracksArray[0] = {{ track.value | json }};
+  tracksMap['{{ track.value.id }}'] = {{ track.value | json }};
+  trackProducts['{{ track.value.id }}'] = {{ track.value | json }};
+  $("#add-to-cart-id-{{ track.value.id }}").click(function (event) {
+            event.stopPropagation()
+            if ('{{ track.value.type }}' != 'song') {
+              addToCart('{{ track.value.id }}');
+            } else {
+              addTrackToCart('{{ track.value.id }}', '{{ product.variants.first.id }}');
+            }
+          }
+  );
+  {% for variant in product.variants %}
+  variants['{{ variant.id }}'] = {{ variant.metafields.tuneboom.value.license | json }};
+  {% endfor %}
+
+
+  const previewTracksArray = tracksArray.filter((track) => track.preview === 'true');
+
+
+  const renderLicenseOverlay = (track, product) => {
+    const licenseModal = `
+        <div id="tuneboom-modal-container" class="tuneboom d-flex justify-content-center align-items-center">
+           <div id="tuneboom-modal">
+                <div class="row d-flex flex-row align-items-center mb-4">
+                    <div class="col-auto">
+                        <h3 class="m-0">
+                            Pricing & Licenses
+                        </h3>
+                    </div>
+                    <div class="col text-right">
+                        <i class="fas fa-times" onclick="hideLicenseOverlay()"></i>
+                    </div>
+                </div>
+                <div id="modal-content">
+                    <div class="artwork-container text-center">
+                      <div class="artwork" onclick="playPause()">
+                        <img class="artwork" src="${product.featured_image}"/>
+                        <div class="artwork-overlay d-flex justify-content-center align-items-center">
+                          <div id="circle-container">
+                            <button id="play-modal" class="btn-play" onclick="tuneboomPlay()">
+                              <i class="fas fa-play fa-play"></i>
+                            </button>
+                            <button id="pause-modal" class="btn-pause" onclick="tuneboomPause()">
+                              <i class="fas fa-pause"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                       <h4 class="mt-2 mb-1 artwork-width">
+                           ${product.title}
+                       </h4>
+                    </div>
+                    <div id="licenses-list">
+                    </div>
+                </div>
+             </div>
+        </div>
+`;
+    $(licenseModal).appendTo('body').show();
+    document.getElementById('tuneboom-modal-container').classList.add('visible');
+  };
+
+  const hideLicenseOverlay = () => {
+    document.getElementById('tuneboom-modal-container').remove();
+  };
+
+  const navigateToProduct = (event, productUrl) => {
+    event.stopPropagation();
+    window.location.href = productUrl;
+  };
+
+  const addToCart = (trackId) => {
+    const product = products[trackId];
+    const licenses = trackProducts[trackId].licenses;
+    const licensesMap = licenses.reduce((acc, { license }) => {
+      if (!acc[buildTuneboomSku(trackId, license._id)]) {
+        acc[buildTuneboomSku(trackId, license._id)] = license;
+      }
+      return acc;
+    }, {});
+
+    renderLicenseOverlay(trackProducts[trackId], product);
+    product.variants.sort((a,b) => a.price - b.price).forEach(item => {
+      const newItem = `
+      <div class="license">
+          <div class="d-flex flex-row align-items-center justify-content-between">
+            <div>
+            <h4 class="m-0">${item?.public_title || 'License'}</h4>
+              <span class="files-available">
+                  ${licensesMap[item.sku].mp3Included ? "Mp3" : ''}
+                  ${licensesMap[item.sku].wavIncluded ? "Wav" : ''}
+                  ${licensesMap[item.sku].trackStemsIncluded ? "Stems" : ''}
+              </span>
+            </div>
+            <button class="btn float-right" onclick="addTrackToCart('${trackId}', '${item.id}')">
+                <i class="fas fa-cart-plus"></i>
+                ${Shopify.formatMoneyTuneboom(item.price)}
+            </button>
+          </div>
+          <div class="terms d-flex flex-row align-items-center mt-3 collapsible">
+              <i class="fas fa-chevron-down mr-2 mt-1"/>
+              <span>
+                  Show usage terms
+              </span>
+          </div>
+          <div class="collapsed-content">
+              <div class="row">
+                 <div class="col col-6">
+                    <i class="fas fa-microphone-alt mr-2"/>
+                   Used for Music Recording
+                </div>
+                <div class="col col-6">
+                  <i class="fas fa-layer-group mr-2"/>
+                   Distribute up to ${licensesMap[item.sku].contract.copies} copies
+                </div>
+              </div>
+             <div class="row">
+                <div class="col col-6">
+                    <i class="fas fa-video mr-2"/>
+                   ${licensesMap[item.sku].contract.musicVideo} Music Videos
+                </div>
+                <div class="col col-6">
+                  <i class="fas fa-satellite-dish mr-2"/>
+                   ${licensesMap[item.sku].contract.audioStreams} Online Audio Streams
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-6">
+                  <i class="fas fa-layer-group mr-2"/>
+                   For ${licensesMap[item.sku].contract.performancesProfit ? '' : 'Non-'}Profit Live Performances
+                </div>
+                <div class="col col-6">
+                    <i class="fas fa-broadcast-tower mr-2"/>
+                   ${licensesMap[item.sku].contract.broadcasting ? '' : 'No'} Radio Broadcasting Rights
+                </div>
+              </div>
+        </div>
+      </div>`
+      $(newItem).appendTo('#licenses-list').show();
+    });
+
+    // set collapses
+    const coll = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  };
+
+  const buildTuneboomSku = (trackId, licenseId) => {
+    return `tk_${trackId}_li_${licenseId}`;
+  };
+
+  const addTrackToCart = function addTrackToCart(trackId, variantId) {
+    $.post('/cart/add.json', { quantity: 1, id: variantId },
+            function(variant) {
+              document.getElementById(`add-to-cart-id-${trackId}`).classList.add('light');
+              document.getElementById(`add-to-cart-id-${trackId}`).innerHTML = '<i class="fas fa-check-circle animated pulse"></i> In cart';
+              hideLicenseOverlay();
+
+            }).fail(function() {
+      alert('Failed to add track to cart!');
+    });
+  };
+
+</script>
+
+
+<script>
+  $(`{% include 'tuneboom-player' %}`).appendTo('body').show();
+  const wavesurfer = WaveSurfer.create({
+    container: document.querySelector('#waveform'),
+    waveColor: 'none',
+    progressColor: 'none',
+    cursorColor: 'none',
+    backend: 'MediaElement',
+    height: 7,
+    responsive: true,
+    backgroundColor:'none',
+  });
+  const waveOverlay = document.getElementById("waveform-overlay");
+  const waveTicks = document.getElementById("waveform-ticks");
+  const waveProgress = document.getElementById("waveform-progress");
+  const iconVolumeUp = document.getElementById("icon-volume-up");
+  const iconVolumeDown = document.getElementById("icon-volume-down");
+  const iconVolumeOff = document.getElementById("icon-volume-off");
+  const volumeInput = document.querySelector('#volume');
+  const iconVolumeMute = document.getElementById("icon-volume-mute");
+
+
+  let currentTrack = null;
+  let previousTrack = null;
+
+  function tuneboomPlay() {
+    if (wavesurfer.isPlaying()) {
+      return wavesurfer.pause();
+    }
+
+    if (currentTrack === null && previewTracksArray[0]) {
+      document.getElementById('player-footer').style.bottom = 0;
+      return togglePlaySong(previewTracksArray[0].id, previewTracksArray[0].previewLink);
+    }
+    wavesurfer.play();
+  }
+
+  function tuneboomPause() {
+    wavesurfer.pause();
+  }
+
+  function tuneboomPrevious() {
+    const currentIndex = previewTracksArray.findIndex((track) => currentTrack === track.id);
+    const previousTrack = previewTracksArray[currentIndex - 1];
+    if (previousTrack) {
+      togglePlaySong(previousTrack.id, previousTrack.previewLink);
+    }
+  }
+
+  function tuneboomNext() {
+    const currentIndex = previewTracksArray.findIndex((track) => currentTrack === track.id);
+    const nextTrack = previewTracksArray[currentIndex + 1];
+    if (nextTrack) {
+      togglePlaySong(nextTrack.id, nextTrack.previewLink);
+    }
+  }
+
+  // Sets the details of the track player
+  const     setPlayerDetails = function(trackId) {
+    document.getElementById('tuneboom-title-text').innerHTML = products[trackId].title;
+    document.getElementById('title-subtitle-text').innerHTML = getSubtitle(tracksMap[trackId]);
+
+    const minVariant = products[trackId].variants.sort((a, b) => a.price - b.price)[0];
+    document.getElementById('player-price').innerText = Shopify.formatMoneyTuneboom(minVariant.price);
+    if (tracksMap[trackId].isNotForSale) {
+      document.getElementById("player-add-to-cart").style.display = 'none';
+    } else {
+      document.getElementById("player-add-to-cart").style.display = 'block';
+      document.getElementById("player-add-to-cart").addEventListener('click', () => {
+        if (tracksMap[trackId].type !== 'song') {
+          addToCart('{{ track.value.id }}');
+        } else {
+          addTrackToCart('{{ track.value.id }}', '{{ product.variants.first.id }}');
+        }
+      });
+    }
+
+  };
+
+  const getSubtitle = (track) => {
+    if (track?.collaborators) return track?.collaborators;
+    if (track?.genres && track.genres.length > 0) return track.genres[0].name;
+    if (track?.moods && track.moods.length > 0) return track.moods[0].name;
+    return "";
+  };
+
+  // Load a track by index and highlight the corresponding link
+  const setCurrentSong = function(trackId) {
+    if (currentTrack) {
+      previousTrack = currentTrack;
+    }
+    currentTrack = trackId;
+  };
+
+
+  function setup() {
+    wavesurfer.setVolume(.5);
+    volumeInput.value = wavesurfer.backend.getVolume() * 100;
+    volumeInput.style.background = setVolumeGradient(wavesurfer.backend.getVolume());
+    volumeInput.addEventListener('input', onChangePlayerVolume);
+    volumeInput.addEventListener('change', onChangePlayerVolume)
+  }
+
+  const togglePlaySong = function(trackId, trackUrl) {
+    // restart song if its the same track being played.
+    if (currentTrack === trackId) {
+      wavesurfer.playPause();
+      return;
+    }
+
+    if (currentTrack === null) {
+      document.getElementById('player-footer').style.bottom = 0;
+    }
+
+    setCurrentSong(trackId);
+    setPlayerDetails(trackId);
+
+
+    wavesurfer.load(trackUrl);
+
+  };
+
+  wavesurfer.on('ready', function () {
+    tuneboomPlay();
+  });
+
+  wavesurfer.on('audioprocess', function (val) {
+    // convert from seconds to mm:ss
+    // updatePlayerTime();
+    updateWaveProgress();
+  });
+
+  wavesurfer.on('finish', function () {
+    document.getElementById("play-artwork").style.display = "flex";
+    document.getElementById("pause-artwork").style.display = "none";
+    document.getElementById("play").style.display = "block";
+    document.getElementById("pause").style.display = "none";
+    if(document.getElementById('play-modal')){
+      document.getElementById('play-modal').style.display = 'block';
+      document.getElementById('pause-modal').style.display = 'none';
+    }
+  });
+
+  // Toggle play/pause text
+  wavesurfer.on('play', function() {
+    document.getElementById('play').style.display = 'none';
+    document.getElementById('pause').style.display = 'block';
+    document.getElementById('play-artwork').style.display = 'none';
+    document.getElementById('pause-artwork').style.display = 'flex';
+    if(document.getElementById('play-modal')){
+      document.getElementById('play-modal').style.display = 'none';
+      document.getElementById('pause-modal').style.display = 'block';
+    }
+  });
+  wavesurfer.on('pause', function() {
+    document.getElementById('play').style.display = 'block';
+    document.getElementById('pause').style.display = 'none';
+    document.getElementById('play-artwork').style.display = 'flex';
+    document.getElementById('pause-artwork').style.display = 'none';
+    if(document.getElementById('play-modal')){
+      document.getElementById('play-modal').style.display = 'block';
+      document.getElementById('pause-modal').style.display = 'none';
+    }
+  });
+
+  // AUDIO PLAYER SCRIPT
+
+  const onChangePlayerVolume = function (e) {
+    wavesurfer.setVolume(e.target.value / 100);
+    clearIcons();
+    if (wavesurfer.getVolume() == 0) iconVolumeOff.style.display = "block";
+    if (wavesurfer.getVolume() < .5 && wavesurfer.getVolume() > 0) iconVolumeDown.style.display = "block";
+    if (wavesurfer.getVolume() >= .5) iconVolumeUp.style.display = "block";
+    volumeInput.style.background = setVolumeGradient(e.target.value / 100);
+  };
+
+  const clearIcons = () => {
+    iconVolumeUp.style.display = "none";
+    iconVolumeDown.style.display = "none";
+    iconVolumeOff.style.display = "none";
+    iconVolumeMute.style.display = "none";
+  };
+
+  const toggleMute = () => {
+    clearIcons();
+    wavesurfer.toggleMute();
+
+    if (wavesurfer.getMute()) {
+      volumeInput.style.background = setVolumeGradient(0);
+      volumeInput.value = 0;
+      iconVolumeMute.style.display = "block";
+    } else {
+      volumeInput.style.background = setVolumeGradient(.5);
+      volumeInput.value = .5;
+      if (wavesurfer.getVolume() < .5) iconVolumeDown.style.display = "block";
+      if (wavesurfer.getVolume() >= .5) iconVolumeUp.style.display = "block";
+    }
+  };
+  const updatePlayerTime = () => {
+    const timer = new Date(wavesurfer.getCurrentTime() * 1000).toISOString().substr(14, 5);
+    const fullTime = new Date((wavesurfer.getDuration() || 0) * 1000).toISOString().substr(14, 5);
+    duration.innerHTML = `${timer} / ${fullTime}`;
+  };
+
+  const updateWaveProgress = () => {
+    const progress = (wavesurfer.getCurrentTime() / wavesurfer.getDuration());
+    waveOverlay.value = progress;
+    // offset progress to align with needle
+    const tickOffset = (99.5 + progress) - (progress * 100);
+    const progressOffset = (progress * 100) + (.5 - progress);
+    waveTicks.style.width = `${tickOffset}%`;
+    waveProgress.style.width = `${progressOffset}%`;
+
+    updatePlayerTime();
+
+  };
+
+
+  const seek = (val) => {
+    wavesurfer.seekTo(parseFloat(val));
+    updateWaveProgress();
+  }
+
+  function setVolumeGradient(val) {
+    return 'linear-gradient(to right, white 0%, white ' + val * 100  + '%, #828282 ' + val * 100 + '%, #828282 100%)';
+  }
+
+  setup();
+</script>
