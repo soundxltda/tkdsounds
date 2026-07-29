@@ -1,0 +1,151 @@
+{% comment %}
+  TKD Contact — CONTACT.TXT (portado de routes/contact.tsx).
+  Janela com linhas de contato (blocks: rótulo + valor + link) e
+  caret READY piscante.
+{% endcomment %}
+
+<div class="tkd-contact tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w720">
+    {%- if section.settings.terminal_text != blank -%}
+      <div class="tkd-contact__terminal">{{ section.settings.terminal_text | escape }}</div>
+    {%- endif -%}
+
+    <h1 class="tkd-contact__title chroma">{{ section.settings.heading | default: page.title | escape }}</h1>
+
+    {%- if section.settings.intro != blank -%}
+      <p class="tkd-contact__intro">&gt; {{ section.settings.intro | escape }}</p>
+    {%- endif -%}
+
+    <div class="win tkd-contact__win">
+      <div class="win-title">
+        <span>{{ section.settings.window_title | escape }}</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+      <div class="tkd-contact__rows">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign href = block.settings.url
+            if block.settings.email != blank
+              assign href = 'mailto:' | append: block.settings.email
+            endif
+          -%}
+          {%- if href != blank -%}
+            <a
+              href="{{ href }}"
+              class="tkd-contact__row"
+              {% if block.settings.external %}target="_blank" rel="noreferrer"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <span class="tkd-contact__row-label">{{ block.settings.label | escape }}</span>
+              <span class="tkd-contact__row-value">
+                {{ block.settings.value | default: block.settings.email | escape }}
+                {%- if block.settings.external %} ↗{% endif %}
+              </span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="tkd-contact__ready caret">{{ section.settings.status_text | escape }}</div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Contato",
+  "tag": "section",
+  "class": "section-tkd-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "terminal_text",
+      "label": "Linha de terminal",
+      "default": "> OPEN CONTACT.TXT"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Introdução",
+      "default": "For licensing, custom work, press or general inquiries — reach out below."
+    },
+    {
+      "type": "text",
+      "id": "window_title",
+      "label": "Título da janela",
+      "default": "CONTACT.TXT"
+    },
+    {
+      "type": "text",
+      "id": "status_text",
+      "label": "Texto de status (caret)",
+      "default": "READY"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "email",
+      "name": "E-mail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "Email"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Endereço de e-mail",
+          "default": "prodbytkd@gmail.com"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "Instagram"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Texto exibido",
+          "default": "@tkdprod"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "external",
+          "label": "Abrir em nova aba",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "TKD Contato",
+      "blocks": [
+        { "type": "email" },
+        { "type": "link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

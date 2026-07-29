@@ -1629,8 +1629,227 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 }
 
 /* ============================================================
-   AJUSTES SOBRE O REFRESH (sem quebrar componentes nativos)
+   COLLECTION — ARCHIVE INDEX (routes/packs.tsx)
    ============================================================ */
+.tkd-collection { padding-top: 56px; padding-bottom: 96px; }
+@media screen and (min-width: 750px) {
+  .tkd-collection { padding-top: 80px; }
+}
+.tkd-collection__terminal {
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--fg-dim);
+  margin-bottom: 16px;
+}
+.tkd-collection__head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+@media screen and (min-width: 750px) {
+  .tkd-collection__head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+}
+.tkd-collection__title {
+  font-family: var(--font-tkd-serif);
+  font-size: clamp(44px, 7vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--fg);
+  margin: 0;
+}
+.tkd-collection__count {
+  color: var(--fg-mid);
+  margin: 12px 0 0;
+  max-width: 512px;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+}
+.tkd-collection__decor {
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-dim);
+}
+.tkd-collection__pad { padding: 20px; }
+@media screen and (min-width: 750px) {
+  .tkd-collection__pad { padding: 32px; }
+}
+.tkd-collection__empty {
+  font-family: var(--font-tkd-mono);
+  color: var(--fg-mid);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.tkd-pagination {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tkd-pagination__link {
+  color: var(--fg-mid);
+  text-decoration: none;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+}
+.tkd-pagination__link:hover { color: var(--amber); border-color: var(--line-h); }
+.tkd-pagination__link--current { color: var(--amber); border-color: var(--line-h); }
+.tkd-pagination__gap { color: var(--fg-ghost); padding: 4px 0; }
+
+/* ============================================================
+   CONTATO — CONTACT.TXT (routes/contact.tsx)
+   ============================================================ */
+.tkd-contact { padding-top: 56px; padding-bottom: 96px; min-height: 70vh; }
+@media screen and (min-width: 750px) {
+  .tkd-contact { padding-top: 80px; }
+}
+.tkd-contact__terminal {
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--fg-dim);
+  margin-bottom: 16px;
+}
+.tkd-contact__title {
+  font-family: var(--font-tkd-serif);
+  font-size: clamp(44px, 7vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--fg);
+  margin: 0;
+}
+.tkd-contact__intro {
+  color: var(--fg-mid);
+  margin: 24px 0 0;
+  max-width: 512px;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+}
+.tkd-contact__win { margin-top: 48px; }
+.tkd-contact__rows { font-family: var(--font-tkd-mono); font-size: 13px; }
+.tkd-contact__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: inherit;
+}
+.tkd-contact__row:nth-child(odd) { background: rgba(236, 217, 176, 0.03); }
+.tkd-contact__row + .tkd-contact__row { border-top: 1px solid var(--line); }
+.tkd-contact__row:hover { background: var(--surface-2); }
+.tkd-contact__row:hover .tkd-contact__row-value { color: var(--amber); }
+.tkd-contact__row-label {
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+}
+.tkd-contact__row-value { color: var(--fg); }
+.tkd-contact__ready {
+  margin-top: 24px;
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-ghost);
+}
+
+/* ============================================================
+   404 — FILE_NOT_FOUND.SYS (__root.tsx NotFoundComponent)
+   ============================================================ */
+.tkd-404 {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+.tkd-404__win { max-width: 448px; width: 100%; }
+.tkd-404__pad { padding: 32px; text-align: center; }
+.tkd-404__code {
+  font-family: var(--font-tkd-serif);
+  font-size: 96px;
+  line-height: 1;
+  color: var(--fg);
+  margin: 0;
+}
+.tkd-404__msg {
+  color: var(--fg-mid);
+  margin: 16px 0 0;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+}
+.tkd-404__action { margin-top: 32px; }
+
+/* ============================================================
+   AJUSTES SOBRE O REFRESH (sem quebrar componentes nativos)
+   Skin retrô para carrinho, drawer, busca e páginas de conta:
+   sobrescreve apenas variáveis de cor/fonte dos esquemas do
+   Refresh — toda a lógica nativa permanece intacta.
+   ============================================================ */
+:root {
+  --font-body-family: "Share Tech Mono", "Courier Prime", ui-monospace, monospace;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 700;
+  --font-heading-family: "Big Shoulders Stencil Display", "Oxanium", Georgia, serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 700;
+}
+
+body,
+[class^="color-scheme"],
+[class*=" color-scheme"] {
+  --color-background: 26, 20, 8;            /* --bg  #1a1408 */
+  --gradient-background: #1a1408;
+  --color-foreground: 240, 215, 140;        /* --fg  #f0d78c */
+  --color-background-contrast: 69, 55, 31;  /* --surface-3 */
+  --color-shadow: 0, 0, 0;
+  --color-button: 255, 154, 31;             /* --amber */
+  --color-button-text: 26, 16, 6;
+  --color-secondary-button: 54, 43, 24;     /* --surface-2 */
+  --color-secondary-button-text: 240, 215, 140;
+  --color-link: 240, 215, 140;
+  --color-badge-foreground: 240, 215, 140;
+  --color-badge-background: 54, 43, 24;
+  --color-badge-border: 240, 215, 140;
+}
+
+/* Cart drawer / notificação no clima da janela retrô */
+cart-drawer .drawer__inner,
+cart-notification .cart-notification {
+  border: 1px solid var(--line-h);
+  box-shadow:
+    inset 1px 1px 0 rgba(236, 217, 176, 0.08),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Headings nativos em caixa alta como o design TKD */
+.cart__title,
+.drawer__heading {
+  text-transform: uppercase;
+}
 
 /* O skip-link nativo continua funcional, estilizado no tom do tema */
 .skip-to-content-link:focus {
