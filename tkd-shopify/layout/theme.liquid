@@ -262,6 +262,7 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'tkd-theme.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'tkd-theme.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'tkd-player.js' | asset_url }}" defer="defer"></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -308,6 +309,9 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {%- # TKD Sounds: player de áudio global (barra fixa inferior) -%}
+    {% render 'tkd-global-player' %}
 
     {%- # TKD Sounds: pilha de overlays CRT (scanlines, vinheta, glow, grain, flicker) -%}
     {% render 'tkd-crt-overlays' %}

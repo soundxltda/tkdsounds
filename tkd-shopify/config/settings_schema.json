@@ -49,6 +49,16 @@
         "id": "tkd_enable_zoom",
         "label": "Ativar escala visual 120% (como o site original)",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Player global"
+      },
+      {
+        "type": "text",
+        "id": "tkd_player_buy_label",
+        "label": "Texto do botão de compra do player",
+        "default": "▶ BUY NOW"
       }
     ]
   },

@@ -1516,6 +1516,119 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 .tkd-faq__a p { margin: 0 0 10px; }
 
 /* ============================================================
+   GLOBAL PLAYER — barra fixa inferior (GlobalPlayer.tsx)
+   ============================================================ */
+.tkd-global-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: linear-gradient(to bottom, #2a1e0e, #14100c);
+  border-top: 1px solid #6b4a10;
+  box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.5), 0 -8px 30px rgba(0, 0, 0, 0.5);
+}
+.tkd-global-player[hidden] { display: none; }
+.tkd-global-player__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px;
+  min-width: 0;
+}
+.tkd-global-player__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.tkd-global-player__cover {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--line-h);
+  display: none;
+}
+.tkd-global-player__meta { min-width: 0; flex: 1 1 0; }
+.tkd-global-player__track {
+  color: var(--fg);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tkd-global-player__pack {
+  color: var(--fg-dim);
+  font-family: var(--font-tkd-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tkd-global-player__volume {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.tkd-global-player__volume-icon { color: var(--fg-dim); }
+.tkd-global-player__volume .volume-slider { width: 90px; }
+.tkd-global-player__buy {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 11px;
+}
+.tkd-global-player__buy[hidden] { display: none; }
+.tkd-global-player__buy-full { display: none; }
+.tkd-global-player__buy-short { display: inline; }
+.tkd-global-player__close {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #6b4a10;
+  background: var(--surface-2);
+  color: var(--fg-dim);
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+}
+.tkd-global-player__close:hover { color: var(--amber); }
+.tkd-global-player__progress {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.tkd-global-player__wave { flex: 1 1 0; min-width: 0; }
+.tkd-global-player__wave .waveform { cursor: pointer; touch-action: none; }
+.tkd-global-player__time {
+  color: var(--fg-dim);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: right;
+}
+.tkd-global-player__time--right { text-align: left; }
+
+@media screen and (min-width: 640px) {
+  .tkd-global-player__cover { display: block; }
+  .tkd-global-player__buy-full { display: inline; }
+  .tkd-global-player__buy-short { display: none; }
+}
+@media screen and (min-width: 750px) {
+  .tkd-global-player__inner { padding: 12px 24px; }
+  .tkd-global-player__top { gap: 16px; }
+  .tkd-global-player__volume { display: flex; }
+}
+
+/* ============================================================
    AJUSTES SOBRE O REFRESH (sem quebrar componentes nativos)
    ============================================================ */
 

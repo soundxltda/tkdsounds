@@ -1,0 +1,56 @@
+{% comment %}
+  TKD Global Player — barra fixa inferior (portado de GlobalPlayer.tsx).
+  Renderizado no theme.liquid; fica oculto até uma faixa ser tocada.
+  Toda a lógica vive em assets/tkd-player.js (JS puro).
+{% endcomment %}
+
+<div class="tkd-global-player" data-tkd-player role="region" aria-label="Global audio player" hidden>
+  <div class="tkd-global-player__inner">
+    <div class="tkd-global-player__top">
+      <button type="button" class="audio-play-btn" data-tkd-player-toggle aria-label="Play">
+        <svg class="tkd-icon-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="tkd-icon-pause" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      </button>
+
+      <div class="tkd-global-player__cover" data-tkd-player-cover aria-hidden="true"></div>
+
+      <div class="tkd-global-player__meta">
+        <div class="tkd-global-player__track" data-tkd-player-track></div>
+        <div class="tkd-global-player__pack" data-tkd-player-pack hidden></div>
+      </div>
+
+      <div class="tkd-global-player__volume" title="Volume">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="tkd-global-player__volume-icon" aria-hidden="true">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/>
+        </svg>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.8"
+          class="volume-slider"
+          data-tkd-player-volume
+          aria-label="Volume"
+        >
+      </div>
+
+      <a class="tkd-btn tkd-btn-solid tkd-global-player__buy" data-tkd-player-buy href="#" hidden>
+        <span class="tkd-global-player__buy-full">{{ settings.tkd_player_buy_label | default: '▶ BUY NOW' }}</span>
+        <span class="tkd-global-player__buy-short">BUY</span>
+      </a>
+
+      <button type="button" class="tkd-global-player__close" data-tkd-player-close aria-label="Close player" title="Close">
+        &times;
+      </button>
+    </div>
+
+    <div class="tkd-global-player__progress">
+      <span class="tkd-global-player__time font-tkd-pixel" data-tkd-player-current>0:00</span>
+      <div class="tkd-global-player__wave">
+        <div class="waveform waveform--global" data-tkd-waveform data-for="@current" data-bars="200" data-seek="always"></div>
+      </div>
+      <span class="tkd-global-player__time tkd-global-player__time--right font-tkd-pixel" data-tkd-player-duration>0:00</span>
+    </div>
+  </div>
+</div>
