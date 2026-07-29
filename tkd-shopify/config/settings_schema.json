@@ -8,6 +8,51 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "TKD Sounds",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Efeitos retrô (CRT)"
+      },
+      {
+        "type": "checkbox",
+        "id": "tkd_enable_crt",
+        "label": "Ativar overlays CRT (scanlines, vinheta, glow)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "tkd_enable_grain",
+        "label": "Ativar grain animado",
+        "info": "Requer overlays CRT ativos.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "tkd_enable_flicker",
+        "label": "Ativar flicker de monitor",
+        "info": "Requer overlays CRT ativos.",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Experiência retrô"
+      },
+      {
+        "type": "checkbox",
+        "id": "tkd_enable_cursors",
+        "label": "Ativar cursores retrô (Win95)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "tkd_enable_zoom",
+        "label": "Ativar escala visual 120% (como o site original)",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {

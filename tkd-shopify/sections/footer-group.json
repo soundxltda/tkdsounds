@@ -1,36 +1,38 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "footer": {
-      "type": "footer",
-      "custom_css": [],
+    "tkd_footer": {
+      "type": "tkd-footer",
+      "blocks": {
+        "instagram": {
+          "type": "link",
+          "settings": {
+            "label": "INSTAGRAM @TKDPROD",
+            "url": "https://instagram.com/tkdprod",
+            "external": true
+          }
+        },
+        "email": {
+          "type": "email",
+          "settings": {
+            "email": "prodbytkd@gmail.com"
+          }
+        }
+      },
+      "block_order": [
+        "instagram",
+        "email"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
-        "newsletter_enable": false,
-        "newsletter_heading": "",
-        "enable_follow_on_shop": false,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "payment_enable": false,
-        "show_policy": false,
-        "margin_top": 0,
-        "padding_top": 40,
-        "padding_bottom": 28
+        "brand_text": "TKD SOUNDS",
+        "tagline": "> ARCHIVE.SYS · EST. 2019 · WAV/24-BIT",
+        "copyright_text": "TKD SOUNDS · ALL RIGHTS RESERVED",
+        "status_text": "READY"
       }
     }
   },
   "order": [
-    "footer"
+    "tkd_footer"
   ]
 }

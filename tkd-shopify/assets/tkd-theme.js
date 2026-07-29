@@ -1,0 +1,102 @@
+/* TKD Sounds — comportamento global do tema (vanilla JS, sem dependências).
+   Portado de: Navbar.tsx (relógio, menu mobile), useScrollReveal.ts (reveal). */
+(function () {
+  'use strict';
+
+  /* Relógio SYS://HH:MM:SS na barra de título do header */
+  function initClock() {
+    var els = document.querySelectorAll('[data-tkd-clock]');
+    if (!els.length) return;
+    function tick() {
+      var d = new Date();
+      var hh = String(d.getHours()).padStart(2, '0');
+      var mm = String(d.getMinutes()).padStart(2, '0');
+      var ss = String(d.getSeconds()).padStart(2, '0');
+      var t = hh + ':' + mm + ':' + ss;
+      els.forEach(function (el) { el.textContent = t; });
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* Menu mobile [MENU] */
+  function initMobileMenu() {
+    var toggle = document.querySelector('[data-tkd-menu-toggle]');
+    var panel = document.querySelector('[data-tkd-mobile-menu]');
+    if (!toggle || !panel) return;
+    toggle.addEventListener('click', function () {
+      var open = panel.hasAttribute('hidden');
+      if (open) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) {
+        panel.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* Scroll reveal (IntersectionObserver) */
+  function initReveal() {
+    var els = document.querySelectorAll('.reveal:not(.revealed)');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('revealed'); });
+      return;
+    }
+    var obs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    els.forEach(function (el) { obs.observe(el); });
+  }
+
+  /* Contador do carrinho no header — atualiza após add-to-cart sem reload.
+     Usa o pub/sub nativo do Refresh quando disponível. */
+  function initCartCount() {
+    var els = document.querySelectorAll('[data-tkd-cart-count]');
+    if (!els.length) return;
+    function render(count) {
+      els.forEach(function (el) {
+        el.textContent = count > 0 ? ' (' + count + ')' : '';
+      });
+    }
+    function refresh() {
+      fetch((window.routes && window.routes.cart_url ? window.routes.cart_url : '/cart') + '.js')
+        .then(function (r) { return r.json(); })
+        .then(function (cart) { render(cart.item_count || 0); })
+        .catch(function () {});
+    }
+    if (typeof window.subscribe === 'function' && window.PUB_SUB_EVENTS && window.PUB_SUB_EVENTS.cartUpdate) {
+      window.subscribe(window.PUB_SUB_EVENTS.cartUpdate, refresh);
+    }
+    document.addEventListener('cart:refresh', refresh);
+  }
+
+  function init() {
+    initClock();
+    initMobileMenu();
+    initReveal();
+    initCartCount();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Re-executa o reveal quando o Theme Editor recarrega sections */
+  document.addEventListener('shopify:section:load', function () {
+    initReveal();
+  });
+})();

@@ -15,6 +15,14 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    {%- # TKD Sounds: fontes retrô (mesmo conjunto do site original) -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@400;600;700;800&family=Share+Tech+Mono&family=Special+Elite&family=VT323&family=Oxanium:wght@400;600;700&display=swap"
+    >
+
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -252,6 +260,8 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'tkd-theme.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'tkd-theme.js' | asset_url }}" defer="defer"></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -282,7 +292,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if settings.tkd_enable_crt %} tkd-crt-on{% endif %}{% if settings.tkd_enable_cursors %} tkd-cursors{% endif %}{% if settings.tkd_enable_zoom %} tkd-zoom{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -298,6 +308,9 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {%- # TKD Sounds: pilha de overlays CRT (scanlines, vinheta, glow, grain, flicker) -%}
+    {% render 'tkd-crt-overlays' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
