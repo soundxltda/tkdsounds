@@ -153,6 +153,11 @@ h1, h2, h3, h4,
 /* Botões — a pill da capa ("PHRASE KIT - DRUM KIT - SAMPLE PACK"):
    formato pílula, Michroma, flat, azul-céu */
 .tkd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  text-transform: uppercase;
   border-radius: 999px;
   font-family: var(--font-tkd-display);
   font-size: 12px;
