@@ -1,7 +1,16 @@
 {% comment %}
-  TKD Hero — "TKD Archives" (portado da seção HERO de routes/index.tsx).
-  Linha de terminal, título gigante serif com aberração cromática,
-  dois CTAs e o Featured Pack (product picker do Theme Editor).
+  TKD Hero — "TKD Archives" + cena grudada estilo Exo Audio.
+
+  Em telas largas (e sem prefers-reduced-motion), Título/CTA, Featured
+  Pack e a esteira de kits viram 3 "atos" de uma cena com scroll
+  travado (position: sticky): o título dá lugar ao Featured Pack, que
+  por sua vez dá lugar à esteira — tudo dentro da mesma tela, como na
+  abertura do site de referência. O controle fica em tkd-exo-motion.js
+  (initHeroScene). Resto do site (grade de packs, FAQ, rodapé) continua
+  com scroll comum — só a abertura usa esse efeito.
+
+  Em mobile ou com movimento reduzido, os 3 blocos caem pro layout
+  empilhado simples de sempre (sem sticky, sem scroll travado).
 {% endcomment %}
 
 {% style %}
@@ -17,106 +26,132 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign has_strip = false
+  if section.settings.show_strip
+    assign strip_col = section.settings.strip_collection
+    if strip_col == blank
+      assign strip_col = collections.all
+    endif
+    if strip_col.products.size > 0
+      assign has_strip = true
+    endif
+  endif
+  assign has_featured = false
+  if section.settings.featured_product != blank
+    assign has_featured = true
+  endif
+  assign use_scene = section.settings.enable_scene
+-%}
+
 <div class="tkd-hero tkd-hero--centered tkd-section tkd-section--wide-gutters">
-  <div class="tkd-section__inner tkd-section__inner--w900">
-    {%- if section.settings.terminal_text != blank -%}
-      <div class="tkd-hero__terminal tkd-hero__terminal--center reveal">{{ section.settings.terminal_text | escape }}</div>
-    {%- endif -%}
+  <div
+    class="tkd-scene{% unless use_scene %} tkd-scene--off{% endunless %}"
+    data-tkd-scene
+    {% unless use_scene %}data-tkd-scene-disabled{% endunless %}
+  >
+    <div class="tkd-scene__pin" data-tkd-scene-pin>
 
-    <h1 class="tkd-hero__title tkd-hero__title--center" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
+      {%- comment %} Ato 1 — título, terminal e CTAs {% endcomment -%}
+      <div class="tkd-scene__layer tkd-scene__layer--title" data-tkd-scene-layer="title">
+        <div class="tkd-section__inner tkd-section__inner--w900">
+          {%- if section.settings.terminal_text != blank -%}
+            <div class="tkd-hero__terminal tkd-hero__terminal--center reveal">{{ section.settings.terminal_text | escape }}</div>
+          {%- endif -%}
 
-    <div class="tkd-hero__ctas tkd-hero__ctas--center reveal">
-      {%- if section.settings.button1_label != blank -%}
-        <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
-          {{- section.settings.button1_label | escape -}}
-        </a>
-      {%- endif -%}
-      {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
-        <a href="{{ section.settings.button2_link }}" class="tkd-btn tkd-btn-outline">
-          {{- section.settings.button2_label | escape -}}
-        </a>
-      {%- endif -%}
-    </div>
+          <h1 class="tkd-hero__title tkd-hero__title--center" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
 
-    {%- if section.settings.show_scroll_cue -%}
-      <div class="tkd-hero__scroll-wrap reveal">
-        <button type="button" class="tkd-scroll-cue" data-tkd-scroll-cue aria-label="{{ section.settings.scroll_cue_text | escape }}">
-          <span>{{ section.settings.scroll_cue_text | escape }}</span>
-          <span class="tkd-scroll-cue__icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
-            </svg>
-          </span>
-        </button>
+          <div class="tkd-hero__ctas tkd-hero__ctas--center reveal">
+            {%- if section.settings.button1_label != blank -%}
+              <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
+                {{- section.settings.button1_label | escape -}}
+              </a>
+            {%- endif -%}
+            {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
+              <a href="{{ section.settings.button2_link }}" class="tkd-btn tkd-btn-outline">
+                {{- section.settings.button2_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.show_scroll_cue -%}
+            <div class="tkd-hero__scroll-wrap reveal">
+              <button type="button" class="tkd-scroll-cue" data-tkd-scroll-cue aria-label="{{ section.settings.scroll_cue_text | escape }}">
+                <span>{{ section.settings.scroll_cue_text | escape }}</span>
+                <span class="tkd-scroll-cue__icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
       </div>
-    {%- endif -%}
-  </div>
 
-  {%- # Esteira de kits: na abertura os cards sobem de baixo pra cima em
-      # stagger e, assim que assentam, começam a deslizar de lado em loop
-      # contínuo (pausa no hover). Inspirado na intro da Exo Audio. -%}
-  {%- if section.settings.show_strip -%}
-    {%- liquid
-      assign strip_col = section.settings.strip_collection
-      if strip_col == blank
-        assign strip_col = collections.all
-      endif
-    -%}
-    {%- if strip_col.products.size > 0 -%}
-      <div class="tkd-hero__strip" data-tkd-hero-strip>
-        <div class="tkd-marquee tkd-marquee--cards" data-tkd-marquee>
-          <div
-            class="tkd-marquee__track"
-            style="--tkd-marquee-duration: {{ section.settings.strip_duration }}s; --tkd-marquee-card-w: 190px;"
-          >
-            {%- for product in strip_col.products limit: section.settings.strip_count -%}
-              <div class="tkd-marquee__card">
-                <a href="{{ product.url }}" class="tkd-strip-card">
-                  <div class="tkd-strip-card__art">
-                    {%- if product.featured_image -%}
-                      {{
-                        product.featured_image
-                        | image_url: width: 570
-                        | image_tag:
-                          widths: '190,380,570',
-                          sizes: '190px',
-                          loading: 'eager',
-                          alt: product.featured_image.alt
-                      }}
-                    {%- endif -%}
-                  </div>
-                  <div class="tkd-strip-card__name">{{ product.title | escape }}</div>
-                  <div class="tkd-strip-card__price">
-                    {%- if product.available -%}
-                      {{ product.price | money_without_trailing_zeros }}
-                    {%- else -%}
-                      SOLD OUT
-                    {%- endif -%}
-                  </div>
-                </a>
+      {%- comment %} Ato 2 — Featured Pack tomando a tela {% endcomment -%}
+      {%- if has_featured -%}
+        <div class="tkd-scene__layer tkd-scene__layer--featured" data-tkd-scene-layer="featured">
+          <div class="tkd-section__inner tkd-section__inner--w720">
+            <div class="tkd-hero__featured tkd-hero__featured--floating reveal">
+              <div class="tkd-hero__featured-label">
+                <span class="tkd-hero__star" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
+                  </svg>
+                </span>
+                <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
               </div>
-            {%- endfor -%}
+              {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide', custom_tagline: section.settings.featured_description %}
+            </div>
           </div>
         </div>
-      </div>
-    {%- endif -%}
-  {%- endif -%}
+      {%- endif -%}
 
-  {%- if section.settings.featured_product != blank -%}
-    <div class="tkd-section__inner tkd-section__inner--w720">
-      <div class="tkd-hero__featured tkd-hero__featured--floating reveal">
-        <div class="tkd-hero__featured-label">
-          <span class="tkd-hero__star" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
-            </svg>
-          </span>
-          <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
+      {%- comment %} Ato 3 — esteira de kits revelada por trás do Featured Pack {% endcomment -%}
+      {%- if has_strip -%}
+        <div class="tkd-scene__layer tkd-scene__layer--kits" data-tkd-scene-layer="kits">
+          <div class="tkd-hero__strip" data-tkd-hero-strip>
+            <div class="tkd-marquee tkd-marquee--cards" data-tkd-marquee>
+              <div
+                class="tkd-marquee__track"
+                style="--tkd-marquee-duration: {{ section.settings.strip_duration }}s; --tkd-marquee-card-w: 190px;"
+              >
+                {%- for product in strip_col.products limit: section.settings.strip_count -%}
+                  <div class="tkd-marquee__card">
+                    <a href="{{ product.url }}" class="tkd-strip-card">
+                      <div class="tkd-strip-card__art">
+                        {%- if product.featured_image -%}
+                          {{
+                            product.featured_image
+                            | image_url: width: 570
+                            | image_tag:
+                              widths: '190,380,570',
+                              sizes: '190px',
+                              loading: 'eager',
+                              alt: product.featured_image.alt
+                          }}
+                        {%- endif -%}
+                      </div>
+                      <div class="tkd-strip-card__name">{{ product.title | escape }}</div>
+                      <div class="tkd-strip-card__price">
+                        {%- if product.available -%}
+                          {{ product.price | money_without_trailing_zeros }}
+                        {%- else -%}
+                          SOLD OUT
+                        {%- endif -%}
+                      </div>
+                    </a>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
         </div>
-        {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide', custom_tagline: section.settings.featured_description %}
-      </div>
+      {%- endif -%}
+
     </div>
-  {%- endif -%}
+  </div>
 </div>
 
 {% schema %}
@@ -178,13 +213,24 @@
     },
     {
       "type": "header",
+      "content": "Cena de abertura (estilo Exo Audio)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scene",
+      "label": "Ativar cena com scroll travado",
+      "info": "Título, Featured Pack e a esteira de kits viram 3 atos de uma cena: você rola e cada um toma a tela por vez. Desliga sozinho em celular e com \"reduzir movimento\" ativado. Se desmarcado, os 3 blocos ficam empilhados normalmente.",
+      "default": true
+    },
+    {
+      "type": "header",
       "content": "Esteira de kits"
     },
     {
       "type": "checkbox",
       "id": "show_strip",
       "label": "Mostrar esteira de kits",
-      "info": "Os kits sobem de baixo pra cima na abertura e depois deslizam de lado em loop (pausa no hover).",
+      "info": "Terceiro ato da cena de abertura: revelada atrás do Featured Pack e depois desliza de lado em loop (pausa no hover).",
       "default": true
     },
     {

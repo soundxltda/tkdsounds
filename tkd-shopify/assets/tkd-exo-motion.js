@@ -15,6 +15,149 @@
      do caminho e a inércia ficava artificial. */
 
   /* ------------------------------------------------------------
+   * 3b) CENA GRUDADA DA ABERTURA (estilo Exo Audio)
+   * Título → Featured Pack → esteira de kits como 3 atos numa tela
+   * com scroll travado. O progresso vem da posição do scroll com
+   * suavização (lerp), igual ao motor de reveals. Só arma em telas
+   * >= 750px e sem prefers-reduced-motion; senão, layout empilhado.
+   * ---------------------------------------------------------- */
+  function clamp01(v) {
+    return Math.max(0, Math.min(1, v));
+  }
+
+  function initHeroScene() {
+    var scene = document.querySelector('[data-tkd-scene]');
+    if (!scene || scene.dataset.tkdSceneReady) return;
+    scene.dataset.tkdSceneReady = 'true';
+    if (scene.hasAttribute('data-tkd-scene-disabled')) return;
+
+    var pin = scene.querySelector('[data-tkd-scene-pin]');
+    var lTitle = scene.querySelector('[data-tkd-scene-layer="title"]');
+    var lFeat = scene.querySelector('[data-tkd-scene-layer="featured"]');
+    var lKits = scene.querySelector('[data-tkd-scene-layer="kits"]');
+    if (!pin || !lTitle || (!lFeat && !lKits)) return;
+
+    var acts = 1 + (lFeat ? 1 : 0) + (lKits ? 1 : 0);
+    var armed = false;
+    var running = false;
+    var p = 0;
+    var kitsUp = false;
+
+    function riseKits() {
+      if (kitsUp) return;
+      kitsUp = true;
+      var strip = scene.querySelector('[data-tkd-hero-strip]');
+      if (strip) {
+        strip.classList.add('is-in');
+        setTimeout(function () {
+          strip.classList.add('is-live');
+        }, 700);
+      }
+    }
+
+    function apply() {
+      // Janelas dos atos (com featured E kits):
+      //   featured entra 0.05–0.42 | título sai 0.10–0.44
+      //   featured sai de lado 0.56–0.92 | kits entram 0.56–0.92
+      // Sem featured, os kits entram na janela do featured.
+      var inA = 0.05, inB = 0.42;
+      var outA = 0.56, outB = 0.92;
+
+      var t = clamp01((p - 0.10) / 0.34);
+      var te = t * t;
+      lTitle.style.opacity = String(1 - te);
+      lTitle.style.transform = 'translate3d(0, ' + (-14 * te).toFixed(2) + 'vh, 0) scale(' + (1 - 0.06 * te).toFixed(4) + ')';
+      // sem isso, o ato 1 (invisível mas ainda ocupando a tela toda)
+      // rouba clique dos CTAs do ato que estiver por cima dele
+      lTitle.style.pointerEvents = te > 0.85 ? 'none' : 'auto';
+
+      if (lFeat) {
+        var f = clamp01((p - inA) / (inB - inA));
+        var fe = 1 - Math.pow(1 - f, 3);
+        var g = lKits ? clamp01((p - outA) / (outB - outA)) : 0;
+        var ge = g * g * (3 - 2 * g);
+        lFeat.style.transform = 'translate3d(' + (-118 * ge).toFixed(2) + 'vw, ' + (100 - 100 * fe).toFixed(2) + 'vh, 0)';
+        lFeat.style.pointerEvents = (fe < 0.02 || ge > 0.98) ? 'none' : 'auto';
+      }
+
+      if (lKits) {
+        var kA = lFeat ? outA : inA;
+        var kB = lFeat ? outB : inB;
+        var k = clamp01((p - kA) / (kB - kA));
+        var ke = 1 - Math.pow(1 - k, 3);
+        lKits.style.transform = 'translate3d(0, ' + (62 - 62 * ke).toFixed(2) + 'vh, 0)';
+        lKits.style.opacity = String(Math.min(1, k * 1.5).toFixed(3));
+        lKits.style.pointerEvents = k < 0.2 ? 'none' : 'auto';
+        if (k > 0.25) riseKits();
+      }
+    }
+
+    function frame() {
+      if (!armed) {
+        running = false;
+        return;
+      }
+      var rect = scene.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var total = rect.height - vh;
+      var target = total > 0 ? clamp01(-rect.top / total) : 0;
+
+      p += (target - p) * 0.18; // glide: persegue o scroll com suavização
+      if (Math.abs(target - p) < 0.0006) p = target;
+      apply();
+
+      if (Math.abs(target - p) > 0.0005) {
+        requestAnimationFrame(frame);
+      } else {
+        running = false;
+      }
+    }
+
+    function wake() {
+      if (!armed || running) return;
+      running = true;
+      requestAnimationFrame(frame);
+    }
+
+    function arm() {
+      armed = true;
+      scene.classList.add('is-armed');
+      scene.style.height = (acts * 110 + 90) + 'vh';
+      apply();
+      wake();
+    }
+
+    function disarm() {
+      armed = false;
+      scene.classList.remove('is-armed');
+      scene.style.height = '';
+      [lTitle, lFeat, lKits].forEach(function (el) {
+        if (el) {
+          el.style.transform = '';
+          el.style.opacity = '';
+          el.style.pointerEvents = '';
+        }
+      });
+      // no layout empilhado a esteira anima do jeito clássico
+      riseKits();
+    }
+
+    function evaluate() {
+      var fits = !reducedMotion && window.innerWidth >= 750;
+      if (fits && !armed) arm();
+      if (!fits && armed) disarm();
+      if (!fits && !armed) riseKits();
+    }
+
+    evaluate();
+    window.addEventListener('scroll', wake, { passive: true });
+    window.addEventListener('resize', function () {
+      evaluate();
+      wake();
+    });
+  }
+
+  /* ------------------------------------------------------------
    * 4) HERO — stagger por linha/palavra
    * ---------------------------------------------------------- */
   function initHeroStagger() {
@@ -76,6 +219,15 @@
       // seriam observados) — entrega o estado final direto
       if (el.closest('.tkd-marquee')) {
         el.classList.add('revealed', 'is-in');
+        return;
+      }
+      // dentro da cena grudada quem controla opacidade/posição são as
+      // camadas da própria cena — elementos entram já visíveis
+      if (el.closest('[data-tkd-scene].is-armed')) {
+        el.classList.add('revealed', 'is-in');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
         return;
       }
       // neutraliza o sistema antigo (classe .revealed do tkd-theme.js
@@ -145,6 +297,14 @@
     requestAnimationFrame(scrubFrame);
   }
 
+  // força uma nova passada mesmo se uma rAF de uma leitura antiga (e
+  // possivelmente errada) ainda estiver de pé — usado só na re-conferência
+  // pós window.load, pra não ficar refém da guarda de reentrância normal
+  function forceWakeScrub() {
+    scrubRunning = false;
+    wakeScrub();
+  }
+
   function initReveal() {
     var targets = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-stagger .reveal-item');
     if (!targets.length) return;
@@ -166,6 +326,25 @@
     window.addEventListener('scroll', wakeScrub, { passive: true });
     window.addEventListener('resize', wakeScrub);
     wakeScrub();
+
+    // initReveal roda no DOMContentLoaded — nesse momento o "boot" do
+    // CRT (#MainContent, animação crt-boot no tkd-theme.css) ainda pode
+    // estar espremendo o conteúdo em Y (scaleY indo de 0.02 até 1), e
+    // fontes podem não ter carregado ainda — a medida acima captura
+    // esse layout transitório e nada mais re-mede depois, então itens
+    // acima da dobra podem ficar presos invisíveis. Reforça a
+    // conferência depois que o boot termina (e por garantia, depois de
+    // 1s mesmo que ele não exista ou não dispare o evento).
+    var mainContent = document.getElementById('MainContent');
+    if (mainContent) {
+      mainContent.addEventListener('animationend', forceWakeScrub, { once: true });
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(forceWakeScrub, 50);
+    } else {
+      window.addEventListener('load', forceWakeScrub, { once: true });
+    }
+    setTimeout(forceWakeScrub, 1000);
   }
 
   /* ------------------------------------------------------------
@@ -281,22 +460,20 @@
         return;
       }
 
-      var maxDelay = 0;
       cards.forEach(function (card, i) {
-        var delay = Math.min(i, 10) * 80;
-        card.style.transitionDelay = delay + 'ms';
-        if (delay > maxDelay) maxDelay = delay;
+        card.style.transitionDelay = Math.min(i, 10) * 80 + 'ms';
       });
+
+      // dentro da cena grudada quem dispara a subida é a própria cena
+      // (initHeroScene → riseKits), no ato certo do scroll
+      if (strip.closest('[data-tkd-scene].is-armed')) return;
 
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           strip.classList.add('is-in');
           setTimeout(function () {
             strip.classList.add('is-live');
-            cards.forEach(function (card) {
-              card.style.transitionDelay = '';
-            });
-          }, maxDelay + 750);
+          }, 1550);
         });
       });
     });
@@ -424,6 +601,7 @@
     if (document.body.classList.contains('tkd-motion-ready')) return;
     document.body.classList.add('tkd-motion-ready');
 
+    initHeroScene();
     initHeroStagger();
     initReveal();
     initCounters();

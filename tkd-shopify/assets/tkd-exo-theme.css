@@ -392,6 +392,61 @@ h1, h2, h3, h4, h5,
 }
 
 /* ============================================================
+   3b) CENA GRUDADA DA ABERTURA (estilo Exo Audio)
+   Título → Featured Pack → esteira de kits como 3 atos numa tela
+   com scroll travado (sticky). SEM a classe .is-armed (mobile,
+   reduced-motion ou desligada no editor) os atos são blocos
+   empilhados normais — o JS é quem arma a cena quando cabe.
+   ============================================================ */
+.tkd-scene__layer--featured .tkd-hero__featured--floating { margin-top: 56px; }
+
+@media screen and (min-width: 750px) {
+  .tkd-scene.is-armed {
+    position: relative;
+    /* rompe os gutters da .tkd-hero: o overflow:hidden do pin precisa
+       coincidir com a borda real da viewport, senão o truque 100vw da
+       esteira (.tkd-hero__strip) fica cortado nos gutters em vez de
+       encostar na borda da tela */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+  .tkd-scene.is-armed .tkd-scene__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .tkd-scene.is-armed .tkd-scene__layer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    will-change: transform, opacity;
+  }
+  /* estados iniciais dos atos 2 e 3: esperando abaixo da tela */
+  .tkd-scene.is-armed .tkd-scene__layer--featured,
+  .tkd-scene.is-armed .tkd-scene__layer--kits {
+    transform: translate3d(0, 100vh, 0);
+  }
+  .tkd-scene.is-armed .tkd-scene__layer--featured .tkd-hero__featured--floating { margin-top: 0; }
+  .tkd-scene.is-armed .tkd-hero__strip { margin-top: 0; }
+  .tkd-scene.is-armed .tkd-scene__layer--featured .tkd-section__inner { width: 100%; }
+  /* cada ato ganha seus próprios gutters de volta, já que a cena
+     rompeu os da .tkd-hero pra caber o full-bleed da esteira — no
+     container flex, não no inner (senão encolheria o max-width) */
+  .tkd-scene.is-armed .tkd-scene__layer--title,
+  .tkd-scene.is-armed .tkd-scene__layer--featured {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* ============================================================
    4) HERO — layout centralizado + stagger + esteira de kits
    ============================================================ */
 .tkd-hero--centered { text-align: center; overflow: visible; }
