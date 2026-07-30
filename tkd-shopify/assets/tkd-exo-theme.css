@@ -21,8 +21,11 @@
      condensada de pôster (Anton) e labels técnicos estilo Eurostile
      (Michroma, como o "PRODUCED BY TKD"). Mono/pixel/typewriter
      continuam vindo do tkd-theme.css. */
+  /* UMA fonte de display no site todo (pedido do TKD): Anton em
+     títulos, botões, nav, labels, badges, eyebrows. Mono de terminal
+     fica só nos valores/preços e textos corridos. */
   --font-tkd-serif: "Anton", "Oxanium", Impact, sans-serif;
-  --font-tkd-display: "Michroma", "Oxanium", sans-serif;
+  --font-tkd-display: "Anton", "Oxanium", Impact, sans-serif;
 
   /* Paleta da capa — aço azul-marinho + branco-osso + azul-céu */
   --bg: #122233;
@@ -71,17 +74,20 @@
   --tkd-danger: #d1704f;
   --tkd-line: rgba(230, 223, 211, 0.14);
   --tkd-line-h: rgba(230, 223, 211, 0.3);
-  --tkd-radius: 8px;
-  --tkd-radius-sm: 5px;
+  /* Cantos QUADRADOS (vintage impresso) — inclui matar os pills do
+     design v2 da loja (header, cart, checkout) via radius-pill: 0 */
+  --tkd-radius: 2px;
+  --tkd-radius-sm: 0px;
+  --tkd-radius-pill: 0px;
   --font-tkd-body: "Share Tech Mono", ui-monospace, monospace;
 
   /* Textura de filme reutilizável (grain fino, tipo a capa) */
   --tkd-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 
-  /* Tokens da camada — cantos discretos (hardware de vault, não app) */
-  --exo-radius-sm: 3px;
-  --exo-radius-md: 6px;
-  --exo-radius-lg: 10px;
+  /* Tokens da camada — cantos QUADRADOS (vintage impresso) */
+  --exo-radius-sm: 0px;
+  --exo-radius-md: 2px;
+  --exo-radius-lg: 2px;
   --exo-shadow-card: 0 2px 0 rgba(0, 0, 0, 0.28), 0 16px 34px -18px rgba(0, 0, 0, 0.6);
   --exo-shadow-card-hover: 0 4px 14px rgba(0, 0, 0, 0.35), 0 26px 50px -20px rgba(0, 0, 0, 0.65), 0 0 24px rgba(95, 178, 230, 0.14);
   --exo-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -106,18 +112,17 @@ body,
   --color-badge-background: 34, 60, 88;
   --color-badge-border: 95, 178, 230;
 
-  /* Cantos UNIFORMES nos componentes nativos do Refresh (forms,
-     newsletter, busca, popups): interativos em pill, painéis em
-     canto discreto — mesma linguagem dos botões/cards TKD */
-  --buttons-radius: 24px;
-  --buttons-radius-outset: 25px;
-  --inputs-radius: 8px;
-  --inputs-radius-outset: 9px;
-  --variant-pills-radius: 999px;
-  --badge-corner-radius: 999px;
-  --popup-corner-radius: 10px;
-  --text-boxes-radius: 10px;
-  --media-radius: 8px;
+  /* Cantos QUADRADOS nos componentes nativos do Refresh (forms,
+     newsletter, busca, popups) — vintage impresso, sem arredondado */
+  --buttons-radius: 0px;
+  --buttons-radius-outset: 1px;
+  --inputs-radius: 0px;
+  --inputs-radius-outset: 1px;
+  --variant-pills-radius: 0px;
+  --badge-corner-radius: 0px;
+  --popup-corner-radius: 2px;
+  --text-boxes-radius: 2px;
+  --media-radius: 0px;
 }
 
 html { background: var(--bg); }
@@ -135,17 +140,18 @@ body {
   background-size: auto, auto, 260px 260px;
 }
 
-/* Moldura de pôster nas bordas da tela, como o frame da capa */
+/* Grain de filme GLOBAL por cima de tudo — as sections da base v2
+   têm fundos opacos que cobrem o noise do body, então esta camada
+   fixa garante a textura no site INTEIRO, do header ao footer */
 body::after {
   content: "";
   position: fixed;
-  inset: 10px;
-  border: 1px solid rgba(230, 223, 211, 0.13);
-  z-index: 80;
+  inset: -5%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+  z-index: 90;
   pointer-events: none;
-}
-@media screen and (max-width: 749px) {
-  body::after { inset: 6px; }
 }
 
 /* Glow central do CRT recolorido (era âmbar fixo no tkd-theme.css) */
@@ -210,11 +216,14 @@ h1, h2, h3, h4, h5,
 /* Grain DENTRO das letras dos títulos grandes, como o lettering
    granulado do "LOST ECHOES" da capa */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  /* IMPORTANTE: os spans do stagger têm transform próprio, e
+  /* Tinta granulada em TODOS os escritos claros do site (pedido do
+     TKD: mesma textura do título do banner em tudo que é branco).
+     IMPORTANTE: os spans do stagger têm transform próprio, e
      background-clip: text no PAI não pinta glifos de filhos
      transformados (viram camada separada) — então o clip é aplicado
      tanto nos títulos quanto nos spans internos, cada um pintando o
      próprio grain */
+  h1, h2, h3, h4, h5,
   .tkd-hero__title,
   .tkd-hero__title .tkd-word,
   .tkd-hero__title .tkd-stagger-line span,
@@ -222,11 +231,19 @@ h1, h2, h3, h4, h5,
   .tkd-h1 .tkd-word,
   .tkd-h2,
   .tkd-h2 .tkd-word,
+  .tkd-h3,
   .tkd-latest__title,
   .tkd-kits-marquee__title,
   .tkd-product-hero__title,
   .tkd-about__title,
-  .tkd-related__title {
+  .tkd-related__title,
+  .pack-tile__name,
+  .pack-tile__fallback-name,
+  .tkd-strip-card__name,
+  .tkd-hero__terminal,
+  .tkd-hero__featured-text,
+  .tkd-header__logo,
+  .tkd-footer__brand {
     background-color: #e9e2d3;
     background-image:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
@@ -235,6 +252,16 @@ h1, h2, h3, h4, h5,
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+  }
+
+  /* O ponto azul do logo continua azul mesmo com o clip do pai */
+  .tkd-header__logo .logo-dot,
+  .tkd-footer__brand .brand-dim {
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    -webkit-text-fill-color: var(--amber);
+    color: var(--amber);
   }
 }
 
@@ -245,29 +272,28 @@ h1, h2, h3, h4, h5,
     -0.6px 0 0 rgba(230, 223, 211, 0.3);
 }
 
-/* Eyebrows — Michroma azul-céu, como o "PRODUCED BY TKD" da capa */
+/* Eyebrows — mesma fonte de pôster, azul-céu, tracking largo */
 .tkd-eyebrow,
 .tkd-eyebrow.text-amber {
   font-family: var(--font-tkd-display);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.24em;
   color: var(--amber);
 }
 
-/* Botões — a pill da capa ("PHRASE KIT - DRUM KIT - SAMPLE PACK"):
-   formato pílula, Michroma, flat, azul-céu */
+/* Botões — quadrados, flat, azul-céu, mesma fonte de pôster */
 .tkd-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   text-transform: uppercase;
-  border-radius: 999px;
+  border-radius: 2px;
   font-family: var(--font-tkd-display);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   transition: transform 200ms var(--exo-ease), box-shadow 200ms var(--exo-ease), background-color 200ms var(--exo-ease), color 200ms var(--exo-ease), border-color 200ms var(--exo-ease), opacity 200ms var(--exo-ease);
 }
 .tkd-btn-solid {
@@ -378,6 +404,15 @@ h1, h2, h3, h4, h5,
 .tkd-hero__featured--floating {
   margin: 56px auto 0;
   max-width: 640px;
+}
+.tkd-hero__featured-label {
+  justify-content: center;
+}
+.tkd-hero__featured-text {
+  font-family: var(--font-tkd-display);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .tkd-hero__featured--floating .pack-tile { text-align: left; }
 
@@ -604,7 +639,31 @@ a.pack-tile:visited,
 .pack-tile__tags {
   justify-content: center;
 }
-.pack-tile__price-btn { text-decoration: none; }
+/* Preço nos cards = texto simples mono azul, espelhando o estilo dos
+   valores da esteira do hero (sem botão, sem borda, sem fundo) */
+.pack-tile .pack-tile__price-btn,
+.pack-tile__price-btn.tkd-btn,
+.pack-tile__price-btn.tkd-btn-solid {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 0;
+  color: var(--amber);
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-decoration: none;
+}
+.pack-tile__price-btn.tkd-btn-solid:hover,
+.pack-tile__price-btn.tkd-btn-solid:active {
+  background: none;
+  color: var(--amber);
+  transform: none;
+  box-shadow: none;
+}
 
 /* Tags/pills fora dos cards — uns tinham, outros não, e o grid ficava
    desigual; a classificação fica só no badge do topo (NEW/BESTSELLER) */
@@ -670,13 +729,13 @@ a.pack-tile:visited,
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  padding: 5px 12px;
-  border-radius: 999px;
+  padding: 4px 12px;
+  border-radius: 0;
   background: var(--bg-2);
   color: var(--amber);
   border: 1px solid var(--amber);
   font-family: var(--font-tkd-display);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -847,9 +906,8 @@ a.pack-tile:visited,
 .pack-tile__price-current {
   color: var(--amber);
   font-family: var(--font-tkd-mono);
-  font-weight: 700;
-  font-size: 28px;
-  text-shadow: 0 0 16px var(--amber-glow);
+  font-weight: 400;
+  font-size: 18px;
 }
 .pack-tile__actions {
   margin-top: 20px;
@@ -944,6 +1002,44 @@ a.pack-tile:visited,
 .tkd-kits-marquee__viewall:hover { color: var(--amber); }
 
 /* ============================================================
+   8b) ABOUT — "Behind the sounds": título centralizado, playlist
+   grande + coluna de bio/streams à direita
+   ============================================================ */
+.tkd-about__head { text-align: center; }
+.tkd-about__head .tkd-h2 { margin-top: 8px; }
+.tkd-about__cols {
+  display: grid;
+  gap: 28px;
+  margin-top: 36px;
+  align-items: start;
+}
+@media screen and (min-width: 750px) {
+  .tkd-about__cols { grid-template-columns: 1.5fr 1fr; gap: 36px; }
+}
+.tkd-about__embed { margin: 0; }
+.tkd-about__embed iframe {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+.tkd-about__streams {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.tkd-about__side .tkd-about__body {
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--fg-mid);
+}
+.tkd-about__side .tkd-about__body p { margin: 0 0 12px; }
+
+/* ============================================================
    9) DRAWER DE CARRINHO — painel lateral
    ============================================================ */
 cart-drawer .drawer__inner {
@@ -970,7 +1066,7 @@ cart-drawer .drawer__inner {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  border-radius: 999px; /* pill, como todos os interativos */
+  border-radius: 0; /* quadrado, vintage */
   border: 1px solid var(--line-h);
   color: var(--fg);
   transition: transform 300ms var(--exo-ease), background-color 300ms var(--exo-ease);
@@ -1003,12 +1099,12 @@ cart-drawer .drawer__inner {
   text-transform: uppercase;
 }
 .tkd-footer__links a {
-  font-family: var(--font-tkd-mono);
-  letter-spacing: 0.12em;
+  font-family: var(--font-tkd-display);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .tkd-footer__brand .brand-dim { color: var(--fg-dim); }
-.tkd-footer__tagline { color: var(--fg-dim); }
+.tkd-footer__tagline { display: none; } /* pedido do TKD: só a marca no rodapé */
 .tkd-footer__links a { color: var(--fg-mid); }
 .tkd-footer__links a:hover { color: var(--amber); }
 .tkd-footer__bottom { color: var(--fg-ghost); }
@@ -1101,31 +1197,33 @@ cart-drawer .drawer__inner {
 }
 .tkd-header__logo .logo-dot { color: var(--amber); }
 .tkd-header__link {
-  font-family: var(--font-tkd-mono);
-  font-size: 12px;
+  font-family: var(--font-tkd-display);
+  font-size: 13px;
   font-weight: 400;
-  letter-spacing: 0.16em;
-  border-radius: var(--exo-radius-sm);
+  letter-spacing: 0.1em;
+  border-radius: 0;
 }
 .tkd-header__link:hover { color: var(--amber); background: rgba(95, 178, 230, 0.08); }
 .tkd-header__link--active { color: var(--fg); background: rgba(95, 178, 230, 0.14); }
 .tkd-header__cart {
   font-family: var(--font-tkd-display);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
+  letter-spacing: 0.08em;
   color: var(--amber);
   border: 1px solid var(--amber);
+  border-radius: 0;
   transition: background-color 200ms var(--exo-ease), color 200ms var(--exo-ease);
 }
 .tkd-header__cart:hover { background: var(--amber); color: #0b1826; border-color: var(--amber); }
-.tkd-header__cart-count { background: var(--amber); color: #0b1826; }
+.tkd-header__cart-count { background: var(--amber); color: #0b1826; border-radius: 0; }
 .tkd-header__cart:hover .tkd-header__cart-count { background: #0b1826; color: var(--amber); }
-.tkd-header__menu-toggle { border-color: var(--line-h); }
+.tkd-header__menu-toggle { border-color: var(--line-h); border-radius: 0; }
 .tkd-header__mobile {
   background: rgba(11, 24, 38, 0.97);
   background-image: var(--tkd-noise);
 }
-.tkd-header__mobile a { font-family: var(--font-tkd-mono); letter-spacing: 0.1em; }
+.tkd-header__mobile a { font-family: var(--font-tkd-display); letter-spacing: 0.08em; }
 
 /* Header retrô v1 (se a section antiga voltar a ser usada) */
 .tkd-header__winbtns span { border-color: var(--line-h); }

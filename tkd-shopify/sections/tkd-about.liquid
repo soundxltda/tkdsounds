@@ -1,13 +1,13 @@
 {% comment %}
-  TKD About — sobre o produtor (portado da seção ABOUT de routes/index.tsx).
-  Retrato flutuado à esquerda, bio em fonte "documento datilografado" e
-  playlist do Spotify embutida (créditos/produções).
+  TKD About — "Behind the sounds": título centralizado, playlist
+  (Spotify etc.) grande à esquerda e, à direita, uma coluna com a
+  foto das streams + texto de bio (richtext editável no Theme Editor).
 {% endcomment %}
 
 {% style %}
   #shopify-section-{{ section.id }} .tkd-about {
     padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round }}px;
   }
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} .tkd-about {
@@ -17,37 +17,47 @@
   }
 {% endstyle %}
 
-<div class="tkd-about tkd-section tkd-section--wide-gutters" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | escape }}"{% endif %}>
-  <div class="tkd-section__inner tkd-section__inner--w980">
-    <div class="tkd-about__body reveal">
-      {%- if section.settings.portrait != blank -%}
-        {{
-          section.settings.portrait
-          | image_url: width: 480
-          | image_tag:
-            widths: '160,320,480',
-            sizes: '160px',
-            class: 'tkd-about__portrait',
-            loading: 'lazy',
-            alt: section.settings.portrait.alt
-        }}
+<div class="tkd-about tkd-section" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | escape }}"{% endif %}>
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    <div class="tkd-about__head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
       {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+    </div>
 
-      {{ section.settings.bio }}
-
+    <div class="tkd-about__cols">
       {%- if section.settings.show_embed and section.settings.embed_url != blank -%}
-        <div class="tkd-about__embed">
+        <div class="tkd-about__embed reveal">
           <iframe
-            title="{{ section.settings.embed_title | escape }}"
             src="{{ section.settings.embed_url }}"
-            width="100%"
+            title="{{ section.settings.embed_title | escape }}"
             height="{{ section.settings.embed_height }}"
-            frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           ></iframe>
         </div>
       {%- endif -%}
+
+      <div class="tkd-about__side reveal">
+        {%- if section.settings.streams_image != blank -%}
+          <img
+            class="tkd-about__streams"
+            src="{{ section.settings.streams_image | image_url: width: 900 }}"
+            srcset="{{ section.settings.streams_image | image_url: width: 480 }} 480w, {{ section.settings.streams_image | image_url: width: 900 }} 900w"
+            sizes="(min-width: 750px) 40vw, 100vw"
+            width="{{ section.settings.streams_image.width }}"
+            height="{{ section.settings.streams_image.height }}"
+            alt="{{ section.settings.streams_image.alt | default: 'Streams' }}"
+            loading="lazy"
+          >
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="tkd-about__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </div>
@@ -56,57 +66,75 @@
 {
   "name": "TKD About",
   "tag": "section",
-  "class": "section-tkd-about",
   "settings": [
     {
       "type": "text",
       "id": "anchor",
-      "label": "Âncora (id para links #)",
+      "label": "Âncora (id p/ links #)",
       "default": "about"
     },
     {
-      "type": "image_picker",
-      "id": "portrait",
-      "label": "Retrato",
-      "info": "Exibido flutuado à esquerda, proporção 4:5, 160px de largura."
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "About"
     },
     {
-      "type": "richtext",
-      "id": "bio",
-      "label": "Bio",
-      "default": "<p>TKD is a multi-platinum producer from Brazil with over 1 billion streams across his catalog.</p><p>Known for crafting dark, soulful and cinematic compositions, his sound has been used by some of the biggest artists and producers in the music scene.</p><p>TKD Archives was created as a private collection of original samples, textures and compositions — built with real instruments, synthesizers, pedals and outboard gear.</p><p>These packs are not generic loop kits. They are selected pieces from TKD's personal archive, designed for producers looking for emotion, character and a sound that feels alive.</p>"
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Behind the sounds"
     },
     {
       "type": "header",
-      "content": "Playlist embutida"
+      "content": "Playlist / embed"
     },
     {
       "type": "checkbox",
       "id": "show_embed",
-      "label": "Mostrar playlist",
+      "label": "Mostrar embed",
       "default": true
     },
     {
       "type": "text",
       "id": "embed_url",
-      "label": "URL do embed (Spotify)",
-      "default": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0"
+      "label": "URL do embed"
     },
     {
       "type": "text",
       "id": "embed_title",
       "label": "Título acessível do embed",
-      "default": "Produced by TKD — Spotify playlist"
+      "default": "Playlist"
     },
     {
       "type": "range",
       "id": "embed_height",
       "label": "Altura do embed",
       "min": 80,
-      "max": 500,
-      "step": 5,
-      "unit": "px",
-      "default": 350
+      "max": 480,
+      "step": 8,
+      "default": 416,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Coluna da direita"
+    },
+    {
+      "type": "image_picker",
+      "id": "streams_image",
+      "label": "Foto das streams",
+      "info": "Aparece acima do texto."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Texto sobre você"
+    },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Retrato (não usado neste layout)"
     },
     {
       "type": "header",
@@ -115,28 +143,24 @@
     {
       "type": "range",
       "id": "padding_top",
-      "label": "Espaço acima (desktop)",
+      "label": "Padding superior (desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
-      "unit": "px",
-      "default": 0
+      "default": 64,
+      "unit": "px"
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Espaço abaixo (desktop)",
+      "label": "Padding inferior (desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
-      "unit": "px",
-      "default": 128
+      "default": 96,
+      "unit": "px"
     }
   ],
-  "presets": [
-    {
-      "name": "TKD About"
-    }
-  ]
+  "presets": [{ "name": "TKD About" }]
 }
 {% endschema %}
