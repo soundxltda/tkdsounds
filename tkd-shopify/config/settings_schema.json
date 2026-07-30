@@ -15,24 +15,28 @@
         "content": "Efeitos retrô (CRT)"
       },
       {
+        "type": "paragraph",
+        "content": "Desligados por padrão na camada visual \"Exo\" (moderna). Pode reativar o visual retrô original a qualquer momento."
+      },
+      {
         "type": "checkbox",
         "id": "tkd_enable_crt",
         "label": "Ativar overlays CRT (scanlines, vinheta, glow)",
-        "default": true
+        "default": false
       },
       {
         "type": "checkbox",
         "id": "tkd_enable_grain",
         "label": "Ativar grain animado",
         "info": "Requer overlays CRT ativos.",
-        "default": true
+        "default": false
       },
       {
         "type": "checkbox",
         "id": "tkd_enable_flicker",
         "label": "Ativar flicker de monitor",
         "info": "Requer overlays CRT ativos.",
-        "default": true
+        "default": false
       },
       {
         "type": "header",
@@ -42,13 +46,13 @@
         "type": "checkbox",
         "id": "tkd_enable_cursors",
         "label": "Ativar cursores retrô (Win95)",
-        "default": true
+        "default": false
       },
       {
         "type": "checkbox",
         "id": "tkd_enable_zoom",
         "label": "Ativar escala visual 120% (como o site original)",
-        "default": true
+        "default": false
       },
       {
         "type": "header",

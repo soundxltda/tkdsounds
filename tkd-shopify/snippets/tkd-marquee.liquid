@@ -1,0 +1,16 @@
+{% comment %}
+  TKD Marquee — faixa horizontal em loop contínuo, pausa no hover.
+  A JS (tkd-exo-motion.js) duplica os itens automaticamente pra
+  criar o efeito seamless; aqui só renderiza a lista original.
+
+  Uso:
+    {% render 'tkd-marquee', blocks: section.blocks, duration: 30 %}
+{% endcomment %}
+
+<div class="tkd-marquee" data-tkd-marquee>
+  <div class="tkd-marquee__track" style="--tkd-marquee-duration: {{ duration | default: 30 }}s;">
+    {%- for block in blocks -%}
+      <span class="tkd-marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+    {%- endfor -%}
+  </div>
+</div>

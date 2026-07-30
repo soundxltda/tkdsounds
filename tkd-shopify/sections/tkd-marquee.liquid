@@ -1,0 +1,65 @@
+{% comment %}
+  TKD Marquee (section) — wrapper editável no Theme Editor pro
+  snippet tkd-marquee.liquid. Útil pra selos de mídia, depoimentos
+  curtos ou frases em loop.
+{% endcomment %}
+
+<div class="tkd-marquee-section tkd-section reveal">
+  <div class="tkd-section__inner tkd-section__inner--w1400">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="tkd-eyebrow" style="text-align: center; margin-bottom: 16px;">{{ section.settings.eyebrow | escape }}</div>
+    {%- endif -%}
+    {% render 'tkd-marquee', blocks: section.blocks, duration: section.settings.duration %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Marquee",
+  "tag": "section",
+  "class": "section-tkd-marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (opcional)"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Duração de uma volta completa",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "REAL INSTRUMENTS · NO RECYCLED SAMPLES"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "TKD Marquee",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

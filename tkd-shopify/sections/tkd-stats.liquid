@@ -1,0 +1,85 @@
+{% comment %}
+  TKD Stats — contadores animados (ex.: "1B+ streams", "5000+ produtores").
+  Cada block anima de 0 até o valor final quando entra na viewport
+  (ver initCounters em tkd-exo-motion.js).
+{% endcomment %}
+
+<div class="tkd-stats tkd-section reveal-stagger">
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="tkd-eyebrow" style="text-align: center; margin-bottom: 24px;">{{ section.settings.eyebrow | escape }}</div>
+    {%- endif -%}
+    <div class="tkd-stats__grid" style="--tkd-stats-cols: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        <div class="reveal-item" {{ block.shopify_attributes }}>
+          <div
+            class="tkd-stats__value"
+            data-count-to="{{ block.settings.value }}"
+            data-count-prefix="{{ block.settings.prefix | escape }}"
+            data-count-suffix="{{ block.settings.suffix | escape }}"
+          >{{ block.settings.prefix }}0{{ block.settings.suffix }}</div>
+          <div class="tkd-stats__label">{{ block.settings.label | escape }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Stats",
+  "tag": "section",
+  "class": "section-tkd-stats",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (opcional)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Contador",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Valor final",
+          "info": "Só números (aceita decimais, ex.: 1.2)",
+          "default": "1000"
+        },
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefixo (opcional)",
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Sufixo (opcional)",
+          "default": "+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "Producers"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "TKD Stats",
+      "blocks": [
+        { "type": "stat" },
+        { "type": "stat" },
+        { "type": "stat" }
+      ]
+    }
+  ]
+}
+{% endschema %}

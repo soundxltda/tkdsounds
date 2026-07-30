@@ -26,7 +26,7 @@
 
 <div class="tkd-latest tkd-section tkd-section--wide-gutters">
   <div class="tkd-section__inner tkd-section__inner--w1200">
-    <div class="tkd-latest__head">
+    <div class="tkd-latest__head reveal">
       <div>
         {%- if section.settings.eyebrow != blank -%}
           <div class="tkd-eyebrow text-amber">{{ section.settings.eyebrow | escape }}</div>
@@ -41,7 +41,7 @@
     {%- if col.products.size == 0 -%}
       <div class="tkd-empty-note">&gt; No packs published yet.</div>
     {%- else -%}
-      <div class="tkd-grid-packs">
+      <div class="tkd-grid-packs reveal-stagger">
         {%- for product in col.products limit: limit -%}
           <div class="tkd-grid-packs__item">
             {% render 'tkd-pack-card', card_product: product %}

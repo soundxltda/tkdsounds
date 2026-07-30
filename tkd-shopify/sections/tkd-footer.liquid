@@ -6,6 +6,43 @@
 
 <footer class="tkd-footer">
   <div class="tkd-footer__inner">
+    {%- if section.settings.show_newsletter -%}
+      <div class="tkd-footer__newsletter reveal">
+        <div class="tkd-footer__newsletter-copy">
+          <div class="tkd-footer__newsletter-title">{{ section.settings.newsletter_title | escape }}</div>
+          {%- if section.settings.newsletter_subtitle != blank -%}
+            <div class="tkd-footer__newsletter-sub">{{ section.settings.newsletter_subtitle | escape }}</div>
+          {%- endif -%}
+        </div>
+
+        <div>
+          {%- form 'customer', class: 'tkd-footer__newsletter-form-wrap' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="tkd-newsletter__success">{{ section.settings.newsletter_success | escape }}</p>
+            {%- else -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="tkd-footer__newsletter-form">
+                <input
+                  type="email"
+                  name="contact[email]"
+                  id="tkd-footer-newsletter-email-{{ section.id }}"
+                  class="tkd-input"
+                  required
+                  autocomplete="email"
+                  placeholder="{{ section.settings.newsletter_placeholder | escape }}"
+                  aria-label="{{ section.settings.newsletter_placeholder | escape }}"
+                >
+                <button type="submit" class="tkd-btn tkd-btn-solid">{{ section.settings.newsletter_button | escape }}</button>
+                {%- if section.settings.secondary_cta_label != blank and section.settings.secondary_cta_link != blank -%}
+                  <a href="{{ section.settings.secondary_cta_link }}" class="tkd-btn tkd-btn-outline tkd-footer__cta">{{ section.settings.secondary_cta_label | escape }}</a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    {%- endif -%}
+
     <div class="tkd-footer__top">
       <div>
         <div class="tkd-footer__brand">
@@ -57,6 +94,53 @@
   "name": "TKD Footer",
   "class": "section-tkd-footer",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar bloco de newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter — título",
+      "default": "Join the list"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "Newsletter — subtítulo",
+      "default": "Free loops, new pack alerts, early access."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Newsletter — placeholder do e-mail",
+      "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Newsletter — texto do botão",
+      "default": "Sign up"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_success",
+      "label": "Newsletter — mensagem de sucesso",
+      "default": "You're on the list. Check your inbox soon."
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_label",
+      "label": "CTA secundário — texto",
+      "default": "Browse Archive"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "CTA secundário — link"
+    },
     {
       "type": "text",
       "id": "brand_text",

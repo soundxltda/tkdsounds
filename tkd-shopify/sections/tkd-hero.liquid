@@ -22,12 +22,12 @@
     <div class="tkd-hero__grid">
       <div>
         {%- if section.settings.terminal_text != blank -%}
-          <div class="tkd-hero__terminal">{{ section.settings.terminal_text | escape }}</div>
+          <div class="tkd-hero__terminal reveal">{{ section.settings.terminal_text | escape }}</div>
         {%- endif -%}
 
-        <h1 class="tkd-hero__title chroma">{{ section.settings.title | escape }}</h1>
+        <h1 class="tkd-hero__title chroma" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
 
-        <div class="tkd-hero__ctas">
+        <div class="tkd-hero__ctas reveal">
           {%- if section.settings.button1_label != blank -%}
             <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
               {{- section.settings.button1_label | escape -}}
@@ -39,6 +39,17 @@
             </a>
           {%- endif -%}
         </div>
+
+        {%- if section.settings.show_scroll_cue -%}
+          <button type="button" class="tkd-scroll-cue reveal" data-tkd-scroll-cue aria-label="{{ section.settings.scroll_cue_text | escape }}">
+            <span>{{ section.settings.scroll_cue_text | escape }}</span>
+            <span class="tkd-scroll-cue__icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
+              </svg>
+            </span>
+          </button>
+        {%- endif -%}
       </div>
 
       {%- if section.settings.featured_product != blank -%}
@@ -102,6 +113,18 @@
       "type": "url",
       "id": "button2_link",
       "label": "Botão secundário — link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_cue",
+      "label": "Mostrar indicador de scroll",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "scroll_cue_text",
+      "label": "Texto do indicador de scroll",
+      "default": "Scroll"
     },
     {
       "type": "header",
