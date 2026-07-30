@@ -352,7 +352,8 @@ h1, h2, h3, h4, h5,
 }
 
 /* ============================================================
-   3) BACKGROUND AMBIENTE — nebulosa azul/dourada girando devagar
+   3) BACKGROUND AMBIENTE — foto do vault desfocada + nebulosa
+   azul/dourada girando devagar por cima
    ============================================================ */
 .tkd-ambient-bg {
   position: fixed;
@@ -360,6 +361,40 @@ h1, h2, h3, h4, h5,
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+}
+/* Foto de fundo: escalada e desfocada só nela (o filter não vaza pro
+   conteúdo porque ele mora em outra camada, com z-index acima) —
+   scale(1.1) esconde a borda amaciada do blur nas margens.
+   display:block explícito é NECESSÁRIO: o base.css da loja tem uma
+   regra genérica "div:empty { display: none }" que, por não ter
+   filhos, esconde essa div (e por tabela, a .tkd-ambient-bg__shape
+   também — daí o display:block nela mais abaixo). Como div:empty tem
+   mais especificidade que uma classe sozinha, precisa do seletor
+   com "div." na frente pra realmente vencer. */
+div.tkd-ambient-bg__photo {
+  display: block;
+}
+.tkd-ambient-bg__photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 38%;
+  filter: blur(22px) saturate(1.05) brightness(0.55);
+  transform: scale(1.1);
+  opacity: 0.75;
+}
+/* Véu escuro por cima da foto: sem isso, textos claros perdem
+   contraste quando caem sobre um trecho mais claro da imagem (ex.: o
+   brilho central) — garante leitura em QUALQUER parte da página, já
+   que a foto é fixa e o conteúdo passa por cima dela ao rolar */
+.tkd-ambient-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 15, 24, 0.55) 0%, rgba(8, 15, 24, 0.72) 45%, rgba(8, 15, 24, 0.85) 100%);
+}
+div.tkd-ambient-bg__shape {
+  display: block;
 }
 .tkd-ambient-bg__shape {
   position: absolute;

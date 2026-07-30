@@ -1,11 +1,14 @@
 {% comment %}
-  TKD Ambient Background — forma abstrata borrada, fixa atrás do
-  conteúdo, girando devagar e continuamente. Puramente decorativo
-  (pointer-events: none), desliga sozinha com prefers-reduced-motion.
+  TKD Ambient Background — foto do vault desfocada no fundo do site
+  inteiro, com uma forma abstrata borrada por cima (girando devagar e
+  continuamente). Tudo fixo atrás do conteúdo e puramente decorativo
+  (pointer-events: none); a rotação desliga sozinha com
+  prefers-reduced-motion.
 
   Uso: {% render 'tkd-ambient-bg' %} (uma vez, em layout/theme.liquid)
 {% endcomment %}
 
 <div class="tkd-ambient-bg" aria-hidden="true">
+  <div class="tkd-ambient-bg__photo" style="background-image: url({{ 'tkd-bg-vault.jpg' | asset_url }});"></div>
   <div class="tkd-ambient-bg__shape"></div>
 </div>
