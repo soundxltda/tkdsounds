@@ -112,7 +112,7 @@
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 <div class="pack-tile pack-tile--wide reveal-item">
   {%- # Badge fora do .pack-art (que tem overflow hidden) pra poder
-      atravessar a borda de cima do card sem ser cortado -%}
+      # atravessar a borda de cima do card sem ser cortado -%}
   {%- if badge_text != blank -%}
     <span class="pack-tile__badge{% if badge_amber %} pack-tile__badge--amber{% endif %}">{{ badge_text }}</span>
   {%- endif -%}
@@ -224,7 +224,7 @@
 {%- else -%}
 <a href="{{ card_product.url }}" class="pack-tile reveal-item">
   {%- # Badge fora do .pack-art (que tem overflow hidden) pra poder
-      atravessar a borda de cima do card sem ser cortado -%}
+      # atravessar a borda de cima do card sem ser cortado -%}
   {%- if badge_text != blank -%}
     <span class="pack-tile__badge{% if badge_amber %} pack-tile__badge--amber{% endif %}">{{ badge_text }}</span>
   {%- endif -%}
