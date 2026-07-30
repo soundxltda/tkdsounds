@@ -1311,6 +1311,20 @@ cart-drawer .drawer__inner {
   box-shadow: none;
 }
 .tkd-header.is-scrolled { border-bottom-color: var(--line-h); }
+/* Nav SEMPRE centralizado na barra: o tkd-theme.css base usa
+   justify-content:space-between entre logo/nav/actions, o que só
+   parecia centralizar o nav por acaso, com o peso do logo do lado
+   esquerdo. Sem o texto do logo (removido a pedido), o nav ficava
+   puxado pra esquerda — grid de 3 colunas garante centro de verdade
+   não importa o tamanho de logo/actions de cada lado. */
+.tkd-header__bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  justify-content: unset;
+}
+.tkd-header__logo { grid-column: 1; justify-self: start; }
+.tkd-header__nav { grid-column: 2; justify-content: center; }
+.tkd-header__actions { grid-column: 3; justify-self: end; }
 .tkd-header__logo {
   font-family: var(--font-tkd-serif);
   font-weight: 400;
