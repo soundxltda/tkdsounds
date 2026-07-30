@@ -71,8 +71,155 @@
     endif
   endfor
   assign pill_tags = pill_tags | split: '||'
+
+  # Layout "wide" (destaque na home): lista de features em duas colunas,
+  # a partir dos metafields tkd.* que existirem (degrada bem se faltar)
+  assign is_wide = false
+  if layout == 'wide'
+    assign is_wide = true
+  endif
+
+  assign features = ''
+  assign sample_count = card_product.metafields.tkd.sample_count.value
+  assign one_shot_count = card_product.metafields.tkd.one_shot_count.value
+  assign bpm_range = card_product.metafields.tkd.bpm_range.value
+  assign includes_midi = card_product.metafields.tkd.includes_midi.value
+  assign includes_stems = card_product.metafields.tkd.includes_stems.value
+  assign mood = card_product.metafields.tkd.mood.value
+
+  if sample_count != blank
+    assign features = features | append: sample_count | append: ' samples||'
+  endif
+  if one_shot_count != blank
+    assign features = features | append: one_shot_count | append: ' one-shots||'
+  endif
+  if bpm_range != blank
+    assign features = features | append: bpm_range | append: ' BPM||'
+  endif
+  if mood != blank
+    assign features = features | append: mood | append: '||'
+  endif
+  if includes_stems
+    assign features = features | append: 'Stems included||'
+  endif
+  if includes_midi
+    assign features = features | append: 'MIDI included||'
+  endif
+  assign features = features | split: '||'
 -%}
 
+{%- if is_wide -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<div class="pack-tile pack-tile--wide reveal-item">
+  <a href="{{ card_product.url }}" class="pack-tile__art-link pack-art">
+    {%- if badge_text != blank -%}
+      <span class="pack-tile__badge{% if badge_amber %} pack-tile__badge--amber{% endif %}">{{ badge_text }}</span>
+    {%- endif -%}
+    {%- if card_product.featured_image -%}
+      <div class="pack-art-fallback">
+        {{
+          card_product.featured_image
+          | image_url: width: 700
+          | image_tag:
+            widths: '350,500,700',
+            sizes: '(min-width: 750px) 280px, 100vw',
+            class: 'pack-art-img',
+            loading: img_loading,
+            alt: card_product.featured_image.alt
+        }}
+      </div>
+    {%- else -%}
+      <div
+        class="pack-art-fallback pack-art-fallback--gradient"
+        style="background: radial-gradient(circle at 30% 30%, {{ accent }}66, #0d0906 75%);"
+      >
+        <div class="pack-tile__fallback-name">{{ card_product.title | escape }}</div>
+      </div>
+    {%- endif -%}
+    {%- if preview_url != blank -%}
+      <div class="pack-tile__hover-layer">
+        <button
+          type="button"
+          class="audio-play-btn pack-tile__hover-play"
+          data-tkd-play
+          data-track-id="{{ card_product.id }}-preview"
+          data-track-src="{{ preview_url }}"
+          data-track-name="{{ preview_name | escape }}"
+          data-pack-name="{{ card_product.title | escape }}"
+          data-pack-url="{{ card_product.url }}"
+          data-accent="{{ accent }}"
+          {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 144 }}"{% endif %}
+          aria-label="Play {{ card_product.title | escape }}"
+        >
+          <svg class="tkd-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="tkd-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </a>
+
+  <div class="pack-tile__meta pack-tile__meta--wide">
+    {%- if genre != blank or formats != blank -%}
+      <div class="pack-tile__row">
+        <span class="pack-tile__genre truncate">{{ genre }}</span>
+        <span class="pack-tile__fmt truncate">{{ formats }}</span>
+      </div>
+    {%- endif -%}
+
+    <a href="{{ card_product.url }}" class="pack-tile__name-link">
+      <div class="pack-tile__name" title="{{ card_product.title | escape }}">{{ card_product.title | escape }}</div>
+    </a>
+
+    {%- if tagline != blank -%}
+      <div class="pack-tile__tagline">{{ tagline }}</div>
+    {%- endif -%}
+
+    {%- if features.size > 0 -%}
+      <ul class="pack-tile__features">
+        {%- for feature in features -%}
+          {%- if feature != blank -%}<li>{{ feature }}</li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if pill_tags.size > 0 -%}
+      <div class="pack-tile__tags">
+        {%- for tag in pill_tags -%}
+          {%- if tag != blank -%}<span class="pack-tile__tag-pill">{{ tag }}</span>{%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pack-tile__price-row">
+      <span class="pack-tile__price-current">
+        {%- if card_product.available -%}
+          {{ card_product.price | money_without_trailing_zeros }}
+        {%- else -%}
+          SOLD OUT
+        {%- endif -%}
+      </span>
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <span class="pack-tile__price-was">{{ card_product.compare_at_price | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if card_product.available -%}
+      <div class="pack-tile__actions">
+        <a href="{{ card_product.url }}?variant={{ card_product.selected_or_first_available_variant.id }}" class="tkd-btn tkd-btn-solid">Buy now</a>
+        <product-form data-section-id="{{ section.id }}" data-hide-errors="true">
+          {%- form 'product', card_product, id: 'tkd-wide-card-form', class: 'tkd-product-form', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+            <button type="submit" name="add" class="tkd-btn tkd-btn-outline">
+              <span>Add to cart</span>
+              {%- render 'loading-spinner' -%}
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- else -%}
 <a href="{{ card_product.url }}" class="pack-tile reveal-item">
   <div class="pack-art">
     {%- if badge_text != blank -%}
@@ -169,3 +316,4 @@
     {%- endif -%}
   </div>
 </a>
+{%- endif -%}

@@ -49,7 +49,8 @@
 
       words.forEach(function (word, i) {
         var span = document.createElement('span');
-        span.textContent = word + (i < words.length - 1 ? ' ' : '');
+        span.textContent = word;
+        if (i < words.length - 1) span.style.marginRight = '0.28em';
         span.style.transitionDelay = reducedMotion ? '0ms' : (i * 90) + 'ms';
         line.appendChild(span);
       });

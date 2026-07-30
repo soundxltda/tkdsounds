@@ -1,9 +1,11 @@
 /* ============================================================
-   TKD SOUNDS — camada visual "Exo" (moderna, clara)
+   TKD SOUNDS — camada visual "Exo" (moderna, azul-marinho vintage)
    Carregado DEPOIS de tkd-theme.css. Redefine os design tokens
    (fontes, cores, raio) que tkd-theme.css já usa em todo o tema,
    então a maior parte da mudança acontece só reatribuindo
-   variáveis CSS — sem reescrever cada seletor do arquivo antigo.
+   variáveis CSS — mas alguns seletores do arquivo antigo usam
+   cores fixas (não variáveis), então esses são sobrescritos
+   explicitamente aqui também (marcados com "cor fixa no antigo").
    Overlays CRT/cursores retrô continuam existindo (settings do
    tema), só ficam desligados por padrão nesta camada.
    ============================================================ */
@@ -17,58 +19,70 @@
   --font-tkd-doc: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-tkd-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Paleta clara — mantém o âmbar como cor de marca */
-  --bg: #f7f5f0;
-  --bg-2: #ffffff;
-  --surface: #ffffff;
-  --surface-2: #f1eee6;
-  --surface-3: #e8e3d7;
+  /* Paleta — azul-marinho vintage + branco/preto (sem âmbar) */
+  --bg: #0f1b2d;
+  --bg-2: #0a1420;
+  --surface: #16233a;
+  --surface-2: #1c2c47;
+  --surface-3: #263a5a;
 
-  --fg: #17140f;
-  --fg-mid: rgba(23, 20, 15, 0.68);
-  --fg-dim: rgba(23, 20, 15, 0.48);
-  --fg-ghost: rgba(23, 20, 15, 0.24);
+  --fg: #f2ede1;
+  --fg-mid: rgba(242, 237, 225, 0.7);
+  --fg-dim: rgba(242, 237, 225, 0.5);
+  --fg-ghost: rgba(242, 237, 225, 0.24);
 
-  --amber: #e6a635;
-  --amber-glow: rgba(230, 166, 53, 0.35);
-  --line: rgba(23, 20, 15, 0.10);
-  --line-h: rgba(23, 20, 15, 0.16);
+  /* "--amber" é o nome histórico da variável de destaque em todo o
+     tema (botões, preço, player ativo, chroma etc.) — reaproveitada
+     aqui como branco/creme pra virar o acento mono do visual novo. */
+  --amber: #f2ede1;
+  --amber-glow: rgba(242, 237, 225, 0.18);
+  --line: rgba(242, 237, 225, 0.12);
+  --line-h: rgba(242, 237, 225, 0.22);
+
+  /* Cores semânticas secundárias (sucesso/erro), suavizadas pra
+     conviver com o azul-marinho sem voltar pro laranja/oliva antigo */
+  --phosphor: #9fd8b3;
+  --phosphor-glow: rgba(159, 216, 179, 0.25);
+  --rust: #e2897d;
+  --mustard: var(--fg-mid);
+  --olive: var(--fg-mid);
+  --oxide: var(--fg-mid);
 
   /* Tokens novos desta camada */
   --exo-radius-sm: 10px;
   --exo-radius-md: 18px;
   --exo-radius-lg: 26px;
-  --exo-shadow-card: 0 1px 2px rgba(23, 20, 15, 0.04), 0 10px 28px -14px rgba(23, 20, 15, 0.16);
-  --exo-shadow-card-hover: 0 4px 12px rgba(23, 20, 15, 0.06), 0 24px 48px -18px rgba(23, 20, 15, 0.22);
+  --exo-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 14px 32px -16px rgba(0, 0, 0, 0.55);
+  --exo-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.3), 0 28px 56px -20px rgba(0, 0, 0, 0.6);
   --exo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reatribui os tokens nativos do Refresh (usados por cart-drawer,
-   badges, botões nativos etc.) para a paleta clara */
+   badges, botões nativos etc.) pra paleta azul-marinho */
 body,
 [class^="color-scheme"],
 [class*=" color-scheme"] {
-  --color-background: 247, 245, 240;
-  --gradient-background: #f7f5f0;
-  --color-foreground: 23, 20, 15;
-  --color-background-contrast: 232, 227, 215;
-  --color-shadow: 23, 20, 15;
-  --color-button: 230, 166, 53;
-  --color-button-text: 26, 16, 6;
-  --color-secondary-button: 255, 255, 255;
-  --color-secondary-button-text: 23, 20, 15;
-  --color-link: 23, 20, 15;
-  --color-badge-foreground: 23, 20, 15;
-  --color-badge-background: 241, 238, 230;
-  --color-badge-border: 23, 20, 15;
+  --color-background: 15, 27, 45;
+  --gradient-background: #0f1b2d;
+  --color-foreground: 242, 237, 225;
+  --color-background-contrast: 38, 58, 90;
+  --color-shadow: 0, 0, 0;
+  --color-button: 242, 237, 225;
+  --color-button-text: 15, 27, 45;
+  --color-secondary-button: 22, 35, 58;
+  --color-secondary-button-text: 242, 237, 225;
+  --color-link: 242, 237, 225;
+  --color-badge-foreground: 242, 237, 225;
+  --color-badge-background: 28, 44, 71;
+  --color-badge-border: 242, 237, 225;
 }
 
 html { background: var(--bg); }
-body { position: relative; background-color: var(--bg); }
+body { position: relative; background-color: var(--bg); background-image: none; }
 
 /* Cursores/CRT/vinheta continuam existindo via settings do tema —
-   aqui só suaviza o que ficar ligado pra não destoar do visual claro */
-.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker, .grain-overlay { opacity: 0.35; }
+   aqui só suaviza o que ficar ligado pra não destoar do visual novo */
+.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker, .grain-overlay { opacity: 0.25; }
 
 body.tkd-cursors,
 body.tkd-cursors button,
@@ -79,6 +93,12 @@ body.tkd-cursors input,
 body.tkd-cursors textarea {
   cursor: auto;
 }
+
+::selection { background: var(--fg); color: var(--bg); }
+
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--surface-3); }
+::-webkit-scrollbar-thumb:hover { background: var(--fg-dim); }
 
 /* ============================================================
    1) TIPOGRAFIA
@@ -101,7 +121,7 @@ h1, h2, h3, h4,
 
 .chroma { text-shadow: none; }
 
-/* Eyebrows — uppercase, tracking amplo, cinza médio (não mais âmbar) */
+/* Eyebrows — uppercase, tracking amplo, creme apagado (não mais âmbar) */
 .tkd-eyebrow,
 .tkd-eyebrow.text-amber {
   font-family: var(--font-tkd-mono);
@@ -120,10 +140,11 @@ h1, h2, h3, h4,
 }
 .tkd-btn-solid {
   border: none;
+  color: var(--bg);
   box-shadow: var(--exo-shadow-card);
 }
 .tkd-btn-solid:hover {
-  background: #f0b64f;
+  background: #ffffff; /* cor fixa no antigo: era #f2b64a (âmbar claro) */
   box-shadow: var(--exo-shadow-card-hover);
   transform: translateY(-2px);
 }
@@ -133,6 +154,7 @@ h1, h2, h3, h4,
 }
 .tkd-btn-outline {
   background: var(--surface);
+  color: var(--fg);
   border: 1px solid var(--line-h);
   box-shadow: none;
 }
@@ -143,7 +165,7 @@ h1, h2, h3, h4,
 }
 .tkd-btn-outline:active { transform: translateY(0); }
 
-/* Janelas "win" — de chapa metálica pra cartão claro com sombra suave */
+/* Janelas "win" — de chapa metálica pra painel azul-marinho */
 .win {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -152,7 +174,7 @@ h1, h2, h3, h4,
   overflow: hidden;
 }
 .win-title {
-  background: var(--surface-2);
+  background: var(--surface-2); /* cor fixa no antigo: gradiente #4a3418→#2a1e0e */
   border-bottom: 1px solid var(--line);
   color: var(--fg-mid);
   font-family: var(--font-tkd-mono);
@@ -163,13 +185,17 @@ h1, h2, h3, h4,
 }
 .win-title .win-controls span {
   background: transparent;
-  border-color: var(--line);
+  border-color: var(--line-h); /* cor fixa no antigo: #6b4a10 */
   color: var(--fg-dim);
+  box-shadow: none; /* cor fixa no antigo: bevel creme/preto */
 }
 
 /* Ticks/stamps/perf decorativos do estilo "vault" somem discretamente */
 .ticks::before, .ticks::after, .perf-top { display: none; }
-.stamp {
+.stamp,
+.stamp-mustard,
+.stamp-olive {
+  color: var(--fg-mid);
   border-radius: 999px;
   transform: none;
   opacity: 1;
@@ -190,15 +216,15 @@ h1, h2, h3, h4,
   position: absolute;
   top: 50%;
   left: 50%;
-  width: min(120vw, 1400px);
-  height: min(120vw, 1400px);
-  margin: calc(min(120vw, 1400px) / -2) 0 0 calc(min(120vw, 1400px) / -2);
+  width: min(130vw, 1500px);
+  height: min(130vw, 1500px);
+  margin: calc(min(130vw, 1500px) / -2) 0 0 calc(min(130vw, 1500px) / -2);
   background:
-    radial-gradient(circle at 30% 30%, rgba(230, 166, 53, 0.16), transparent 55%),
-    radial-gradient(circle at 70% 60%, rgba(122, 122, 58, 0.10), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(230, 166, 53, 0.08), transparent 60%);
-  filter: blur(80px);
-  animation: tkd-ambient-spin 100s linear infinite;
+    radial-gradient(circle at 30% 30%, rgba(242, 237, 225, 0.07), transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(120, 150, 200, 0.10), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(242, 237, 225, 0.05), transparent 60%);
+  filter: blur(90px);
+  animation: tkd-ambient-spin 110s linear infinite;
   will-change: transform;
 }
 @keyframes tkd-ambient-spin {
@@ -218,8 +244,24 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
-   4) HERO — stagger no título + indicador de scroll
+   4) HERO — layout centralizado (estilo Exo Audio) + stagger
    ============================================================ */
+.tkd-hero--centered { text-align: center; overflow: visible; }
+.tkd-hero__terminal--center { display: flex; justify-content: center; }
+.tkd-hero__title--center {
+  max-width: none;
+  font-size: clamp(44px, 8vw, 104px);
+  line-height: 0.98;
+}
+.tkd-hero__ctas--center { justify-content: center; }
+.tkd-hero__scroll-wrap { display: flex; justify-content: center; }
+
+.tkd-hero__featured--floating {
+  margin: 56px auto 0;
+  max-width: 640px;
+}
+.tkd-hero__featured--floating .pack-tile { text-align: left; }
+
 .tkd-hero__title[data-tkd-stagger] .tkd-stagger-line {
   display: block;
   overflow: hidden;
@@ -326,7 +368,7 @@ h1, h2, h3, h4,
 .pack-tile {
   border: 1px solid var(--line);
   border-radius: var(--exo-radius-md);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--exo-shadow-card);
   transition: transform 300ms var(--exo-ease), box-shadow 300ms var(--exo-ease), border-color 300ms var(--exo-ease);
 }
@@ -336,27 +378,40 @@ h1, h2, h3, h4,
   transform: translateY(-6px);
 }
 .pack-tile::before { display: none; } /* remove a barra "file header" retrô */
-.pack-tile .pack-art { border-bottom: none; }
+.pack-tile .pack-art {
+  border-bottom: none;
+  border-radius: var(--exo-radius-md) var(--exo-radius-md) 0 0;
+  overflow: hidden;
+}
 .pack-tile .pack-art::after { display: none; } /* remove scanline por-card */
+.pack-tile__meta { border-radius: 0 0 var(--exo-radius-md) var(--exo-radius-md); overflow: hidden; }
 
+/* Badge atravessando a borda de cima do card (estilo Exo Audio) */
 .pack-tile__badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 5;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
   display: inline-flex;
   align-items: center;
-  padding: 5px 12px;
+  white-space: nowrap;
+  padding: 6px 14px;
   border-radius: 999px;
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--bg-2);
+  color: var(--fg);
+  border: 1px solid var(--line-h);
   font-family: var(--font-tkd-mono);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.pack-tile__badge--amber { background: var(--amber); color: #1a1006; }
+.pack-tile__badge--amber {
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+}
 
 .pack-tile__hover-layer {
   position: absolute;
@@ -369,7 +424,7 @@ h1, h2, h3, h4,
   gap: 12px;
   padding: 16px;
   text-align: center;
-  background: linear-gradient(to top, rgba(23, 20, 15, 0.82), rgba(23, 20, 15, 0.35) 55%, transparent);
+  background: linear-gradient(to top, rgba(10, 20, 32, 0.88), rgba(10, 20, 32, 0.4) 55%, transparent);
   opacity: 0;
   transition: opacity 300ms var(--exo-ease);
 }
@@ -399,8 +454,8 @@ h1, h2, h3, h4,
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--fg);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--bg);
   transform: scale(0.9);
   opacity: 0;
   transition: transform 250ms var(--exo-ease), opacity 250ms var(--exo-ease);
@@ -439,6 +494,72 @@ h1, h2, h3, h4,
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+/* Card "wide" — destaque horizontal (hero / featured), inspirado no
+   card de produto do Exo Audio: imagem à esquerda, ficha à direita */
+.pack-tile--wide {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+@media screen and (min-width: 640px) {
+  .pack-tile--wide { flex-direction: row; align-items: stretch; }
+  .pack-tile--wide .pack-tile__art-link { width: 44%; flex-shrink: 0; }
+  .pack-tile--wide .pack-art { height: 100%; border-radius: var(--exo-radius-md) 0 0 var(--exo-radius-md); }
+}
+.pack-tile__art-link { display: block; position: relative; text-decoration: none; }
+.pack-tile__meta--wide {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+}
+.pack-tile__name-link { text-decoration: none; }
+.pack-tile__meta--wide .pack-tile__name {
+  font-size: 22px;
+  margin-top: 4px;
+  white-space: normal;
+}
+.pack-tile__meta--wide .pack-tile__tagline {
+  color: var(--fg-mid);
+  font-size: 13px;
+  white-space: normal;
+  margin-top: 8px;
+}
+.pack-tile__features {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  color: var(--fg-mid);
+}
+.pack-tile__features li {
+  padding-left: 14px;
+  position: relative;
+}
+.pack-tile__features li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--fg-ghost);
+}
+.pack-tile__price-current {
+  color: var(--fg);
+  font-family: var(--font-tkd-mono);
+  font-weight: 800;
+  font-size: 28px;
+}
+.pack-tile__actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pack-tile__actions .tkd-product-form { display: contents; }
 
 /* ============================================================
    8) MARQUEE HORIZONTAL
@@ -484,12 +605,12 @@ cart-drawer .drawer__inner {
   max-width: 400px;
   border: none;
   border-radius: var(--exo-radius-lg) 0 0 var(--exo-radius-lg);
-  box-shadow: -24px 0 60px -20px rgba(23, 20, 15, 0.35);
+  box-shadow: -24px 0 60px -20px rgba(0, 0, 0, 0.6);
 }
 #CartDrawer-Overlay {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
-  background: rgba(23, 20, 15, 0.45);
+  background: rgba(5, 9, 15, 0.6);
 }
 .cart__title, .drawer__heading { text-transform: none; }
 
@@ -507,13 +628,15 @@ cart-drawer .drawer__inner {
   flex-shrink: 0;
   border-radius: 999px;
   border: 1px solid var(--line-h);
+  color: var(--fg);
   transition: transform 300ms var(--exo-ease), background-color 300ms var(--exo-ease);
 }
 .tkd-faq__toggle::before { content: "+"; font-size: 14px; line-height: 1; }
 .tkd-faq__item[open] .tkd-faq__toggle {
   transform: rotate(45deg);
-  background: var(--amber);
-  border-color: var(--amber);
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
 }
 .tkd-faq__a-inner {
   overflow: hidden;
@@ -521,25 +644,25 @@ cart-drawer .drawer__inner {
 }
 
 /* ============================================================
-   11) FOOTER — contraste escuro sobre o resto claro do tema
+   11) FOOTER — mesmo azul-marinho, um tom mais escuro que o resto
    ============================================================ */
 .tkd-footer {
-  background: var(--fg);
-  border-top: none;
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
 }
-.tkd-footer__inner { color: rgba(247, 245, 240, 0.7); }
-.tkd-footer__brand { color: #fff; }
-.tkd-footer__brand .brand-dim { color: rgba(247, 245, 240, 0.55); }
-.tkd-footer__tagline { color: rgba(247, 245, 240, 0.5); }
-.tkd-footer__links a { color: rgba(247, 245, 240, 0.7); }
-.tkd-footer__links a:hover { color: var(--amber); }
-.tkd-footer__bottom { color: rgba(247, 245, 240, 0.4); }
-.tkd-footer .hr-dashed { border-top-color: rgba(247, 245, 240, 0.14); }
+.tkd-footer__inner { color: var(--fg-mid); }
+.tkd-footer__brand { color: var(--fg); }
+.tkd-footer__brand .brand-dim { color: var(--fg-dim); }
+.tkd-footer__tagline { color: var(--fg-dim); }
+.tkd-footer__links a { color: var(--fg-mid); }
+.tkd-footer__links a:hover { color: var(--fg); }
+.tkd-footer__bottom { color: var(--fg-ghost); }
+.tkd-footer .hr-dashed { border-top-color: var(--line); }
 
 .tkd-footer__newsletter {
   margin-top: 32px;
   padding-top: 32px;
-  border-top: 1px solid rgba(247, 245, 240, 0.14);
+  border-top: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -553,28 +676,71 @@ cart-drawer .drawer__inner {
   }
 }
 .tkd-footer__newsletter-copy { max-width: 420px; }
-.tkd-footer__newsletter-title { color: #fff; font-size: 18px; font-weight: 700; }
-.tkd-footer__newsletter-sub { margin-top: 4px; font-size: 13px; color: rgba(247, 245, 240, 0.55); }
+.tkd-footer__newsletter-title { color: var(--fg); font-size: 18px; font-weight: 700; }
+.tkd-footer__newsletter-sub { margin-top: 4px; font-size: 13px; color: var(--fg-dim); }
 .tkd-footer__newsletter-form {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 .tkd-footer__newsletter-form .tkd-input {
-  background: rgba(247, 245, 240, 0.08);
-  border-color: rgba(247, 245, 240, 0.18);
-  color: #fff;
+  background: var(--surface);
+  border-color: var(--line-h);
+  color: var(--fg);
   border-radius: var(--exo-radius-sm);
   min-width: 220px;
 }
-.tkd-footer__newsletter-form .tkd-input::placeholder { color: rgba(247, 245, 240, 0.4); }
+.tkd-footer__newsletter-form .tkd-input::placeholder { color: var(--fg-ghost); }
 .tkd-footer__newsletter-form .tkd-btn-solid { border-radius: var(--exo-radius-sm); }
 .tkd-footer__cta.tkd-btn-outline {
-  border-color: rgba(247, 245, 240, 0.25);
+  border-color: var(--line-h);
   background: transparent;
-  color: #fff;
+  color: var(--fg);
 }
 .tkd-footer__cta.tkd-btn-outline:hover {
-  background: rgba(247, 245, 240, 0.08);
-  border-color: rgba(247, 245, 240, 0.4);
+  background: var(--surface);
+  border-color: var(--fg-dim);
+}
+
+/* ============================================================
+   12) CORREÇÕES DE CORES FIXAS (não-variáveis) do tkd-theme.css
+   Vários elementos do arquivo antigo usam hex/rgba literais em vez
+   de var(--...), então não reagem à troca de paleta acima — são
+   sobrescritos aqui, um a um.
+   ============================================================ */
+.player-title-bar {
+  background: linear-gradient(to bottom, var(--surface-3), var(--surface-2));
+  border-bottom: 1px solid var(--line-h);
+}
+.player-title-bar .dot { border-color: var(--line-h); }
+
+.volume-slider {
+  background: var(--surface-3);
+  border: 1px solid var(--line-h);
+}
+.volume-slider::-webkit-slider-thumb {
+  background: var(--fg);
+  border: 1px solid var(--bg);
+}
+.volume-slider::-moz-range-thumb {
+  background: var(--fg);
+  border: 1px solid var(--bg);
+}
+
+.tkd-header {
+  background: linear-gradient(to bottom, var(--surface-3), var(--surface-2));
+  border-bottom: 1px solid var(--line-h);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.tkd-header__winbtns span { border-color: var(--line-h); }
+.tkd-header__menubar { border-top-color: var(--line-h); }
+
+.tkd-vinyl__hole { background: var(--bg-2); }
+
+.audio-play-btn[data-active="true"] { border-color: transparent; }
+
+.tkd-global-player {
+  background: linear-gradient(to bottom, var(--surface-2), var(--bg-2));
+  border-top: 1px solid var(--line-h);
+  box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.35), 0 -8px 30px rgba(0, 0, 0, 0.4);
 }

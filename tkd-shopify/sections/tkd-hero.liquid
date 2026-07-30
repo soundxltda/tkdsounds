@@ -17,56 +17,56 @@
   }
 {% endstyle %}
 
-<div class="tkd-hero tkd-section tkd-section--wide-gutters">
-  <div class="tkd-section__inner tkd-section__inner--w1200">
-    <div class="tkd-hero__grid">
-      <div>
-        {%- if section.settings.terminal_text != blank -%}
-          <div class="tkd-hero__terminal reveal">{{ section.settings.terminal_text | escape }}</div>
-        {%- endif -%}
+<div class="tkd-hero tkd-hero--centered tkd-section tkd-section--wide-gutters">
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    {%- if section.settings.terminal_text != blank -%}
+      <div class="tkd-hero__terminal tkd-hero__terminal--center reveal">{{ section.settings.terminal_text | escape }}</div>
+    {%- endif -%}
 
-        <h1 class="tkd-hero__title chroma" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
+    <h1 class="tkd-hero__title tkd-hero__title--center" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
 
-        <div class="tkd-hero__ctas reveal">
-          {%- if section.settings.button1_label != blank -%}
-            <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
-              {{- section.settings.button1_label | escape -}}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
-            <a href="{{ section.settings.button2_link }}" class="tkd-btn tkd-btn-outline">
-              {{- section.settings.button2_label | escape -}}
-            </a>
-          {%- endif -%}
-        </div>
-
-        {%- if section.settings.show_scroll_cue -%}
-          <button type="button" class="tkd-scroll-cue reveal" data-tkd-scroll-cue aria-label="{{ section.settings.scroll_cue_text | escape }}">
-            <span>{{ section.settings.scroll_cue_text | escape }}</span>
-            <span class="tkd-scroll-cue__icon" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
-              </svg>
-            </span>
-          </button>
-        {%- endif -%}
-      </div>
-
-      {%- if section.settings.featured_product != blank -%}
-        <div class="tkd-hero__featured">
-          <div class="tkd-hero__featured-label">
-            <span class="tkd-hero__star" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
-              </svg>
-            </span>
-            <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
-          </div>
-          {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false %}
-        </div>
+    <div class="tkd-hero__ctas tkd-hero__ctas--center reveal">
+      {%- if section.settings.button1_label != blank -%}
+        <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
+          {{- section.settings.button1_label | escape -}}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
+        <a href="{{ section.settings.button2_link }}" class="tkd-btn tkd-btn-outline">
+          {{- section.settings.button2_label | escape -}}
+        </a>
       {%- endif -%}
     </div>
+
+    {%- if section.settings.show_scroll_cue -%}
+      <div class="tkd-hero__scroll-wrap reveal">
+        <button type="button" class="tkd-scroll-cue" data-tkd-scroll-cue aria-label="{{ section.settings.scroll_cue_text | escape }}">
+          <span>{{ section.settings.scroll_cue_text | escape }}</span>
+          <span class="tkd-scroll-cue__icon" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    {%- endif -%}
   </div>
+
+  {%- if section.settings.featured_product != blank -%}
+    <div class="tkd-section__inner tkd-section__inner--w720">
+      <div class="tkd-hero__featured tkd-hero__featured--floating reveal">
+        <div class="tkd-hero__featured-label">
+          <span class="tkd-hero__star" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
+            </svg>
+          </span>
+          <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
+        </div>
+        {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide' %}
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
