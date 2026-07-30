@@ -16,20 +16,20 @@
       },
       {
         "type": "paragraph",
-        "content": "Desligados por padrão na camada visual \"Exo\" (moderna). Pode reativar o visual retrô original a qualquer momento."
+        "content": "Parte do visual retrofuturista \"Vault\" (Fallout). Ligados por padrão, em intensidade sutil — pode desligar aqui a qualquer momento."
       },
       {
         "type": "checkbox",
         "id": "tkd_enable_crt",
         "label": "Ativar overlays CRT (scanlines, vinheta, glow)",
-        "default": false
+        "default": true
       },
       {
         "type": "checkbox",
         "id": "tkd_enable_grain",
         "label": "Ativar grain animado",
         "info": "Requer overlays CRT ativos.",
-        "default": false
+        "default": true
       },
       {
         "type": "checkbox",

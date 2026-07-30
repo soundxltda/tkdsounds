@@ -1,209 +1,218 @@
 /* ============================================================
-   TKD SOUNDS — camada visual "Exo" (moderna, azul-marinho vintage)
-   Carregado DEPOIS de tkd-theme.css. Redefine os design tokens
-   (fontes, cores, raio) que tkd-theme.css já usa em todo o tema,
-   então a maior parte da mudança acontece só reatribuindo
-   variáveis CSS — mas alguns seletores do arquivo antigo usam
-   cores fixas (não variáveis), então esses são sobrescritos
-   explicitamente aqui também (marcados com "cor fixa no antigo").
-   Overlays CRT/cursores retrô continuam existindo (settings do
-   tema), só ficam desligados por padrão nesta camada.
+   TKD SOUNDS — camada "VAULT" (retrofuturista Fallout, azul-marinho)
+   Carregado DEPOIS de tkd-theme.css. A ideia da camada:
+
+   · VISUAL vintage — fontes retrô do tema original (stencil militar,
+     mono de terminal, typewriter), paleta Vault-Tec: azul-marinho
+     escuro + creme de papel envelhecido + dourado de macacão vault,
+     cantos quase retos, scanlines/CRT, stamps e ticks de dossiê.
+
+   · MOTION futurista — tudo da camada de motion continua (Lenis
+     smooth scroll, reveal on scroll, stagger, contadores, marquees
+     de kits com pausa no hover, esteira do hero, parallax).
+
+   tkd-theme.css já define o esqueleto retrô com variáveis; aqui a
+   paleta é reatribuída pro azul e os poucos hex fixos do arquivo
+   antigo (marrom/âmbar) são corrigidos um a um no fim do arquivo.
    ============================================================ */
 
 :root {
-  /* Tipografia — troca global via as mesmas variáveis que
-     tkd-theme.css já usa em headings, botões, eyebrows, preço etc. */
-  --font-tkd-mono: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-tkd-serif: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-tkd-pixel: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-tkd-doc: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-tkd-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Paleta Vault-Tec — aço azul-marinho + papel envelhecido + dourado */
+  --bg: #0d1a2b;
+  --bg-2: #091220;
+  --surface: #142942;
+  --surface-2: #1b3355;
+  --surface-3: #274672;
 
-  /* Paleta — azul-marinho vintage + branco/preto (sem âmbar) */
-  --bg: #0f1b2d;
-  --bg-2: #0a1420;
-  --surface: #16233a;
-  --surface-2: #1c2c47;
-  --surface-3: #263a5a;
+  --fg: #eee3c4;
+  --fg-mid: rgba(238, 227, 196, 0.82);
+  --fg-dim: rgba(238, 227, 196, 0.6);
+  --fg-ghost: rgba(238, 227, 196, 0.26);
 
-  --fg: #f2ede1;
-  --fg-mid: rgba(242, 237, 225, 0.7);
-  --fg-dim: rgba(242, 237, 225, 0.5);
-  --fg-ghost: rgba(242, 237, 225, 0.24);
+  /* Dourado vault — acento principal (botões, preço, player ativo) */
+  --amber: #f3b73f;
+  --amber-glow: rgba(243, 183, 63, 0.38);
+  --mustard: #cfa435;
+  --olive: #93a06b;
+  --oxide: #b07a3f;
+  --phosphor: #7ed695;
+  --phosphor-glow: rgba(126, 214, 149, 0.32);
+  --rust: #d1704f;
 
-  /* "--amber" é o nome histórico da variável de destaque em todo o
-     tema (botões, preço, player ativo, chroma etc.) — reaproveitada
-     aqui como branco/creme pra virar o acento mono do visual novo. */
-  --amber: #f2ede1;
-  --amber-glow: rgba(242, 237, 225, 0.18);
-  --line: rgba(242, 237, 225, 0.12);
-  --line-h: rgba(242, 237, 225, 0.22);
+  --line: rgba(238, 227, 196, 0.16);
+  --line-h: rgba(238, 227, 196, 0.32);
 
-  /* Cores semânticas secundárias (sucesso/erro), suavizadas pra
-     conviver com o azul-marinho sem voltar pro laranja/oliva antigo */
-  --phosphor: #9fd8b3;
-  --phosphor-glow: rgba(159, 216, 179, 0.25);
-  --rust: #e2897d;
-  --mustard: var(--fg-mid);
-  --olive: var(--fg-mid);
-  --oxide: var(--fg-mid);
-
-  /* Tokens novos desta camada */
-  --exo-radius-sm: 10px;
-  --exo-radius-md: 18px;
-  --exo-radius-lg: 26px;
-  --exo-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 14px 32px -16px rgba(0, 0, 0, 0.55);
-  --exo-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.3), 0 28px 56px -20px rgba(0, 0, 0, 0.6);
+  /* Tokens da camada — cantos discretos (hardware de vault, não app) */
+  --exo-radius-sm: 3px;
+  --exo-radius-md: 6px;
+  --exo-radius-lg: 10px;
+  --exo-shadow-card: 0 2px 0 rgba(0, 0, 0, 0.28), 0 16px 34px -18px rgba(0, 0, 0, 0.6);
+  --exo-shadow-card-hover: 0 4px 14px rgba(0, 0, 0, 0.35), 0 26px 50px -20px rgba(0, 0, 0, 0.65), 0 0 24px rgba(243, 183, 63, 0.12);
   --exo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Reatribui os tokens nativos do Refresh (usados por cart-drawer,
-   badges, botões nativos etc.) pra paleta azul-marinho */
+/* Reatribui os tokens nativos do Refresh (cart-drawer, badges,
+   botões nativos etc.) pra paleta vault */
 body,
 [class^="color-scheme"],
 [class*=" color-scheme"] {
-  --color-background: 15, 27, 45;
-  --gradient-background: #0f1b2d;
-  --color-foreground: 242, 237, 225;
-  --color-background-contrast: 38, 58, 90;
+  --color-background: 13, 26, 43;
+  --gradient-background: #0d1a2b;
+  --color-foreground: 238, 227, 196;
+  --color-background-contrast: 39, 70, 114;
   --color-shadow: 0, 0, 0;
-  --color-button: 242, 237, 225;
-  --color-button-text: 15, 27, 45;
-  --color-secondary-button: 22, 35, 58;
-  --color-secondary-button-text: 242, 237, 225;
-  --color-link: 242, 237, 225;
-  --color-badge-foreground: 242, 237, 225;
-  --color-badge-background: 28, 44, 71;
-  --color-badge-border: 242, 237, 225;
+  --color-button: 243, 183, 63;
+  --color-button-text: 13, 20, 32;
+  --color-secondary-button: 20, 41, 66;
+  --color-secondary-button-text: 238, 227, 196;
+  --color-link: 238, 227, 196;
+  --color-badge-foreground: 238, 227, 196;
+  --color-badge-background: 27, 51, 85;
+  --color-badge-border: 243, 183, 63;
 }
 
 html { background: var(--bg); }
-body { position: relative; background-color: var(--bg); background-image: none; }
 
-/* Cursores/CRT/vinheta continuam existindo via settings do tema —
-   aqui só suaviza o que ficar ligado pra não destoar do visual novo */
-.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker, .grain-overlay { opacity: 0.25; }
-
-body.tkd-cursors,
-body.tkd-cursors button,
-body.tkd-cursors a,
-body.tkd-cursors summary,
-body.tkd-cursors [role="button"],
-body.tkd-cursors input,
-body.tkd-cursors textarea {
-  cursor: auto;
+/* Fundo: glow dourado de monitor no topo + vinheta + grain de papel
+   levemente azulado (o grain do tkd-theme.css era âmbar/marrom) */
+body {
+  position: relative;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 50% 36%, rgba(243, 183, 63, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.16 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+  background-size: auto, auto, 260px 260px;
 }
 
-::selection { background: var(--fg); color: var(--bg); }
+/* Overlays CRT ficam LIGADOS no visual vault — só levemente
+   suavizados pra não brigar com as capas dos kits */
+.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker { opacity: 0.55; }
+.grain-overlay { opacity: 0.07; }
+
+::selection { background: var(--amber); color: var(--bg-2); }
 
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--surface-3); }
-::-webkit-scrollbar-thumb:hover { background: var(--fg-dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }
 
 /* ============================================================
-   1) TIPOGRAFIA
+   1) TIPOGRAFIA — stencil militar nos títulos, terminal no resto
+   (as famílias vêm do tkd-theme.css; aqui só reforça hierarquia)
    ============================================================ */
 h1, h2, h3, h4,
 .tkd-hero__title,
 .tkd-latest__title,
 .tkd-product-hero__title,
 .tkd-product-cta__title,
-.pack-tile__name,
-.pack-tile__fallback-name,
 .tkd-newsletter__title,
 .tkd-faq__title,
 .tkd-about__title,
 .tkd-related__title {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  text-transform: none;
+  font-family: var(--font-tkd-serif);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.pack-tile__name,
+.pack-tile__fallback-name {
+  font-weight: 700;
 }
 
-.chroma { text-shadow: none; }
+/* Aberração cromática dos títulos, recolorida pro dourado/fósforo */
+.chroma {
+  text-shadow:
+    0.6px 0 0 rgba(243, 183, 63, 0.45),
+    -0.6px 0 0 rgba(126, 214, 149, 0.3);
+}
 
-/* Eyebrows — uppercase, tracking amplo, creme apagado (não mais âmbar) */
+/* Eyebrows de terminal — dourado vault, tracking largo */
 .tkd-eyebrow,
 .tkd-eyebrow.text-amber {
   font-family: var(--font-tkd-mono);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--fg-dim);
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  color: var(--amber);
 }
 
-/* Botões — de bevel Win95 pra flat moderno com cantos suaves */
+/* Botões — chapa de vault: bevel retrô, mas com motion suave */
 .tkd-btn {
   border-radius: var(--exo-radius-sm);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: transform 200ms var(--exo-ease), box-shadow 200ms var(--exo-ease), background-color 200ms var(--exo-ease), opacity 200ms var(--exo-ease);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  transition: transform 200ms var(--exo-ease), box-shadow 200ms var(--exo-ease), background-color 200ms var(--exo-ease), color 200ms var(--exo-ease), border-color 200ms var(--exo-ease), opacity 200ms var(--exo-ease);
 }
 .tkd-btn-solid {
-  border: none;
-  color: var(--bg);
-  box-shadow: var(--exo-shadow-card);
+  background: var(--amber);
+  color: #0d1420; /* cor fixa no antigo: #1a1006 (marrom) */
+  border: 1px solid #8a6414; /* cor fixa no antigo: #6b4a10 */
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 236, 190, 0.55),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+    2px 2px 0 rgba(0, 0, 0, 0.5);
 }
 .tkd-btn-solid:hover {
-  background: #ffffff; /* cor fixa no antigo: era #f2b64a (âmbar claro) */
-  box-shadow: var(--exo-shadow-card-hover);
-  transform: translateY(-2px);
+  background: #f7c65e; /* cor fixa no antigo: #f2b64a */
+  color: #0d1420;
+  transform: translate(-1px, -1px);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 236, 190, 0.55),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.3),
+    3px 3px 0 rgba(0, 0, 0, 0.5),
+    0 0 22px var(--amber-glow);
 }
 .tkd-btn-solid:active {
-  box-shadow: var(--exo-shadow-card);
-  transform: translateY(0);
+  transform: translate(1px, 1px);
+  box-shadow:
+    inset -1px -1px 0 rgba(255, 236, 190, 0.4),
+    inset 1px 1px 0 rgba(0, 0, 0, 0.35);
 }
 .tkd-btn-outline {
   background: var(--surface);
   color: var(--fg);
   border: 1px solid var(--line-h);
-  box-shadow: none;
+  box-shadow:
+    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.4),
+    2px 2px 0 rgba(0, 0, 0, 0.45);
 }
 .tkd-btn-outline:hover {
-  border-color: var(--fg);
-  background: var(--surface-2);
-  transform: translateY(-2px);
+  color: var(--amber);
+  border-color: var(--amber);
+  transform: translate(-1px, -1px);
+  box-shadow:
+    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.4),
+    3px 3px 0 rgba(0, 0, 0, 0.45);
 }
-.tkd-btn-outline:active { transform: translateY(0); }
+.tkd-btn-outline:active { transform: translate(1px, 1px); }
 
-/* Janelas "win" — de chapa metálica pra painel azul-marinho */
+/* Janelas "win" — painel de terminal vault (mantém o bevel retrô) */
 .win {
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--exo-radius-md);
-  box-shadow: var(--exo-shadow-card);
+  border: 1px solid var(--line-h);
+  border-radius: var(--exo-radius-sm);
+  box-shadow:
+    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+    3px 3px 0 rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 .win-title {
-  background: var(--surface-2); /* cor fixa no antigo: gradiente #4a3418→#2a1e0e */
-  border-bottom: 1px solid var(--line);
-  color: var(--fg-mid);
-  font-family: var(--font-tkd-mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: none;
+  background: linear-gradient(to bottom, var(--surface-3), var(--surface-2)); /* cor fixa no antigo: #4a3418→#2a1e0e */
+  border-bottom: 1px solid var(--line-h); /* cor fixa no antigo: #6b4a10 */
+  color: var(--fg);
 }
 .win-title .win-controls span {
-  background: transparent;
+  background: var(--surface-2);
   border-color: var(--line-h); /* cor fixa no antigo: #6b4a10 */
-  color: var(--fg-dim);
-  box-shadow: none; /* cor fixa no antigo: bevel creme/preto */
-}
-
-/* Ticks/stamps/perf decorativos do estilo "vault" somem discretamente */
-.ticks::before, .ticks::after, .perf-top { display: none; }
-.stamp,
-.stamp-mustard,
-.stamp-olive {
-  color: var(--fg-mid);
-  border-radius: 999px;
-  transform: none;
-  opacity: 1;
-  box-shadow: none;
+  color: var(--fg);
 }
 
 /* ============================================================
-   3) BACKGROUND AMBIENTE
+   3) BACKGROUND AMBIENTE — nebulosa azul/dourada girando devagar
    ============================================================ */
 .tkd-ambient-bg {
   position: fixed;
@@ -220,9 +229,9 @@ h1, h2, h3, h4,
   height: min(130vw, 1500px);
   margin: calc(min(130vw, 1500px) / -2) 0 0 calc(min(130vw, 1500px) / -2);
   background:
-    radial-gradient(circle at 30% 30%, rgba(242, 237, 225, 0.07), transparent 55%),
-    radial-gradient(circle at 70% 60%, rgba(120, 150, 200, 0.10), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(242, 237, 225, 0.05), transparent 60%);
+    radial-gradient(circle at 30% 30%, rgba(90, 140, 220, 0.11), transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(243, 183, 63, 0.06), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(238, 227, 196, 0.04), transparent 60%);
   filter: blur(90px);
   animation: tkd-ambient-spin 110s linear infinite;
   will-change: transform;
@@ -235,8 +244,7 @@ h1, h2, h3, h4,
   .tkd-ambient-bg__shape { animation: none; }
 }
 
-/* Garante que o conteúdo real fique acima do background ambiente,
-   sem precisar mexer no z-index de cada seção individualmente */
+/* Conteúdo real acima do background ambiente */
 .shopify-section,
 #MainContent {
   position: relative;
@@ -244,7 +252,7 @@ h1, h2, h3, h4,
 }
 
 /* ============================================================
-   4) HERO — layout centralizado (estilo Exo Audio) + stagger
+   4) HERO — layout centralizado + stagger + esteira de kits
    ============================================================ */
 .tkd-hero--centered { text-align: center; overflow: visible; }
 .tkd-hero__terminal--center { display: flex; justify-content: center; }
@@ -300,6 +308,75 @@ h1, h2, h3, h4,
   .tkd-scroll-cue__icon { animation: none; }
 }
 
+/* --- Esteira do hero: kits sobem de baixo, depois deslizam de lado.
+   Estados: .is-in (cards subiram) → .is-live (marquee rodando) --- */
+.tkd-hero__strip {
+  width: 100vw;
+  margin: 48px 0 0 calc(50% - 50vw);
+}
+.tkd-hero__strip .tkd-marquee__track { animation-play-state: paused; }
+.tkd-hero__strip.is-live .tkd-marquee__track { animation-play-state: running; }
+.tkd-hero__strip .tkd-marquee__card {
+  opacity: 0;
+  transform: translateY(76px);
+  transition: opacity 700ms var(--exo-ease), transform 700ms var(--exo-ease);
+}
+.tkd-hero__strip.is-in .tkd-marquee__card {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tkd-hero__strip .tkd-marquee__card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Card compacto da esteira (só capa + nome + preço) */
+.tkd-strip-card {
+  display: block;
+  text-decoration: none;
+  text-align: left;
+}
+.tkd-strip-card__art {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--exo-radius-sm);
+  box-shadow: var(--exo-shadow-card);
+  transition: transform 300ms var(--exo-ease), border-color 300ms var(--exo-ease), box-shadow 300ms var(--exo-ease);
+}
+.tkd-strip-card__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tkd-strip-card:hover .tkd-strip-card__art {
+  transform: translateY(-5px);
+  border-color: var(--amber);
+  box-shadow: var(--exo-shadow-card-hover);
+}
+.tkd-strip-card__name {
+  margin-top: 10px;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tkd-strip-card__price {
+  margin-top: 2px;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  color: var(--amber);
+}
+
 /* ============================================================
    5) REVEAL ON SCROLL
    ============================================================ */
@@ -334,8 +411,11 @@ h1, h2, h3, h4,
   }
 }
 
+/* Parallax sutil (aplicado via data-tkd-parallax + JS) */
+[data-tkd-parallax] { will-change: transform; }
+
 /* ============================================================
-   6) CONTADORES ANIMADOS
+   6) CONTADORES ANIMADOS — mostrador de Pip-Boy
    ============================================================ */
 .tkd-stats { padding-top: 48px; padding-bottom: 48px; }
 .tkd-stats__grid {
@@ -348,24 +428,27 @@ h1, h2, h3, h4,
   .tkd-stats__grid { grid-template-columns: repeat(var(--tkd-stats-cols, 4), 1fr); }
 }
 .tkd-stats__value {
-  font-family: var(--font-tkd-mono);
-  font-weight: 800;
-  font-size: clamp(32px, 5vw, 56px);
-  letter-spacing: -0.02em;
-  color: var(--fg);
+  font-family: var(--font-tkd-pixel);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 68px);
+  letter-spacing: 0.02em;
+  color: var(--amber);
+  text-shadow: 0 0 18px var(--amber-glow);
 }
 .tkd-stats__label {
   margin-top: 4px;
+  font-family: var(--font-tkd-mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-dim);
 }
 
 /* ============================================================
-   7) CARDS DE PRODUTO — pack-tile arredondado com hover overlay
+   7) CARDS DE PRODUTO — dossiê de vault com hover overlay
    ============================================================ */
 .pack-tile {
+  position: relative; /* âncora do badge, que fica fora do .pack-art */
   border: 1px solid var(--line);
   border-radius: var(--exo-radius-md);
   overflow: visible;
@@ -373,20 +456,20 @@ h1, h2, h3, h4,
   transition: transform 300ms var(--exo-ease), box-shadow 300ms var(--exo-ease), border-color 300ms var(--exo-ease);
 }
 .pack-tile:hover {
-  border-color: var(--line-h);
+  border-color: var(--amber);
   box-shadow: var(--exo-shadow-card-hover);
   transform: translateY(-6px);
 }
-.pack-tile::before { display: none; } /* remove a barra "file header" retrô */
+.pack-tile::before { display: none; } /* barra "file header" sai — o badge assume o papel */
 .pack-tile .pack-art {
   border-bottom: none;
   border-radius: var(--exo-radius-md) var(--exo-radius-md) 0 0;
   overflow: hidden;
 }
-.pack-tile .pack-art::after { display: none; } /* remove scanline por-card */
+.pack-tile .pack-art::after { display: none; } /* scanline por-card sai (a global cobre) */
 .pack-tile__meta { border-radius: 0 0 var(--exo-radius-md) var(--exo-radius-md); overflow: hidden; }
 
-/* Badge atravessando a borda de cima do card (estilo Exo Audio) */
+/* Badge de classificação atravessando a borda de cima (estilo Exo) */
 .pack-tile__badge {
   position: absolute;
   top: 0;
@@ -396,21 +479,21 @@ h1, h2, h3, h4,
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  padding: 6px 14px;
-  border-radius: 999px;
+  padding: 5px 12px;
+  border-radius: var(--exo-radius-sm);
   background: var(--bg-2);
   color: var(--fg);
   border: 1px solid var(--line-h);
   font-family: var(--font-tkd-mono);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .pack-tile__badge--amber {
-  background: var(--fg);
-  color: var(--bg);
-  border: none;
+  background: var(--amber);
+  color: #0d1420;
+  border: 1px solid #8a6414;
 }
 
 .pack-tile__hover-layer {
@@ -424,7 +507,7 @@ h1, h2, h3, h4,
   gap: 12px;
   padding: 16px;
   text-align: center;
-  background: linear-gradient(to top, rgba(10, 20, 32, 0.88), rgba(10, 20, 32, 0.4) 55%, transparent);
+  background: linear-gradient(to top, rgba(9, 18, 32, 0.9), rgba(9, 18, 32, 0.4) 55%, transparent);
   opacity: 0;
   transition: opacity 300ms var(--exo-ease);
 }
@@ -436,7 +519,7 @@ h1, h2, h3, h4,
   transform: translateY(12px);
   opacity: 0;
   transition: transform 300ms var(--exo-ease) 60ms, opacity 300ms var(--exo-ease) 60ms;
-  color: #fff;
+  color: var(--fg);
   font-family: var(--font-tkd-mono);
   font-size: 11px;
   letter-spacing: 0.06em;
@@ -454,18 +537,19 @@ h1, h2, h3, h4,
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94);
-  color: var(--bg);
+  background: var(--amber);
+  color: #0d1420;
+  border: 1px solid #8a6414;
   transform: scale(0.9);
   opacity: 0;
-  transition: transform 250ms var(--exo-ease), opacity 250ms var(--exo-ease);
+  transition: transform 250ms var(--exo-ease), opacity 250ms var(--exo-ease), background-color 250ms var(--exo-ease);
 }
 .pack-tile:hover .pack-tile__hover-play,
 .pack-tile:focus-within .pack-tile__hover-play {
   transform: scale(1);
   opacity: 1;
 }
-.pack-tile__hover-play:hover { background: #fff; }
+.pack-tile__hover-play:hover { background: #f7c65e; }
 
 .pack-tile__price-btn { border-radius: var(--exo-radius-sm); }
 .pack-tile__price-row {
@@ -487,16 +571,18 @@ h1, h2, h3, h4,
 }
 .pack-tile__tag-pill {
   padding: 3px 9px;
-  border-radius: 999px;
+  border-radius: var(--exo-radius-sm);
   background: var(--surface-2);
+  border: 1px solid var(--line);
   color: var(--fg-mid);
+  font-family: var(--font-tkd-mono);
   font-size: 10px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-/* Card "wide" — destaque horizontal (hero / featured), inspirado no
-   card de produto do Exo Audio: imagem à esquerda, ficha à direita */
+/* Card "wide" — destaque horizontal (hero / featured):
+   imagem à esquerda, ficha de dossiê à direita */
 .pack-tile--wide {
   display: flex;
   flex-direction: column;
@@ -522,6 +608,7 @@ h1, h2, h3, h4,
 }
 .pack-tile__meta--wide .pack-tile__tagline {
   color: var(--fg-mid);
+  font-family: var(--font-tkd-doc);
   font-size: 13px;
   white-space: normal;
   margin-top: 8px;
@@ -542,16 +629,19 @@ h1, h2, h3, h4,
   position: relative;
 }
 .pack-tile__features li::before {
-  content: "—";
+  content: "■";
   position: absolute;
   left: 0;
-  color: var(--fg-ghost);
+  font-size: 8px;
+  top: 3px;
+  color: var(--amber);
 }
 .pack-tile__price-current {
-  color: var(--fg);
+  color: var(--amber);
   font-family: var(--font-tkd-mono);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 28px;
+  text-shadow: 0 0 16px var(--amber-glow);
 }
 .pack-tile__actions {
   margin-top: 20px;
@@ -562,7 +652,7 @@ h1, h2, h3, h4,
 .pack-tile__actions .tkd-product-form { display: contents; }
 
 /* ============================================================
-   8) MARQUEE HORIZONTAL
+   8) MARQUEES — texto e cards de kits em loop, pausa no hover
    ============================================================ */
 .tkd-marquee {
   overflow: hidden;
@@ -580,6 +670,7 @@ h1, h2, h3, h4,
 .tkd-marquee.is-paused .tkd-marquee__track {
   animation-play-state: paused;
 }
+.tkd-marquee--reverse .tkd-marquee__track { animation-direction: reverse; }
 .tkd-marquee__item {
   flex-shrink: 0;
   color: var(--fg-dim);
@@ -598,21 +689,65 @@ h1, h2, h3, h4,
   .tkd-marquee { overflow-x: auto; }
 }
 
+/* Variante com cards de kits (esteira do hero e section de kits):
+   padding no topo dá folga pro badge e pro lift do hover */
+.tkd-marquee--cards { padding: 18px 0 10px; }
+.tkd-marquee--cards .tkd-marquee__track {
+  gap: 22px;
+  align-items: stretch;
+}
+.tkd-marquee__card {
+  flex: 0 0 auto;
+  width: var(--tkd-marquee-card-w, 260px);
+}
+.tkd-marquee__card .pack-tile { height: 100%; }
+
+/* Dentro de marquee os cards já entram visíveis — quem revela é a
+   section inteira, não cada card (senão clones ficariam invisíveis) */
+.tkd-marquee .reveal-item {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* A esteira de kits atravessa a tela inteira, ignorando os gutters
+   da section (o overflow-x: hidden do body segura o 100vw) */
+.tkd-kits-marquee .tkd-marquee--cards {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.tkd-kits-marquee__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.tkd-kits-marquee__title { margin: 4px 0 0; font-size: clamp(24px, 3.4vw, 40px); }
+.tkd-kits-marquee__viewall {
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.tkd-kits-marquee__viewall:hover { color: var(--amber); }
+
 /* ============================================================
-   9) DRAWER DE CARRINHO — painel lateral moderno
+   9) DRAWER DE CARRINHO — painel lateral
    ============================================================ */
 cart-drawer .drawer__inner {
   max-width: 400px;
-  border: none;
-  border-radius: var(--exo-radius-lg) 0 0 var(--exo-radius-lg);
+  border-left: 1px solid var(--line-h);
+  border-radius: 0;
   box-shadow: -24px 0 60px -20px rgba(0, 0, 0, 0.6);
 }
 #CartDrawer-Overlay {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
-  background: rgba(5, 9, 15, 0.6);
+  background: rgba(4, 9, 17, 0.6);
 }
-.cart__title, .drawer__heading { text-transform: none; }
 
 /* ============================================================
    10) FAQ EM ACCORDION
@@ -626,7 +761,7 @@ cart-drawer .drawer__inner {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  border-radius: 999px;
+  border-radius: var(--exo-radius-sm);
   border: 1px solid var(--line-h);
   color: var(--fg);
   transition: transform 300ms var(--exo-ease), background-color 300ms var(--exo-ease);
@@ -634,9 +769,9 @@ cart-drawer .drawer__inner {
 .tkd-faq__toggle::before { content: "+"; font-size: 14px; line-height: 1; }
 .tkd-faq__item[open] .tkd-faq__toggle {
   transform: rotate(45deg);
-  background: var(--fg);
-  color: var(--bg);
-  border-color: var(--fg);
+  background: var(--amber);
+  color: #0d1420;
+  border-color: var(--amber);
 }
 .tkd-faq__a-inner {
   overflow: hidden;
@@ -644,7 +779,7 @@ cart-drawer .drawer__inner {
 }
 
 /* ============================================================
-   11) FOOTER — mesmo azul-marinho, um tom mais escuro que o resto
+   11) FOOTER — mesmo azul, um tom mais escuro
    ============================================================ */
 .tkd-footer {
   background: var(--bg-2);
@@ -655,7 +790,7 @@ cart-drawer .drawer__inner {
 .tkd-footer__brand .brand-dim { color: var(--fg-dim); }
 .tkd-footer__tagline { color: var(--fg-dim); }
 .tkd-footer__links a { color: var(--fg-mid); }
-.tkd-footer__links a:hover { color: var(--fg); }
+.tkd-footer__links a:hover { color: var(--amber); }
 .tkd-footer__bottom { color: var(--fg-ghost); }
 .tkd-footer .hr-dashed { border-top-color: var(--line); }
 
@@ -699,14 +834,13 @@ cart-drawer .drawer__inner {
 }
 .tkd-footer__cta.tkd-btn-outline:hover {
   background: var(--surface);
-  border-color: var(--fg-dim);
+  border-color: var(--amber);
 }
 
 /* ============================================================
    12) CORREÇÕES DE CORES FIXAS (não-variáveis) do tkd-theme.css
-   Vários elementos do arquivo antigo usam hex/rgba literais em vez
-   de var(--...), então não reagem à troca de paleta acima — são
-   sobrescritos aqui, um a um.
+   Elementos do arquivo antigo que usam hex/rgba literais marrom/
+   âmbar em vez de var(--...) — re-tintados pro azul vault.
    ============================================================ */
 .player-title-bar {
   background: linear-gradient(to bottom, var(--surface-3), var(--surface-2));
@@ -719,11 +853,11 @@ cart-drawer .drawer__inner {
   border: 1px solid var(--line-h);
 }
 .volume-slider::-webkit-slider-thumb {
-  background: var(--fg);
+  background: var(--amber);
   border: 1px solid var(--bg);
 }
 .volume-slider::-moz-range-thumb {
-  background: var(--fg);
+  background: var(--amber);
   border: 1px solid var(--bg);
 }
 

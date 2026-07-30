@@ -163,19 +163,126 @@
   }
 
   /* ------------------------------------------------------------
-   * 8) MARQUEE — clona os itens pra loop contínuo
+   * 8) MARQUEE — clona os itens pra loop contínuo (texto e cards)
+   * A animação vai de 0 a -50%, então o conteúdo precisa ser sempre
+   * um número PAR de cópias do conjunto original; com poucos itens
+   * (ex.: 3 kits) duplica de novo até cobrir 2x a largura visível.
+   * Clones são decorativos: aria-hidden e sem foco de teclado.
    * ---------------------------------------------------------- */
+  function hideCloneFromA11y(node) {
+    if (node.nodeType !== 1) return;
+    node.setAttribute('aria-hidden', 'true');
+    var focusables = node.querySelectorAll('a, button, input, select, textarea, [tabindex]');
+    if (node.matches('a, button, input, select, textarea, [tabindex]')) {
+      node.setAttribute('tabindex', '-1');
+    }
+    focusables.forEach(function (el) {
+      el.setAttribute('tabindex', '-1');
+    });
+  }
+
   function initMarquees() {
     document.querySelectorAll('[data-tkd-marquee]').forEach(function (marquee) {
       var track = marquee.querySelector('.tkd-marquee__track');
       if (!track || track.dataset.tkdCloned) return;
       track.dataset.tkdCloned = 'true';
 
-      var originalChildren = Array.prototype.slice.call(track.children);
-      originalChildren.forEach(function (node) {
-        track.appendChild(node.cloneNode(true));
+      var needed = (marquee.clientWidth || window.innerWidth) * 2;
+      var guard = 0;
+      do {
+        var children = Array.prototype.slice.call(track.children);
+        children.forEach(function (node) {
+          var clone = node.cloneNode(true);
+          hideCloneFromA11y(clone);
+          track.appendChild(clone);
+        });
+        guard += 1;
+      } while (track.scrollWidth < needed && guard < 6);
+    });
+  }
+
+  /* ------------------------------------------------------------
+   * 4b) ESTEIRA DO HERO — os kits sobem de baixo pra cima em
+   * stagger e, quando o último assenta, a esteira começa a
+   * deslizar de lado em loop (pausa no hover via CSS).
+   * ---------------------------------------------------------- */
+  function initHeroStrip() {
+    document.querySelectorAll('[data-tkd-hero-strip]').forEach(function (strip) {
+      if (strip.dataset.tkdReady) return;
+      strip.dataset.tkdReady = 'true';
+
+      var cards = strip.querySelectorAll('.tkd-marquee__card');
+      if (!cards.length) return;
+
+      if (reducedMotion) {
+        strip.classList.add('is-in', 'is-live');
+        return;
+      }
+
+      var maxDelay = 0;
+      cards.forEach(function (card, i) {
+        var delay = Math.min(i, 10) * 80;
+        card.style.transitionDelay = delay + 'ms';
+        if (delay > maxDelay) maxDelay = delay;
+      });
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          strip.classList.add('is-in');
+          setTimeout(function () {
+            strip.classList.add('is-live');
+            cards.forEach(function (card) {
+              card.style.transitionDelay = '';
+            });
+          }, maxDelay + 750);
+        });
       });
     });
+  }
+
+  /* ------------------------------------------------------------
+   * 9) PARALLAX SUTIL — elementos com data-tkd-parallax="0.08"
+   * derivam do centro da viewport na velocidade indicada.
+   * ---------------------------------------------------------- */
+  function initParallax() {
+    var els = document.querySelectorAll('[data-tkd-parallax]');
+    if (!els.length || reducedMotion) return;
+
+    var items = Array.prototype.map.call(els, function (el) {
+      return { el: el, factor: parseFloat(el.dataset.tkdParallax) || 0.08, y: 0 };
+    });
+
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      items.forEach(function (item) {
+        var rect = item.el.getBoundingClientRect();
+        if (rect.bottom < -200 || rect.top > vh + 200) return;
+        // rect já inclui o translate atual — remove antes de recalcular
+        var baseCenter = rect.top + rect.height / 2 - item.y;
+        var delta = (vh / 2 - baseCenter) * item.factor;
+        if (Math.abs(delta - item.y) > 0.5) {
+          item.y = delta;
+          item.el.style.transform = 'translate3d(0, ' + delta.toFixed(1) + 'px, 0)';
+        }
+      });
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    if (window.tkdLenis) {
+      window.tkdLenis.on('scroll', onScroll);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    window.addEventListener('resize', onScroll);
+    onScroll();
   }
 
   /* ------------------------------------------------------------
@@ -268,6 +375,8 @@
     initReveal();
     initCounters();
     initMarquees();
+    initHeroStrip();
+    initParallax();
     initFaqAccordion();
     initScrollCue();
   }

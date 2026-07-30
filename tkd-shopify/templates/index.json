@@ -7,6 +7,9 @@
         "title": "TKD Archives",
         "button1_label": "▶ Browse Archive",
         "button2_label": "Contact",
+        "show_strip": true,
+        "strip_count": 10,
+        "strip_duration": 45,
         "featured_label": "Featured Pack",
         "featured_product": "lost-echoes",
         "padding_top": 96,
@@ -26,6 +29,21 @@
         "padding_bottom": 128
       }
     },
+    "tkd_kits_marquee": {
+      "type": "tkd-kits-marquee",
+      "settings": {
+        "eyebrow": "// FULL ARCHIVE",
+        "title": "Browse the vault",
+        "products_to_show": 8,
+        "direction": "right",
+        "duration": 55,
+        "card_width": 260,
+        "show_view_all": true,
+        "view_all_label": "[VIEW ALL →]",
+        "padding_top": 32,
+        "padding_bottom": 96
+      }
+    },
     "tkd_about": {
       "type": "tkd-about",
       "settings": {
@@ -42,6 +60,7 @@
   "order": [
     "tkd_hero",
     "tkd_latest",
+    "tkd_kits_marquee",
     "tkd_about"
   ]
 }

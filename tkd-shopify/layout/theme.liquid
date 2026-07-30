@@ -23,12 +23,6 @@
       href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@400;600;700;800&family=Share+Tech+Mono&family=Special+Elite&family=VT323&family=Oxanium:wght@400;600;700&display=swap"
     >
 
-    {%- # TKD Sounds: fonte da camada visual "Exo" (Plus Jakarta Sans) -%}
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
-    >
-
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -285,8 +279,8 @@
     <script src="{{ 'tkd-theme.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'tkd-player.js' | asset_url }}" defer="defer"></script>
 
-    {%- # TKD Sounds: camada visual/motion "Exo" — carrega DEPOIS de -%}
-    {%- # tkd-theme.css pra poder sobrescrever os tokens com segurança -%}
+    {%- # TKD Sounds: camada visual/motion "Vault" (retrofuturista Fallout) — -%}
+    {%- # carrega DEPOIS de tkd-theme.css pra sobrescrever os tokens com segurança -%}
     {{ 'tkd-exo-theme.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'lenis.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'tkd-exo-motion.js' | asset_url }}" defer="defer"></script>

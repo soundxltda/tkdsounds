@@ -52,8 +52,58 @@
     {%- endif -%}
   </div>
 
+  {%- # Esteira de kits: na abertura os cards sobem de baixo pra cima em
+      stagger e, assim que assentam, começam a deslizar de lado em loop
+      contínuo (pausa no hover). Inspirado na intro da Exo Audio. -%}
+  {%- if section.settings.show_strip -%}
+    {%- liquid
+      assign strip_col = section.settings.strip_collection
+      if strip_col == blank
+        assign strip_col = collections.all
+      endif
+    -%}
+    {%- if strip_col.products.size > 0 -%}
+      <div class="tkd-hero__strip" data-tkd-hero-strip>
+        <div class="tkd-marquee tkd-marquee--cards" data-tkd-marquee>
+          <div
+            class="tkd-marquee__track"
+            style="--tkd-marquee-duration: {{ section.settings.strip_duration }}s; --tkd-marquee-card-w: 190px;"
+          >
+            {%- for product in strip_col.products limit: section.settings.strip_count -%}
+              <div class="tkd-marquee__card">
+                <a href="{{ product.url }}" class="tkd-strip-card">
+                  <div class="tkd-strip-card__art">
+                    {%- if product.featured_image -%}
+                      {{
+                        product.featured_image
+                        | image_url: width: 570
+                        | image_tag:
+                          widths: '190,380,570',
+                          sizes: '190px',
+                          loading: 'eager',
+                          alt: product.featured_image.alt
+                      }}
+                    {%- endif -%}
+                  </div>
+                  <div class="tkd-strip-card__name">{{ product.title | escape }}</div>
+                  <div class="tkd-strip-card__price">
+                    {%- if product.available -%}
+                      {{ product.price | money_without_trailing_zeros }}
+                    {%- else -%}
+                      SOLD OUT
+                    {%- endif -%}
+                  </div>
+                </a>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
   {%- if section.settings.featured_product != blank -%}
-    <div class="tkd-section__inner tkd-section__inner--w720">
+    <div class="tkd-section__inner tkd-section__inner--w720" data-tkd-parallax="0.05">
       <div class="tkd-hero__featured tkd-hero__featured--floating reveal">
         <div class="tkd-hero__featured-label">
           <span class="tkd-hero__star" aria-hidden="true">
@@ -125,6 +175,43 @@
       "id": "scroll_cue_text",
       "label": "Texto do indicador de scroll",
       "default": "Scroll"
+    },
+    {
+      "type": "header",
+      "content": "Esteira de kits"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_strip",
+      "label": "Mostrar esteira de kits",
+      "info": "Os kits sobem de baixo pra cima na abertura e depois deslizam de lado em loop (pausa no hover).",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "strip_collection",
+      "label": "Coleção da esteira",
+      "info": "Se vazia, usa todos os produtos da loja."
+    },
+    {
+      "type": "range",
+      "id": "strip_count",
+      "label": "Kits na esteira",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "strip_duration",
+      "label": "Duração de uma volta completa",
+      "info": "Maior = mais lento.",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "default": 45
     },
     {
       "type": "header",
