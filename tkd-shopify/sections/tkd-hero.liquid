@@ -1,15 +1,15 @@
 {% comment %}
   TKD Hero — "TKD Archives" + cena grudada estilo Exo Audio.
 
-  Em telas largas (e sem prefers-reduced-motion), Título/CTA, Featured
-  Pack e a esteira de kits viram 3 "atos" de uma cena com scroll
-  travado (position: sticky): o título dá lugar ao Featured Pack, que
-  por sua vez dá lugar à esteira — tudo dentro da mesma tela, como na
-  abertura do site de referência. O controle fica em tkd-exo-motion.js
-  (initHeroScene). Resto do site (grade de packs, FAQ, rodapé) continua
-  com scroll comum — só a abertura usa esse efeito.
+  Em telas largas (e sem prefers-reduced-motion), Título/CTA e a
+  esteira de "Featured Packs" viram 2 "atos" de uma cena com scroll
+  travado (position: sticky): o título dá lugar à esteira — tudo
+  dentro da mesma tela, como na abertura do site de referência. O
+  controle fica em tkd-exo-motion.js (initHeroScene). Resto do site
+  (grade de packs, FAQ, rodapé) continua com scroll comum — só a
+  abertura usa esse efeito.
 
-  Em mobile ou com movimento reduzido, os 3 blocos caem pro layout
+  Em mobile ou com movimento reduzido, os 2 blocos caem pro layout
   empilhado simples de sempre (sem sticky, sem scroll travado).
 {% endcomment %}
 
@@ -36,10 +36,6 @@
     if strip_col.products.size > 0
       assign has_strip = true
     endif
-  endif
-  assign has_featured = false
-  if section.settings.featured_product != blank
-    assign has_featured = true
   endif
   assign use_scene = section.settings.enable_scene
 -%}
@@ -89,28 +85,17 @@
         </div>
       </div>
 
-      {%- comment %} Ato 2 — Featured Pack tomando a tela {% endcomment -%}
-      {%- if has_featured -%}
-        <div class="tkd-scene__layer tkd-scene__layer--featured" data-tkd-scene-layer="featured">
-          <div class="tkd-section__inner tkd-section__inner--w720">
-            <div class="tkd-hero__featured tkd-hero__featured--floating reveal">
-              <div class="tkd-hero__featured-label">
-                <span class="tkd-hero__star" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
-                  </svg>
-                </span>
-                <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
-              </div>
-              {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide', custom_tagline: section.settings.featured_description %}
-            </div>
-          </div>
-        </div>
-      {%- endif -%}
-
-      {%- comment %} Ato 3 — esteira de kits revelada por trás do Featured Pack {% endcomment -%}
+      {%- comment %} Ato 2 — esteira de "Featured Packs" tomando a tela {% endcomment -%}
       {%- if has_strip -%}
         <div class="tkd-scene__layer tkd-scene__layer--kits" data-tkd-scene-layer="kits">
+          <div class="tkd-hero__featured-label tkd-hero__featured-label--standalone reveal">
+            <span class="tkd-hero__star" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/>
+              </svg>
+            </span>
+            <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
+          </div>
           <div class="tkd-hero__strip" data-tkd-hero-strip>
             <div class="tkd-marquee tkd-marquee--cards" data-tkd-marquee>
               <div
@@ -219,19 +204,25 @@
       "type": "checkbox",
       "id": "enable_scene",
       "label": "Ativar cena com scroll travado",
-      "info": "Título, Featured Pack e a esteira de kits viram 3 atos de uma cena: você rola e cada um toma a tela por vez. Desliga sozinho em celular e com \"reduzir movimento\" ativado. Se desmarcado, os 3 blocos ficam empilhados normalmente.",
+      "info": "Título e a esteira de Featured Packs viram 2 atos de uma cena: você rola e cada um toma a tela por vez. Desliga sozinho em celular e com \"reduzir movimento\" ativado. Se desmarcado, os 2 blocos ficam empilhados normalmente.",
       "default": true
     },
     {
       "type": "header",
-      "content": "Esteira de kits"
+      "content": "Esteira de Featured Packs"
     },
     {
       "type": "checkbox",
       "id": "show_strip",
-      "label": "Mostrar esteira de kits",
-      "info": "Terceiro ato da cena de abertura: revelada atrás do Featured Pack e depois desliza de lado em loop (pausa no hover).",
+      "label": "Mostrar esteira",
+      "info": "Segundo ato da cena de abertura: toma a tela depois do título e desliza de lado em loop (pausa no hover).",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "featured_label",
+      "label": "Rótulo",
+      "default": "Featured Packs"
     },
     {
       "type": "collection",
@@ -258,27 +249,6 @@
       "step": 5,
       "unit": "s",
       "default": 45
-    },
-    {
-      "type": "header",
-      "content": "Pack em destaque"
-    },
-    {
-      "type": "text",
-      "id": "featured_label",
-      "label": "Rótulo",
-      "default": "Featured Pack"
-    },
-    {
-      "type": "product",
-      "id": "featured_product",
-      "label": "Produto em destaque"
-    },
-    {
-      "type": "textarea",
-      "id": "featured_description",
-      "label": "Breve descrição do kit",
-      "info": "Aparece embaixo do nome no card em destaque."
     },
     {
       "type": "header",
