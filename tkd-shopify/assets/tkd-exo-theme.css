@@ -454,8 +454,36 @@ h1, h2, h3, h4,
   border-radius: var(--exo-radius-md);
   overflow: visible;
   box-shadow: var(--exo-shadow-card);
+  background: var(--surface);
   transition: transform 300ms var(--exo-ease), box-shadow 300ms var(--exo-ease), border-color 300ms var(--exo-ease);
 }
+
+/* Resets de âncora — o card inteiro (e seus links internos) nunca
+   herda azul/sublinhado de link cru, independente da base carregada */
+a.pack-tile,
+a.pack-tile:visited,
+.pack-tile__art-link,
+.pack-tile__name-link,
+.tkd-strip-card,
+.tkd-strip-card:visited {
+  text-decoration: none;
+  color: inherit;
+}
+.pack-tile__name {
+  color: var(--fg);
+  font-family: var(--font-tkd-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.pack-tile__genre,
+.pack-tile__fmt {
+  color: var(--fg-dim);
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.pack-tile__meta { padding: 14px 16px 16px; background: var(--surface); }
+.pack-tile__price-btn { text-decoration: none; }
 .pack-tile:hover {
   border-color: var(--amber);
   box-shadow: var(--exo-shadow-card-hover);

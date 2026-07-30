@@ -39,6 +39,10 @@
     var titles = document.querySelectorAll('[data-tkd-stagger]');
     titles.forEach(function (title) {
       if (title.dataset.tkdStaggerReady) return;
+      // Se outro sistema de stagger (tkd-theme.js legado, marcador
+      // data-staggered) já processou este título, não mexe: re-dividir
+      // o textContent dele perderia os espaços entre as palavras.
+      if (title.dataset.staggered) return;
       var text = title.textContent.trim();
       var words = text.split(/\s+/);
       title.textContent = '';
@@ -50,9 +54,11 @@
       words.forEach(function (word, i) {
         var span = document.createElement('span');
         span.textContent = word;
-        if (i < words.length - 1) span.style.marginRight = '0.28em';
         span.style.transitionDelay = reducedMotion ? '0ms' : (i * 90) + 'ms';
         line.appendChild(span);
+        // Espaço como nó de texto REAL (não margin): o textContent do
+        // título continua correto mesmo se outro script reler/reescrever
+        if (i < words.length - 1) line.appendChild(document.createTextNode(' '));
       });
       title.appendChild(line);
 
