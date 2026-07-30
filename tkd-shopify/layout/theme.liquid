@@ -260,6 +260,21 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {%- # TKD Sounds: tkd-header.liquid substitui sections/header.liquid, que é
+       quem normalmente carrega o CSS do carrinho no tema base. Sem isto, o
+       cart-drawer (renderizado em theme.liquid antes do header) fica sem
+       estilo e aparece como um bloco enorme no topo da página. -%}
+    {{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}
+    {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
+    {%- if settings.cart_type == 'drawer' -%}
+      {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+      {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+      {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+      {{ 'component-price.css' | asset_url | stylesheet_tag }}
+      {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     {{ 'tkd-theme.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'tkd-theme.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'tkd-player.js' | asset_url }}" defer="defer"></script>
