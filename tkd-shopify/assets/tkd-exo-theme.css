@@ -995,7 +995,18 @@ cart-drawer .drawer__inner {
   border-top: 1px solid var(--line);
 }
 .tkd-footer__inner { color: var(--fg-mid); }
-.tkd-footer__brand { color: var(--fg); }
+.tkd-footer__brand {
+  color: var(--fg);
+  font-family: var(--font-tkd-serif); /* mesma fonte de pôster do site todo */
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tkd-footer__links a {
+  font-family: var(--font-tkd-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 .tkd-footer__brand .brand-dim { color: var(--fg-dim); }
 .tkd-footer__tagline { color: var(--fg-dim); }
 .tkd-footer__links a { color: var(--fg-mid); }
