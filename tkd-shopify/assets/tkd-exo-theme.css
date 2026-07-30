@@ -122,6 +122,16 @@ body,
   --badge-corner-radius: 0px;
   --popup-corner-radius: 2px;
   --text-boxes-radius: 2px;
+
+  /* Desliga a sombra "block" de -12px/-12px 100% opaca do Refresh
+     nos botões nativos (checkout, Shop Pay, PayPal, carrinho): virava
+     um retângulo preto sólido atrás do botão, brigando com o visual
+     plano/reto do resto do site. Nenhum outro botão daqui tem sombra. */
+  --buttons-shadow-opacity: 0;
+  --buttons-shadow-visible: 0;
+  --buttons-shadow-horizontal-offset: 0px;
+  --buttons-shadow-vertical-offset: 0px;
+  --buttons-shadow-blur-radius: 0px;
   --media-radius: 0px;
 }
 
