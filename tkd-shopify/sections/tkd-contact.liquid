@@ -1,91 +1,68 @@
 {% comment %}
-  TKD Contact — CONTACT.TXT (portado de routes/contact.tsx).
-  Janela com linhas de contato (blocks: rótulo + valor + link) e
-  caret READY piscante.
+  TKD Contact — página de contato: título grande + linhas de canal
+  (e-mail, redes) em cards clicáveis (design system v2).
 {% endcomment %}
 
 <div class="tkd-contact tkd-section">
-  <div class="tkd-section__inner tkd-section__inner--w720">
-    {%- if section.settings.terminal_text != blank -%}
-      <div class="tkd-contact__terminal">{{ section.settings.terminal_text | escape }}</div>
-    {%- endif -%}
-
-    <h1 class="tkd-contact__title chroma">{{ section.settings.heading | default: page.title | escape }}</h1>
-
-    {%- if section.settings.intro != blank -%}
-      <p class="tkd-contact__intro">&gt; {{ section.settings.intro | escape }}</p>
-    {%- endif -%}
-
-    <div class="win tkd-contact__win">
-      <div class="win-title">
-        <span>{{ section.settings.window_title | escape }}</span>
-        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-      </div>
-      <div class="tkd-contact__rows">
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign href = block.settings.url
-            if block.settings.email != blank
-              assign href = 'mailto:' | append: block.settings.email
-            endif
-          -%}
-          {%- if href != blank -%}
-            <a
-              href="{{ href }}"
-              class="tkd-contact__row"
-              {% if block.settings.external %}target="_blank" rel="noreferrer"{% endif %}
-              {{ block.shopify_attributes }}
-            >
-              <span class="tkd-contact__row-label">{{ block.settings.label | escape }}</span>
-              <span class="tkd-contact__row-value">
-                {{ block.settings.value | default: block.settings.email | escape }}
-                {%- if block.settings.external %} ↗{% endif %}
-              </span>
-            </a>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    <div class="reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      <h1 class="tkd-contact__title">{{ section.settings.title | escape }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="tkd-contact__sub">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
     </div>
 
-    <div class="tkd-contact__ready caret">{{ section.settings.status_text | escape }}</div>
+    <div class="tkd-contact__rows">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign href = block.settings.url
+          if block.type == 'email'
+            assign href = 'mailto:' | append: block.settings.value
+          endif
+        -%}
+        <a
+          class="tkd-contact__row reveal"
+          style="transition-delay: {{ forloop.index0 | times: 60 }}ms;"
+          href="{{ href }}"
+          {% if block.type == 'link' and block.settings.external %}target="_blank" rel="noopener"{% endif %}
+          {{ block.shopify_attributes }}
+        >
+          <span class="label">{{ block.settings.label | escape }}</span>
+          <span>{{ block.settings.value | escape }}</span>
+          <span class="arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "TKD Contato",
+  "name": "TKD Contact",
   "tag": "section",
-  "class": "section-tkd-contact",
   "settings": [
     {
       "type": "text",
-      "id": "terminal_text",
-      "label": "Linha de terminal",
-      "default": "> OPEN CONTACT.TXT"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Título",
+      "id": "eyebrow",
+      "label": "Rótulo",
       "default": "Contact"
     },
     {
       "type": "text",
-      "id": "intro",
-      "label": "Introdução",
-      "default": "For licensing, custom work, press or general inquiries — reach out below."
+      "id": "title",
+      "label": "Título",
+      "default": "Let's talk"
     },
     {
-      "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "CONTACT.TXT"
-    },
-    {
-      "type": "text",
-      "id": "status_text",
-      "label": "Texto de status (caret)",
-      "default": "READY"
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Questions, collabs, or support — reach out through any channel below."
     }
   ],
   "blocks": [
@@ -93,54 +70,24 @@
       "type": "email",
       "name": "E-mail",
       "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Rótulo",
-          "default": "Email"
-        },
-        {
-          "type": "text",
-          "id": "email",
-          "label": "Endereço de e-mail",
-          "default": "prodbytkd@gmail.com"
-        }
+        { "type": "text", "id": "label", "label": "Rótulo", "default": "Email" },
+        { "type": "text", "id": "value", "label": "Endereço", "default": "prodbytkd@gmail.com" }
       ]
     },
     {
       "type": "link",
       "name": "Link",
       "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Rótulo",
-          "default": "Instagram"
-        },
-        {
-          "type": "text",
-          "id": "value",
-          "label": "Texto exibido",
-          "default": "@tkdprod"
-        },
-        {
-          "type": "url",
-          "id": "url",
-          "label": "URL"
-        },
-        {
-          "type": "checkbox",
-          "id": "external",
-          "label": "Abrir em nova aba",
-          "default": true
-        }
+        { "type": "text", "id": "label", "label": "Rótulo", "default": "Instagram" },
+        { "type": "text", "id": "value", "label": "Texto exibido", "default": "@tkdprod" },
+        { "type": "url", "id": "url", "label": "URL" },
+        { "type": "checkbox", "id": "external", "label": "Abrir em nova aba", "default": true }
       ]
     }
   ],
-  "max_blocks": 8,
   "presets": [
     {
-      "name": "TKD Contato",
+      "name": "TKD Contact",
       "blocks": [
         { "type": "email" },
         { "type": "link" }

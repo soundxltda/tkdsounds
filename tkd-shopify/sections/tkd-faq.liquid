@@ -1,36 +1,40 @@
 {% comment %}
-  TKD FAQ — seção opcional (não existia no site Lovable; criada no padrão
-  visual TKD a pedido do cliente). Janela retrô com perguntas/respostas
-  em blocks colapsáveis (details/summary, sem JavaScript).
+  TKD FAQ — perguntas frequentes em accordion (details/summary),
+  ícone "+" rotaciona ao abrir (design system v2).
 {% endcomment %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-faq {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-faq {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
 
 <div class="tkd-faq tkd-section">
   <div class="tkd-section__inner tkd-section__inner--w900">
-    <div class="win reveal">
-      <div class="win-title">
-        <span>{{ section.settings.window_title | escape }}</span>
-        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-      </div>
-      <div class="tkd-faq__pad">
-        {%- if section.settings.eyebrow != blank -%}
-          <div class="tkd-eyebrow text-amber tkd-faq__eyebrow">&gt; {{ section.settings.eyebrow | escape }}</div>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="tkd-faq__title">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
+    <div class="reveal" style="text-align: center;">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+    </div>
 
-        <div class="tkd-faq__list">
-          {%- for block in section.blocks -%}
-            <details class="tkd-faq__item" {{ block.shopify_attributes }}>
-              <summary class="tkd-faq__q">
-                <span class="tkd-faq__q-text">{{ block.settings.question | escape }}</span>
-                <span class="tkd-faq__toggle" aria-hidden="true"></span>
-              </summary>
-              <div class="tkd-faq__a">{{ block.settings.answer }}</div>
-            </details>
-          {%- endfor -%}
-        </div>
-      </div>
+    <div class="tkd-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="tkd-faq__item reveal" style="transition-delay: {{ forloop.index0 | times: 50 }}ms;" {{ block.shopify_attributes }}>
+          <summary class="tkd-faq__q">
+            <span>{{ block.settings.question | escape }}</span>
+            <span class="tkd-faq__toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="tkd-faq__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
     </div>
   </div>
 </div>
@@ -39,54 +43,67 @@
 {
   "name": "TKD FAQ",
   "tag": "section",
-  "class": "section-tkd-faq",
   "settings": [
     {
       "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "FAQ.HLP"
-    },
-    {
-      "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "HELP INDEX"
+      "label": "Rótulo",
+      "default": "FAQ"
     },
     {
       "type": "text",
-      "id": "heading",
+      "id": "title",
       "label": "Título",
-      "default": "Frequently asked questions"
+      "default": "Questions, answered"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64,
+      "unit": "px"
     }
   ],
   "blocks": [
     {
-      "type": "item",
+      "type": "faq",
       "name": "Pergunta",
       "settings": [
         {
           "type": "text",
           "id": "question",
           "label": "Pergunta",
-          "default": "How do I download my pack?"
+          "default": "Are the packs royalty-free?"
         },
         {
           "type": "richtext",
           "id": "answer",
           "label": "Resposta",
-          "default": "<p>After checkout you'll receive an instant download link by email.</p>"
+          "default": "<p>Yes — all sounds can be used in commercial releases at no extra cost.</p>"
         }
       ]
     }
   ],
-  "max_blocks": 12,
   "presets": [
     {
       "name": "TKD FAQ",
       "blocks": [
-        { "type": "item" },
-        { "type": "item" }
+        { "type": "faq" },
+        { "type": "faq", "settings": { "question": "Which DAWs does it work with?", "answer": "<p>All files are WAV 24-bit and work in any DAW: FL Studio, Ableton, Logic, Reaper and more.</p>" } },
+        { "type": "faq", "settings": { "question": "How do I get the download?", "answer": "<p>After checkout you'll receive the download link by email, instantly.</p>" } }
       ]
     }
   ]

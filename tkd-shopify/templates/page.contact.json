@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tkd_contact": {
@@ -6,8 +15,8 @@
         "email": {
           "type": "email",
           "settings": {
-            "label": "Email",
-            "email": "prodbytkd@gmail.com"
+            "label": "E-mail",
+            "value": "prodbytkd@gmail.com"
           }
         },
         "instagram": {
@@ -20,16 +29,11 @@
           }
         }
       },
-      "block_order": [
-        "email",
-        "instagram"
-      ],
+      "block_order": ["email", "instagram"],
       "settings": {
-        "terminal_text": "> OPEN CONTACT.TXT",
-        "heading": "Contact",
-        "intro": "For licensing, custom work, press or general inquiries — reach out below.",
-        "window_title": "CONTACT.TXT",
-        "status_text": "READY"
+        "eyebrow": "Contact",
+        "title": "Let's talk",
+        "subtitle": "Questions, collabs, or support — reach out through any channel below."
       }
     }
   },
