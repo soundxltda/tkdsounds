@@ -105,6 +105,19 @@ body,
   --color-badge-foreground: 230, 223, 211;
   --color-badge-background: 34, 60, 88;
   --color-badge-border: 95, 178, 230;
+
+  /* Cantos UNIFORMES nos componentes nativos do Refresh (forms,
+     newsletter, busca, popups): interativos em pill, painéis em
+     canto discreto — mesma linguagem dos botões/cards TKD */
+  --buttons-radius: 24px;
+  --buttons-radius-outset: 25px;
+  --inputs-radius: 8px;
+  --inputs-radius-outset: 9px;
+  --variant-pills-radius: 999px;
+  --badge-corner-radius: 999px;
+  --popup-corner-radius: 10px;
+  --text-boxes-radius: 10px;
+  --media-radius: 8px;
 }
 
 html { background: var(--bg); }
@@ -117,7 +130,7 @@ body {
   background-image:
     radial-gradient(ellipse at 50% 36%, rgba(150, 200, 240, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 60%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.34 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.46 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-attachment: fixed;
   background-size: auto, auto, 260px 260px;
 }
@@ -140,9 +153,17 @@ body::after {
   background: radial-gradient(ellipse at 50% 45%, rgba(95, 178, 230, 0.05) 0%, transparent 60%);
 }
 
-/* Overlays CRT ficam LIGADOS no visual vault — dose vintage */
-.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker { opacity: 0.6; }
-.grain-overlay { opacity: 0.13; }
+/* Overlays CRT ficam LIGADOS no visual vault — dose vintage.
+   display: block é necessário: o bloco "legado" no fim do
+   tkd-theme.css v2 da loja esconde essas camadas com display: none */
+.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker {
+  display: block;
+  opacity: 0.6;
+}
+.grain-overlay {
+  display: block;
+  opacity: 0.18;
+}
 
 /* Textura de filme também nas superfícies (cards, painéis, rodapé) */
 .pack-tile,
@@ -164,7 +185,10 @@ cart-drawer .drawer__inner {
    1) TIPOGRAFIA — Anton (pôster) nos títulos, Michroma nos labels,
    terminal no resto (mono/pixel/typewriter vêm do tkd-theme.css)
    ============================================================ */
-h1, h2, h3, h4,
+h1, h2, h3, h4, h5,
+.tkd-h1,
+.tkd-h2,
+.tkd-h3,
 .tkd-hero__title,
 .tkd-latest__title,
 .tkd-product-hero__title,
@@ -194,6 +218,10 @@ h1, h2, h3, h4,
   .tkd-hero__title,
   .tkd-hero__title .tkd-word,
   .tkd-hero__title .tkd-stagger-line span,
+  .tkd-h1,
+  .tkd-h1 .tkd-word,
+  .tkd-h2,
+  .tkd-h2 .tkd-word,
   .tkd-latest__title,
   .tkd-kits-marquee__title,
   .tkd-product-hero__title,
@@ -420,7 +448,7 @@ h1, h2, h3, h4,
 .tkd-strip-card {
   display: block;
   text-decoration: none;
-  text-align: left;
+  text-align: center;
 }
 .tkd-strip-card__art {
   position: relative;
@@ -532,6 +560,7 @@ h1, h2, h3, h4,
    7) CARDS DE PRODUTO — dossiê de vault com hover overlay
    ============================================================ */
 .pack-tile {
+  display: block; /* o <a> inline com borda gerava lascas de 1px (fragmentos de inline box) acima/abaixo do card */
   position: relative; /* âncora do badge, que fica fora do .pack-art */
   border: 1px solid var(--line);
   border-radius: var(--exo-radius-md);
@@ -565,8 +594,37 @@ a.pack-tile:visited,
   font-size: 11px;
   text-transform: uppercase;
 }
-.pack-tile__meta { padding: 14px 16px 16px; background: var(--surface); }
+.pack-tile__meta {
+  padding: 14px 16px 16px;
+  background: var(--surface);
+  text-align: center; /* nome e valor centralizados */
+}
+.pack-tile__row,
+.pack-tile__price-row,
+.pack-tile__tags {
+  justify-content: center;
+}
 .pack-tile__price-btn { text-decoration: none; }
+
+/* Tags/pills fora dos cards — uns tinham, outros não, e o grid ficava
+   desigual; a classificação fica só no badge do topo (NEW/BESTSELLER) */
+.pack-tile .pack-tile__tags { display: none; }
+
+/* Grid de packs com cards da MESMA altura */
+.tkd-grid-packs__item { display: flex; }
+.tkd-grid-packs__item .pack-tile { width: 100%; }
+.tkd-grid-packs__item .pack-tile,
+.tkd-latest .pack-tile {
+  display: flex;
+  flex-direction: column;
+}
+.tkd-grid-packs__item .pack-tile .pack-tile__meta,
+.tkd-latest .pack-tile .pack-tile__meta {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .pack-tile:hover {
   border-color: var(--amber);
   box-shadow: var(--exo-shadow-card-hover);
@@ -743,6 +801,9 @@ a.pack-tile:visited,
   padding: 24px;
   display: flex;
   flex-direction: column;
+  align-items: center; /* ficha do featured centralizada */
+  justify-content: center;
+  text-align: center;
   flex: 1 1 0;
 }
 .pack-tile__name-link { text-decoration: none; }
@@ -760,11 +821,13 @@ a.pack-tile:visited,
 }
 .pack-tile__features {
   list-style: none;
-  margin: 16px 0 0;
+  margin: 16px auto 0;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px 16px;
+  max-width: 360px;
+  text-align: left;
   font-family: var(--font-tkd-mono);
   font-size: 12px;
   color: var(--fg-mid);
@@ -792,6 +855,7 @@ a.pack-tile:visited,
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 .pack-tile__actions .tkd-product-form { display: contents; }
@@ -906,7 +970,7 @@ cart-drawer .drawer__inner {
   width: 22px;
   height: 22px;
   flex-shrink: 0;
-  border-radius: var(--exo-radius-sm);
+  border-radius: 999px; /* pill, como todos os interativos */
   border: 1px solid var(--line-h);
   color: var(--fg);
   transition: transform 300ms var(--exo-ease), background-color 300ms var(--exo-ease);
