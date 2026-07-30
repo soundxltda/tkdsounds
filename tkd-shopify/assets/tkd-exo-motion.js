@@ -9,28 +9,10 @@
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ------------------------------------------------------------
-   * 2) SMOOTH SCROLL (Lenis)
-   * ---------------------------------------------------------- */
-  function initSmoothScroll() {
-    if (reducedMotion || typeof window.Lenis !== 'function') return;
-
-    var lenis = new window.Lenis({
-      duration: 1.1,
-      easing: function (t) {
-        return Math.min(1, 1.001 - Math.pow(2, -10 * t));
-      },
-      smoothWheel: true,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    window.tkdLenis = lenis;
-  }
+  /* Scroll é NATIVO de propósito: o tkd-theme.css da loja já usa
+     scroll-behavior: smooth, e um smooth scroll de JS (Lenis) por
+     cima disputava o controle da rolagem — a página parava no meio
+     do caminho e a inércia ficava artificial. */
 
   /* ------------------------------------------------------------
    * 4) HERO — stagger por linha/palavra
@@ -282,11 +264,7 @@
       requestAnimationFrame(update);
     }
 
-    if (window.tkdLenis) {
-      window.tkdLenis.on('scroll', onScroll);
-    } else {
-      window.addEventListener('scroll', onScroll, { passive: true });
-    }
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     onScroll();
   }
@@ -363,11 +341,7 @@
       btn.dataset.tkdReady = 'true';
       btn.addEventListener('click', function () {
         var target = window.scrollY + window.innerHeight * 0.9;
-        if (window.tkdLenis) {
-          window.tkdLenis.scrollTo(target);
-        } else {
-          window.scrollTo({ top: target, behavior: reducedMotion ? 'auto' : 'smooth' });
-        }
+        window.scrollTo({ top: target, behavior: reducedMotion ? 'auto' : 'smooth' });
       });
     });
   }
@@ -376,7 +350,6 @@
     if (document.body.classList.contains('tkd-motion-ready')) return;
     document.body.classList.add('tkd-motion-ready');
 
-    initSmoothScroll();
     initHeroStagger();
     initReveal();
     initCounters();

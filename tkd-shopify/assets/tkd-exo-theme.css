@@ -50,6 +50,34 @@
   --line: rgba(230, 223, 211, 0.16);
   --line-h: rgba(230, 223, 211, 0.32);
 
+  /* Tokens do "design system v2" (Studio Dark) que está no tema da
+     loja — header/footer/sections v2 leem estas variáveis --tkd-*,
+     então re-tintar aqui faz TUDO seguir o azul vintage da capa
+     (cores, fonte do corpo em mono de terminal, cantos discretos) */
+  --tkd-bg: #122233;
+  --tkd-bg-soft: #0e1c2e;
+  --tkd-surface: #1a2f45;
+  --tkd-surface-2: #223c58;
+  --tkd-surface-3: #2f5174;
+  --tkd-fg: #e6dfd3;
+  --tkd-fg-mid: rgba(230, 223, 211, 0.8);
+  --tkd-fg-dim: rgba(230, 223, 211, 0.58);
+  --tkd-fg-ghost: rgba(230, 223, 211, 0.26);
+  --tkd-accent: #5fb2e6;
+  --tkd-accent-h: #7cc4ef;
+  --tkd-accent-soft: rgba(95, 178, 230, 0.16);
+  --tkd-accent-glow: rgba(95, 178, 230, 0.35);
+  --tkd-lime: #7ed695;
+  --tkd-danger: #d1704f;
+  --tkd-line: rgba(230, 223, 211, 0.14);
+  --tkd-line-h: rgba(230, 223, 211, 0.3);
+  --tkd-radius: 8px;
+  --tkd-radius-sm: 5px;
+  --font-tkd-body: "Share Tech Mono", ui-monospace, monospace;
+
+  /* Textura de filme reutilizável (grain fino, tipo a capa) */
+  --tkd-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='4'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
   /* Tokens da camada — cantos discretos (hardware de vault, não app) */
   --exo-radius-sm: 3px;
   --exo-radius-md: 6px;
@@ -82,16 +110,29 @@ body,
 html { background: var(--bg); }
 
 /* Fundo como o da capa: glow frio de "orbe" no topo + vinheta +
-   grain de filme levemente azulado */
+   grain de filme FORTE (a textura é protagonista, igual no pack) */
 body {
   position: relative;
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse at 50% 36%, rgba(150, 200, 240, 0.055) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 36%, rgba(150, 200, 240, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 60%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.16 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.34 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-attachment: fixed;
   background-size: auto, auto, 260px 260px;
+}
+
+/* Moldura de pôster nas bordas da tela, como o frame da capa */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 10px;
+  border: 1px solid rgba(230, 223, 211, 0.13);
+  z-index: 80;
+  pointer-events: none;
+}
+@media screen and (max-width: 749px) {
+  body::after { inset: 6px; }
 }
 
 /* Glow central do CRT recolorido (era âmbar fixo no tkd-theme.css) */
@@ -99,10 +140,19 @@ body {
   background: radial-gradient(ellipse at 50% 45%, rgba(95, 178, 230, 0.05) 0%, transparent 60%);
 }
 
-/* Overlays CRT ficam LIGADOS no visual vault — só levemente
-   suavizados pra não brigar com as capas dos kits */
-.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker { opacity: 0.55; }
-.grain-overlay { opacity: 0.07; }
+/* Overlays CRT ficam LIGADOS no visual vault — dose vintage */
+.crt-scanlines, .crt-vignette, .crt-glow, .crt-flicker { opacity: 0.6; }
+.grain-overlay { opacity: 0.13; }
+
+/* Textura de filme também nas superfícies (cards, painéis, rodapé) */
+.pack-tile,
+.pack-tile__meta,
+.win,
+.tkd-footer,
+cart-drawer .drawer__inner {
+  background-image: var(--tkd-noise);
+}
+.tkd-strip-card__art { background-image: var(--tkd-noise); }
 
 ::selection { background: var(--amber); color: var(--bg-2); }
 
@@ -131,6 +181,33 @@ h1, h2, h3, h4,
 .pack-tile__name,
 .pack-tile__fallback-name {
   font-weight: 400;
+}
+
+/* Grain DENTRO das letras dos títulos grandes, como o lettering
+   granulado do "LOST ECHOES" da capa */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  /* IMPORTANTE: os spans do stagger têm transform próprio, e
+     background-clip: text no PAI não pinta glifos de filhos
+     transformados (viram camada separada) — então o clip é aplicado
+     tanto nos títulos quanto nos spans internos, cada um pintando o
+     próprio grain */
+  .tkd-hero__title,
+  .tkd-hero__title .tkd-word,
+  .tkd-hero__title .tkd-stagger-line span,
+  .tkd-latest__title,
+  .tkd-kits-marquee__title,
+  .tkd-product-hero__title,
+  .tkd-about__title,
+  .tkd-related__title {
+    background-color: #e9e2d3;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+      linear-gradient(180deg, #f4eee1 0%, #cfc6b0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 }
 
 /* Aberração cromática dos títulos, recolorida pro azul da capa */
@@ -283,8 +360,8 @@ h1, h2, h3, h4,
 .tkd-hero__title[data-tkd-stagger] .tkd-stagger-line span {
   display: inline-block;
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 700ms var(--exo-ease), transform 700ms var(--exo-ease);
+  transform: translateY(18px);
+  transition: opacity 550ms var(--exo-ease), transform 550ms var(--exo-ease);
 }
 .tkd-hero__title[data-tkd-stagger].is-in .tkd-stagger-line span {
   opacity: 1;
@@ -324,8 +401,8 @@ h1, h2, h3, h4,
 .tkd-hero__strip.is-live .tkd-marquee__track { animation-play-state: running; }
 .tkd-hero__strip .tkd-marquee__card {
   opacity: 0;
-  transform: translateY(76px);
-  transition: opacity 700ms var(--exo-ease), transform 700ms var(--exo-ease);
+  transform: translateY(44px);
+  transition: opacity 550ms var(--exo-ease), transform 550ms var(--exo-ease);
 }
 .tkd-hero__strip.is-in .tkd-marquee__card {
   opacity: 1;
@@ -386,10 +463,11 @@ h1, h2, h3, h4,
 /* ============================================================
    5) REVEAL ON SCROLL
    ============================================================ */
+/* Reveals discretos e rápidos — presença, não espetáculo */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 600ms var(--exo-ease), transform 600ms var(--exo-ease);
+  transform: translateY(12px);
+  transition: opacity 450ms var(--exo-ease), transform 450ms var(--exo-ease);
 }
 .reveal.revealed { opacity: 1; transform: translateY(0); }
 .no-js .reveal { opacity: 1; transform: none; }
@@ -398,9 +476,9 @@ h1, h2, h3, h4,
    via JS (nth-of-type) e usa esse índice pro delay */
 .reveal-stagger .reveal-item {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 550ms var(--exo-ease), transform 550ms var(--exo-ease);
-  transition-delay: calc(var(--tkd-stagger-i, 0) * 80ms);
+  transform: translateY(12px);
+  transition: opacity 420ms var(--exo-ease), transform 420ms var(--exo-ease);
+  transition-delay: calc(var(--tkd-stagger-i, 0) * 60ms);
 }
 .reveal-stagger.is-in .reveal-item {
   opacity: 1;
@@ -501,6 +579,26 @@ a.pack-tile:visited,
   overflow: hidden;
 }
 .pack-tile .pack-art::after { display: none; } /* scanline por-card sai (a global cobre) */
+
+/* Capas SEM esticar: proporção quadrada + object-fit cover, definidos
+   aqui na camada pra não depender da base tkd-theme.css carregada */
+.pack-art {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: var(--surface-2);
+}
+.pack-art-fallback {
+  width: 100%;
+  height: 100%;
+}
+.pack-art img,
+.pack-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .pack-tile__meta { border-radius: 0 0 var(--exo-radius-md) var(--exo-radius-md); overflow: hidden; }
 
 /* Badge de classificação atravessando a borda de cima (estilo Exo),
@@ -626,7 +724,19 @@ a.pack-tile:visited,
 @media screen and (min-width: 640px) {
   .pack-tile--wide { flex-direction: row; align-items: stretch; }
   .pack-tile--wide .pack-tile__art-link { width: 44%; flex-shrink: 0; }
-  .pack-tile--wide .pack-art { height: 100%; border-radius: var(--exo-radius-md) 0 0 var(--exo-radius-md); }
+  .pack-tile--wide .pack-art {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 280px;
+    border-radius: var(--exo-radius-md) 0 0 var(--exo-radius-md);
+  }
+  /* Preenche a coluna da capa por posicionamento absoluto — cadeia de
+     height:100% percentual não resolve dentro do flex esticado */
+  .pack-tile--wide .pack-art .pack-art-fallback {
+    position: absolute;
+    inset: 0;
+    height: auto;
+  }
 }
 .pack-tile__art-link { display: block; position: relative; text-decoration: none; }
 .pack-tile__meta--wide {
@@ -896,11 +1006,53 @@ cart-drawer .drawer__inner {
   border: 1px solid var(--bg);
 }
 
+/* Header (markup v2 da loja): vidro azul-aço com grain, marca em
+   Anton como o lettering da capa, nav em mono de terminal e
+   carrinho em pill azul estilo a cápsula da capa */
 .tkd-header {
-  background: linear-gradient(to bottom, var(--surface-3), var(--surface-2));
-  border-bottom: 1px solid var(--line-h);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 0 20px rgba(0, 0, 0, 0.2);
+  background: rgba(11, 24, 38, 0.85);
+  background-image: var(--tkd-noise);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
 }
+.tkd-header.is-scrolled { border-bottom-color: var(--line-h); }
+.tkd-header__logo {
+  font-family: var(--font-tkd-serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+.tkd-header__logo .logo-dot { color: var(--amber); }
+.tkd-header__link {
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  border-radius: var(--exo-radius-sm);
+}
+.tkd-header__link:hover { color: var(--amber); background: rgba(95, 178, 230, 0.08); }
+.tkd-header__link--active { color: var(--fg); background: rgba(95, 178, 230, 0.14); }
+.tkd-header__cart {
+  font-family: var(--font-tkd-display);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  transition: background-color 200ms var(--exo-ease), color 200ms var(--exo-ease);
+}
+.tkd-header__cart:hover { background: var(--amber); color: #0b1826; border-color: var(--amber); }
+.tkd-header__cart-count { background: var(--amber); color: #0b1826; }
+.tkd-header__cart:hover .tkd-header__cart-count { background: #0b1826; color: var(--amber); }
+.tkd-header__menu-toggle { border-color: var(--line-h); }
+.tkd-header__mobile {
+  background: rgba(11, 24, 38, 0.97);
+  background-image: var(--tkd-noise);
+}
+.tkd-header__mobile a { font-family: var(--font-tkd-mono); letter-spacing: 0.1em; }
+
+/* Header retrô v1 (se a section antiga voltar a ser usada) */
 .tkd-header__winbtns span { border-color: var(--line-h); }
 .tkd-header__menubar { border-top-color: var(--line-h); }
 
