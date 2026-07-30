@@ -3,10 +3,9 @@
     "tkd_collection": {
       "type": "tkd-collection",
       "settings": {
-        "terminal_text": "> DIR C:\\ARCHIVE\\",
-        "decor_text": "SORT: [ RECENT ] · VIEW: [ GRID ]",
-        "window_title": "ARCHIVE_INDEX.DB",
-        "products_per_page": 24
+        "eyebrow": "The archive",
+        "title_override": "",
+        "products_per_page": 12
       }
     }
   },

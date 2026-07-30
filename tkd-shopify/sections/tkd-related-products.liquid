@@ -1,41 +1,61 @@
 {% comment %}
-  TKD Related Products — "More from the archive" (portado de RELATED de
-  pack.$id.tsx). Usa a API nativa de recomendações da Shopify: o conteúdo
-  é buscado por tkd-theme.js via routes.product_recommendations_url e
-  renderizado com o mesmo pack card do restante do site.
+  TKD Related Products — recomendações nativas da Shopify carregadas
+  via fetch ([data-tkd-recommendations] em assets/tkd-theme.js), com
+  fallback de coleção enquanto não há recomendações.
 {% endcomment %}
 
 <div class="tkd-related tkd-section">
-  <div
-    class="tkd-section__inner tkd-section__inner--w1400"
-    data-tkd-recommendations
-    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
-  >
-    {%- if recommendations.performed and recommendations.products_count > 0 -%}
-      <div class="tkd-eyebrow text-amber tkd-related__eyebrow">{{ section.settings.eyebrow | escape }}</div>
-      <h2 class="tkd-related__title">{{ section.settings.title | escape }}</h2>
-      <div class="tkd-grid-packs">
-        {%- for recommendation in recommendations.products -%}
-          <div class="tkd-grid-packs__item">
-            {% render 'tkd-pack-card', card_product: recommendation %}
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div
+      data-tkd-recommendations
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
+    >
+      {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+        <div class="reveal revealed">
+          <span class="tkd-eyebrow tkd-related__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          <h2 class="tkd-h2 tkd-related__title">{{ section.settings.title | escape }}</h2>
+        </div>
+        <div class="tkd-grid-packs">
+          {%- for rec in recommendations.products -%}
+            <div class="tkd-grid-packs__item">
+              {% render 'tkd-pack-card', card_product: rec %}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- elsif recommendations.performed? == false and section.settings.fallback_collection != blank -%}
+        {%- liquid
+          assign shown = 0
+          assign limit = section.settings.products_to_show
+        -%}
+        <div class="reveal">
+          <span class="tkd-eyebrow tkd-related__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          <h2 class="tkd-h2 tkd-related__title">{{ section.settings.title | escape }}</h2>
+        </div>
+        <div class="tkd-grid-packs">
+          {%- for p in section.settings.fallback_collection.products -%}
+            {%- if p.id != product.id and shown < limit -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <div class="tkd-grid-packs__item reveal">
+                {% render 'tkd-pack-card', card_product: p %}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "TKD Relacionados",
+  "name": "TKD Related Products",
   "tag": "section",
-  "class": "section-tkd-related",
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "\/\/ RELATED FILES"
+      "label": "Rótulo",
+      "default": "Keep digging"
     },
     {
       "type": "text",
@@ -46,11 +66,17 @@
     {
       "type": "range",
       "id": "products_to_show",
-      "label": "Produtos exibidos",
+      "label": "Quantidade",
       "min": 2,
-      "max": 10,
+      "max": 6,
       "step": 1,
-      "default": 5
+      "default": 3
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Coleção de fallback",
+      "info": "Usada enquanto a Shopify não gera recomendações."
     }
   ]
 }

@@ -3,9 +3,9 @@
     "tkd_404": {
       "type": "tkd-404",
       "settings": {
-        "window_title": "ERROR — FILE_NOT_FOUND.SYS",
-        "message": "The requested resource could not be located on this volume.",
-        "button_label": "Return to Index"
+        "title": "This page doesn't exist",
+        "subtitle": "O link pode ter mudado — mas os sons continuam no lugar.",
+        "button_label": "Back to home"
       }
     }
   },

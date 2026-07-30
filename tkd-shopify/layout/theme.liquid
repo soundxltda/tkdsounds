@@ -15,18 +15,12 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- # TKD Sounds: fontes retrô (mesmo conjunto do site original) -%}
+    {%- # TKD Sounds: fontes do design system v2 (Space Grotesk display + Inter body) -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@400;600;700;800&family=Share+Tech+Mono&family=Special+Elite&family=VT323&family=Oxanium:wght@400;600;700&display=swap"
-    >
-
-    {%- # TKD Sounds: fonte da camada visual "Exo" (Plus Jakarta Sans) -%}
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
     >
 
     <title>
@@ -285,12 +279,6 @@
     <script src="{{ 'tkd-theme.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'tkd-player.js' | asset_url }}" defer="defer"></script>
 
-    {%- # TKD Sounds: camada visual/motion "Exo" — carrega DEPOIS de -%}
-    {%- # tkd-theme.css pra poder sobrescrever os tokens com segurança -%}
-    {{ 'tkd-exo-theme.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'lenis.min.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'tkd-exo-motion.js' | asset_url }}" defer="defer"></script>
-
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
@@ -320,13 +308,10 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if settings.tkd_enable_crt %} tkd-crt-on{% endif %}{% if settings.tkd_enable_cursors %} tkd-cursors{% endif %}{% if settings.tkd_enable_zoom %} tkd-zoom{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
-
-    {%- # TKD Sounds: background ambiente fixo da camada visual "Exo" -%}
-    {% render 'tkd-ambient-bg' %}
 
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
@@ -340,11 +325,8 @@
 
     {% sections 'footer-group' %}
 
-    {%- # TKD Sounds: player de áudio global (barra fixa inferior) -%}
+    {%- # TKD Sounds: player de áudio global (barra flutuante inferior) -%}
     {% render 'tkd-global-player' %}
-
-    {%- # TKD Sounds: pilha de overlays CRT (scanlines, vinheta, glow, grain, flicker) -%}
-    {% render 'tkd-crt-overlays' %}
 
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>

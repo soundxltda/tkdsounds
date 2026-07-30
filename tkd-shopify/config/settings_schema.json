@@ -12,57 +12,13 @@
     "settings": [
       {
         "type": "header",
-        "content": "Efeitos retrô (CRT)"
-      },
-      {
-        "type": "paragraph",
-        "content": "Desligados por padrão na camada visual \"Exo\" (moderna). Pode reativar o visual retrô original a qualquer momento."
-      },
-      {
-        "type": "checkbox",
-        "id": "tkd_enable_crt",
-        "label": "Ativar overlays CRT (scanlines, vinheta, glow)",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "tkd_enable_grain",
-        "label": "Ativar grain animado",
-        "info": "Requer overlays CRT ativos.",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "tkd_enable_flicker",
-        "label": "Ativar flicker de monitor",
-        "info": "Requer overlays CRT ativos.",
-        "default": false
-      },
-      {
-        "type": "header",
-        "content": "Experiência retrô"
-      },
-      {
-        "type": "checkbox",
-        "id": "tkd_enable_cursors",
-        "label": "Ativar cursores retrô (Win95)",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "tkd_enable_zoom",
-        "label": "Ativar escala visual 120% (como o site original)",
-        "default": false
-      },
-      {
-        "type": "header",
         "content": "Player global"
       },
       {
         "type": "text",
         "id": "tkd_player_buy_label",
         "label": "Texto do botão de compra do player",
-        "default": "▶ BUY NOW"
+        "default": "BUY NOW"
       }
     ]
   },

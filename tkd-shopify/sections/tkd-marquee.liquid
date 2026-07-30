@@ -1,38 +1,69 @@
 {% comment %}
-  TKD Marquee (section) — wrapper editável no Theme Editor pro
-  snippet tkd-marquee.liquid. Útil pra selos de mídia, depoimentos
-  curtos ou frases em loop.
+  TKD Marquee — faixa horizontal em loop (prova social / artistas).
+  Blocks de texto rolando continuamente; pausa no hover.
 {% endcomment %}
 
-<div class="tkd-marquee-section tkd-section reveal">
-  <div class="tkd-section__inner tkd-section__inner--w1400">
-    {%- if section.settings.eyebrow != blank -%}
-      <div class="tkd-eyebrow" style="text-align: center; margin-bottom: 16px;">{{ section.settings.eyebrow | escape }}</div>
-    {%- endif -%}
-    {% render 'tkd-marquee', blocks: section.blocks, duration: section.settings.duration %}
-  </div>
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-marquee-section {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-marquee-section {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="tkd-marquee-section">
+  {%- if section.settings.eyebrow != blank -%}
+    <div class="tkd-section" style="text-align: center; margin-bottom: 20px;">
+      <span class="tkd-eyebrow reveal">{{ section.settings.eyebrow | escape }}</span>
+    </div>
+  {%- endif -%}
+  {% render 'tkd-marquee', blocks: section.blocks, duration: section.settings.duration %}
 </div>
 
 {% schema %}
 {
   "name": "TKD Marquee",
   "tag": "section",
-  "class": "section-tkd-marquee",
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow (opcional)"
+      "label": "Rótulo acima (vazio = oculto)",
+      "default": "Trusted by producers worldwide"
     },
     {
       "type": "range",
       "id": "duration",
-      "label": "Duração de uma volta completa",
+      "label": "Velocidade (segundos por volta)",
       "min": 10,
       "max": 60,
       "step": 5,
-      "unit": "s",
       "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
     }
   ],
   "blocks": [
@@ -44,20 +75,19 @@
           "type": "text",
           "id": "text",
           "label": "Texto",
-          "default": "REAL INSTRUMENTS · NO RECYCLED SAMPLES"
+          "default": "TKD Sounds"
         }
       ]
     }
   ],
-  "max_blocks": 16,
   "presets": [
     {
       "name": "TKD Marquee",
       "blocks": [
-        { "type": "item" },
-        { "type": "item" },
-        { "type": "item" },
-        { "type": "item" }
+        { "type": "item", "settings": { "text": "Drum kits" } },
+        { "type": "item", "settings": { "text": "Loops" } },
+        { "type": "item", "settings": { "text": "One-shots" } },
+        { "type": "item", "settings": { "text": "Royalty-free" } }
       ]
     }
   ]

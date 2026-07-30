@@ -1,60 +1,17 @@
 {% comment %}
-  TKD Footer — "ARCHIVE.SYS" (portado de Footer.tsx).
-  Marca serif, tagline de terminal, links (blocks), hr tracejado,
-  copyright com ano automático e caret READY piscante.
+  TKD Footer — rodapé (design system v2). Wordmark grande, links de
+  blocks (link/email/menu de políticas) e linha legal.
 {% endcomment %}
 
 <footer class="tkd-footer">
   <div class="tkd-footer__inner">
-    {%- if section.settings.show_newsletter -%}
-      <div class="tkd-footer__newsletter reveal">
-        <div class="tkd-footer__newsletter-copy">
-          <div class="tkd-footer__newsletter-title">{{ section.settings.newsletter_title | escape }}</div>
-          {%- if section.settings.newsletter_subtitle != blank -%}
-            <div class="tkd-footer__newsletter-sub">{{ section.settings.newsletter_subtitle | escape }}</div>
-          {%- endif -%}
-        </div>
-
-        <div>
-          {%- form 'customer', class: 'tkd-footer__newsletter-form-wrap' -%}
-            {%- if form.posted_successfully? -%}
-              <p class="tkd-newsletter__success">{{ section.settings.newsletter_success | escape }}</p>
-            {%- else -%}
-              <input type="hidden" name="contact[tags]" value="newsletter">
-              <div class="tkd-footer__newsletter-form">
-                <input
-                  type="email"
-                  name="contact[email]"
-                  id="tkd-footer-newsletter-email-{{ section.id }}"
-                  class="tkd-input"
-                  required
-                  autocomplete="email"
-                  placeholder="{{ section.settings.newsletter_placeholder | escape }}"
-                  aria-label="{{ section.settings.newsletter_placeholder | escape }}"
-                >
-                <button type="submit" class="tkd-btn tkd-btn-solid">{{ section.settings.newsletter_button | escape }}</button>
-                {%- if section.settings.secondary_cta_label != blank and section.settings.secondary_cta_link != blank -%}
-                  <a href="{{ section.settings.secondary_cta_link }}" class="tkd-btn tkd-btn-outline tkd-footer__cta">{{ section.settings.secondary_cta_label | escape }}</a>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endform -%}
-        </div>
-      </div>
-    {%- endif -%}
-
     <div class="tkd-footer__top">
       <div>
         <div class="tkd-footer__brand">
-          {%- assign brand_words = section.settings.brand_text | split: ' ' -%}
-          {%- if brand_words.size > 1 -%}
-            {{ brand_words.first | escape }} <span class="brand-dim">{{ brand_words | slice: 1, 10 | join: ' ' | escape }}</span>
-          {%- else -%}
-            {{ section.settings.brand_text | escape }}
-          {%- endif -%}
+          {{ section.settings.brand_text | escape }}<span class="brand-dim">.</span>
         </div>
         {%- if section.settings.tagline != blank -%}
-          <div class="tkd-footer__tagline">{{ section.settings.tagline | escape }}</div>
+          <p class="tkd-footer__tagline">{{ section.settings.tagline | escape }}</p>
         {%- endif -%}
       </div>
 
@@ -62,29 +19,33 @@
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'link' -%}
-              {%- if block.settings.url != blank -%}
-                <a
-                  href="{{ block.settings.url }}"
-                  {% if block.settings.external %}target="_blank" rel="noreferrer"{% endif %}
-                  {{ block.shopify_attributes }}
-                >[{{ block.settings.label | escape | upcase }}]</a>
-              {%- endif -%}
+              <a
+                href="{{ block.settings.url }}"
+                {% if block.settings.external %}target="_blank" rel="noopener"{% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {{- block.settings.label | escape -}}
+              </a>
             {%- when 'email' -%}
-              {%- if block.settings.email != blank -%}
-                <a href="mailto:{{ block.settings.email }}" {{ block.shopify_attributes }}>
-                  [{{ block.settings.email | upcase }}]
-                </a>
-              {%- endif -%}
+              <a href="mailto:{{ block.settings.email }}" {{ block.shopify_attributes }}>
+                {{- block.settings.label | default: block.settings.email | escape -}}
+              </a>
           {%- endcase -%}
         {%- endfor -%}
+
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     </div>
 
-    <hr class="hr-dashed">
-
     <div class="tkd-footer__bottom">
-      <div>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | escape }}</div>
-      <div class="caret">{{ section.settings.status_text | escape }}</div>
+      <span>© {{ 'now' | date: '%Y' }} {{ section.settings.copyright_text | escape }}</span>
+      {%- if section.settings.status_text != blank -%}
+        <span>{{ section.settings.status_text | escape }}</span>
+      {%- endif -%}
     </div>
   </div>
 </footer>
@@ -92,78 +53,37 @@
 {% schema %}
 {
   "name": "TKD Footer",
+  "tag": "div",
   "class": "section-tkd-footer",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "show_newsletter",
-      "label": "Mostrar bloco de newsletter",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "newsletter_title",
-      "label": "Newsletter — título",
-      "default": "Join the list"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_subtitle",
-      "label": "Newsletter — subtítulo",
-      "default": "Free loops, new pack alerts, early access."
-    },
-    {
-      "type": "text",
-      "id": "newsletter_placeholder",
-      "label": "Newsletter — placeholder do e-mail",
-      "default": "you@email.com"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_button",
-      "label": "Newsletter — texto do botão",
-      "default": "Sign up"
-    },
-    {
-      "type": "text",
-      "id": "newsletter_success",
-      "label": "Newsletter — mensagem de sucesso",
-      "default": "You're on the list. Check your inbox soon."
-    },
-    {
-      "type": "text",
-      "id": "secondary_cta_label",
-      "label": "CTA secundário — texto",
-      "default": "Browse Archive"
-    },
-    {
-      "type": "url",
-      "id": "secondary_cta_link",
-      "label": "CTA secundário — link"
-    },
-    {
       "type": "text",
       "id": "brand_text",
-      "label": "Marca",
-      "default": "TKD SOUNDS"
+      "label": "Wordmark",
+      "default": "TKD Sounds"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "tagline",
-      "label": "Tagline de terminal",
-      "default": "> ARCHIVE.SYS · EST. 2019 · WAV\/24-BIT"
+      "label": "Tagline",
+      "default": "Sample packs e sound kits royalty-free, direto do estúdio do TKD."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu de links (políticas etc.)"
     },
     {
       "type": "text",
       "id": "copyright_text",
-      "label": "Texto do copyright (o ano é automático)",
-      "default": "TKD SOUNDS · ALL RIGHTS RESERVED"
+      "label": "Texto de copyright",
+      "default": "TKD Sounds · All rights reserved"
     },
     {
       "type": "text",
       "id": "status_text",
-      "label": "Texto de status (caret piscante)",
-      "default": "READY"
+      "label": "Texto à direita (vazio = oculto)",
+      "default": "WAV · 24-bit · Royalty-free"
     }
   ],
   "blocks": [
@@ -171,41 +91,19 @@
       "type": "link",
       "name": "Link",
       "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Rótulo",
-          "default": "INSTAGRAM @TKDPROD"
-        },
-        {
-          "type": "url",
-          "id": "url",
-          "label": "URL"
-        },
-        {
-          "type": "checkbox",
-          "id": "external",
-          "label": "Abrir em nova aba",
-          "default": true
-        }
+        { "type": "text", "id": "label", "label": "Texto", "default": "Instagram" },
+        { "type": "url", "id": "url", "label": "URL" },
+        { "type": "checkbox", "id": "external", "label": "Abrir em nova aba", "default": true }
       ]
     },
     {
       "type": "email",
       "name": "E-mail",
       "settings": [
-        {
-          "type": "text",
-          "id": "email",
-          "label": "Endereço de e-mail",
-          "default": "prodbytkd@gmail.com"
-        }
+        { "type": "text", "id": "label", "label": "Texto (vazio = mostra o e-mail)" },
+        { "type": "text", "id": "email", "label": "E-mail", "default": "prodbytkd@gmail.com" }
       ]
     }
-  ],
-  "max_blocks": 6,
-  "enabled_on": {
-    "groups": ["footer"]
-  }
+  ]
 }
 {% endschema %}

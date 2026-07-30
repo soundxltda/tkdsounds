@@ -32,7 +32,11 @@
           }
         }
       },
-      "block_order": ["step1", "step2", "step3"],
+      "block_order": [
+        "step1",
+        "step2",
+        "step3"
+      ],
       "settings": {
         "title": "HOW IT WORKS"
       }
@@ -65,7 +69,11 @@
           }
         }
       },
-      "block_order": ["phrases", "samples", "drumkit"],
+      "block_order": [
+        "phrases",
+        "samples",
+        "drumkit"
+      ],
       "settings": {
         "eyebrow": "WHAT'S INSIDE",
         "title": "Contents",
@@ -75,7 +83,7 @@
     "landing_previews": {
       "type": "tkd-product-previews",
       "settings": {
-        "player_title": "FULL KIT PREVIEW"
+        "panel_title": "FULL KIT PREVIEW"
       }
     },
     "landing_credibility": {
@@ -103,7 +111,11 @@
           }
         }
       },
-      "block_order": ["badge1", "badge2", "badge3"],
+      "block_order": [
+        "badge1",
+        "badge2",
+        "badge3"
+      ],
       "settings": {}
     },
     "landing_reviews": {
@@ -138,7 +150,12 @@
           }
         }
       },
-      "block_order": ["r1", "r2", "r3", "r4"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
       "settings": {
         "title": "REVIEWS"
       }
@@ -168,7 +185,11 @@
           }
         }
       },
-      "block_order": ["li1", "li2", "li3"],
+      "block_order": [
+        "li1",
+        "li2",
+        "li3"
+      ],
       "settings": {
         "window_title": "PRICING",
         "pay_label": "WHAT YOU PAY",
@@ -210,17 +231,21 @@
           }
         }
       },
-      "block_order": ["faq1", "faq2", "faq3", "faq4"],
+      "block_order": [
+        "faq1",
+        "faq2",
+        "faq3",
+        "faq4"
+      ],
       "settings": {
-        "window_title": "FAQ",
-        "eyebrow": "HELP INDEX",
-        "heading": "Frequently asked questions"
+        "eyebrow": "FAQ",
+        "title": "Frequently asked questions"
       }
     },
     "landing_related": {
       "type": "tkd-related-products",
       "settings": {
-        "eyebrow": "// RELATED FILES",
+        "eyebrow": "Keep digging",
         "title": "More from the archive",
         "products_to_show": 5
       }

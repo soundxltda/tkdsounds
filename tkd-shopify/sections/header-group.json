@@ -5,9 +5,7 @@
     "tkd_header": {
       "type": "tkd-header",
       "settings": {
-        "title_text": "TKD_SOUNDS.EXE — SAMPLE ARCHIVE",
-        "show_clock": true,
-        "logo_text": "TKD SOUNDS",
+        "logo_text": "TKD Sounds",
         "menu": "main-menu",
         "show_cart": true
       }

@@ -1,83 +1,60 @@
 {% comment %}
-  TKD Credibility — janela CREDENTIALS.LOG (portado de CredibilityStrip.tsx).
-  Texto de credibilidade + playlist Spotify compacta.
+  TKD Credibility — prova social: texto de credibilidade + embed
+  (Spotify etc.) num card horizontal (design system v2).
 {% endcomment %}
 
 <div class="tkd-credibility tkd-section">
   <div class="tkd-section__inner tkd-section__inner--w1300">
-    <div class="win reveal">
-      <div class="win-title">
-        <span>{{ section.settings.window_title | escape }}</span>
-        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-      </div>
-      <div class="tkd-credibility__grid">
-        <div>
-          <div class="tkd-credibility__eyebrow">&gt; {{ section.settings.eyebrow | escape }}</div>
-          <p class="tkd-credibility__text">{{ section.settings.text | escape }}</p>
-        </div>
-        {%- if section.settings.show_embed and section.settings.embed_url != blank -%}
-          <div class="tkd-credibility__embed">
-            <iframe
-              title="{{ section.settings.embed_title | escape }}"
-              src="{{ section.settings.embed_url }}"
-              width="100%"
-              height="{{ section.settings.embed_height }}"
-              frameborder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            ></iframe>
-          </div>
+    <div class="tkd-card tkd-credibility__card reveal">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
         {%- endif -%}
+        <p class="tkd-credibility__text">{{ section.settings.text | escape }}</p>
       </div>
+      {%- if section.settings.embed_url != blank -%}
+        <div class="tkd-credibility__embed">
+          <iframe
+            src="{{ section.settings.embed_url }}"
+            title="{{ section.settings.embed_title | escape }}"
+            height="{{ section.settings.embed_height }}"
+            width="100%"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "TKD Credibilidade",
+  "name": "TKD Credibility",
   "tag": "section",
-  "class": "section-tkd-credibility",
   "settings": [
     {
       "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "CREDENTIALS.LOG"
-    },
-    {
-      "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "VERIFIED"
+      "label": "Rótulo",
+      "default": "Heard on streams worldwide"
     },
     {
       "type": "textarea",
       "id": "text",
       "label": "Texto",
-      "default": "TKD — multi-platinum producer from Brazil, 1B+ streams across his catalog. His sound has been used by major artists and producers around the globe."
-    },
-    {
-      "type": "header",
-      "content": "Playlist embutida"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_embed",
-      "label": "Mostrar playlist",
-      "default": true
+      "default": "Sons do arquivo TKD já rodaram em faixas com milhões de plays. Produção testada no mundo real, pronta pro seu próximo lançamento."
     },
     {
       "type": "text",
       "id": "embed_url",
-      "label": "URL do embed (Spotify)",
-      "default": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0"
+      "label": "URL do embed (vazio = oculto)"
     },
     {
       "type": "text",
       "id": "embed_title",
       "label": "Título acessível do embed",
-      "default": "Produced by TKD — Spotify playlist"
+      "default": "Playlist"
     },
     {
       "type": "range",
@@ -86,13 +63,8 @@
       "min": 80,
       "max": 400,
       "step": 4,
-      "unit": "px",
-      "default": 152
-    }
-  ],
-  "presets": [
-    {
-      "name": "TKD Credibilidade"
+      "default": 152,
+      "unit": "px"
     }
   ]
 }

@@ -1,17 +1,13 @@
 {% comment %}
-  TKD Pack Card — fichário de arquivo retrô (portado de PackCard.tsx).
-
+  TKD Pack Card — card de sample pack (design system v2).
   Uso:
     {% render 'tkd-pack-card', card_product: product %}
     {% render 'tkd-pack-card', card_product: product, lazy: false %}
-
-  Dados dinâmicos: título, preço, capa, URL e disponibilidade vêm do
-  produto Shopify. Preview de áudio, gênero, formatos, tagline e cor de
-  destaque vêm dos metafields tkd.* (opcionais — o card degrada bem).
+    {% render 'tkd-pack-card', card_product: product, layout: 'wide' %}   <- destaque
+  O botão de play usa o contrato data-* de assets/tkd-player.js.
 {% endcomment %}
 
 {%- liquid
-  assign accent = card_product.metafields.tkd.accent_color.value | default: '#e6a635'
   assign previews = card_product.metafields.tkd.preview_files.value
   assign titles = card_product.metafields.tkd.preview_titles.value
   assign genre = card_product.metafields.tkd.genre.value
@@ -33,7 +29,7 @@
   if psize > 0
     assign preview_file = previews[midx]
     assign preview_url = preview_file.url
-    if titles[midx] != blank
+    if titles and titles[midx] != blank
       assign preview_name = titles[midx]
     endif
   endif
@@ -44,276 +40,143 @@
     assign img_loading = 'lazy'
   endif
 
-  # Badge (opcional): via tags "bestseller" / "new" — sem precisar de metafield novo
   assign badge_text = ''
-  assign badge_amber = false
+  assign badge_class = 'tkd-badge'
   for tag in card_product.tags
     assign tag_down = tag | downcase
-    if tag_down == 'bestseller' or tag_down == 'best-seller'
+    if tag_down == 'bestseller'
       assign badge_text = 'Bestseller'
-      assign badge_amber = true
-    elsif tag_down == 'new' and badge_text == ''
-      assign badge_text = 'New'
-    endif
-  endfor
-
-  # Até 3 tags visíveis como pills (exclui as usadas pro badge)
-  assign pill_tags = ''
-  assign pill_count = 0
-  for tag in card_product.tags
-    assign tag_down = tag | downcase
-    if pill_count >= 3
       break
-    endif
-    if tag_down != 'bestseller' and tag_down != 'best-seller' and tag_down != 'new'
-      assign pill_tags = pill_tags | append: tag | append: '||'
-      assign pill_count = pill_count | plus: 1
+    elsif tag_down == 'new' or tag_down == 'novo'
+      assign badge_text = 'New'
+      assign badge_class = 'tkd-badge tkd-badge--ghost'
+    elsif tag_down == 'free' or tag_down == 'gratis' or tag_down == 'grátis'
+      assign badge_text = 'Free'
+      assign badge_class = 'tkd-badge tkd-badge--lime'
     endif
   endfor
-  assign pill_tags = pill_tags | split: '||'
 
-  # Layout "wide" (destaque na home): lista de features em duas colunas,
-  # a partir dos metafields tkd.* que existirem (degrada bem se faltar)
   assign is_wide = false
   if layout == 'wide'
     assign is_wide = true
   endif
-
-  assign features = ''
-  assign sample_count = card_product.metafields.tkd.sample_count.value
-  assign one_shot_count = card_product.metafields.tkd.one_shot_count.value
-  assign bpm_range = card_product.metafields.tkd.bpm_range.value
-  assign includes_midi = card_product.metafields.tkd.includes_midi.value
-  assign includes_stems = card_product.metafields.tkd.includes_stems.value
-  assign mood = card_product.metafields.tkd.mood.value
-
-  if sample_count != blank
-    assign features = features | append: sample_count | append: ' samples||'
-  endif
-  if one_shot_count != blank
-    assign features = features | append: one_shot_count | append: ' one-shots||'
-  endif
-  if bpm_range != blank
-    assign features = features | append: bpm_range | append: ' BPM||'
-  endif
-  if mood != blank
-    assign features = features | append: mood | append: '||'
-  endif
-  if includes_stems
-    assign features = features | append: 'Stems included||'
-  endif
-  if includes_midi
-    assign features = features | append: 'MIDI included||'
-  endif
-  assign features = features | split: '||'
 -%}
 
-{%- if is_wide -%}
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-<div class="pack-tile pack-tile--wide reveal-item">
-  <a href="{{ card_product.url }}" class="pack-tile__art-link pack-art">
-    {%- if badge_text != blank -%}
-      <span class="pack-tile__badge{% if badge_amber %} pack-tile__badge--amber{% endif %}">{{ badge_text }}</span>
-    {%- endif -%}
+<div class="pack-card{% if is_wide %} pack-card--wide{% endif %}">
+  <a href="{{ card_product.url }}" class="pack-card__art" aria-label="{{ card_product.title | escape }}" tabindex="-1">
     {%- if card_product.featured_image -%}
-      <div class="pack-art-fallback">
-        {{
-          card_product.featured_image
-          | image_url: width: 700
-          | image_tag:
-            widths: '350,500,700',
-            sizes: '(min-width: 750px) 280px, 100vw',
-            class: 'pack-art-img',
-            loading: img_loading,
-            alt: card_product.featured_image.alt
-        }}
-      </div>
-    {%- else -%}
-      <div
-        class="pack-art-fallback pack-art-fallback--gradient"
-        style="background: radial-gradient(circle at 30% 30%, {{ accent }}66, #0d0906 75%);"
+      <img
+        src="{{ card_product.featured_image | image_url: width: 720 }}"
+        srcset="{{ card_product.featured_image | image_url: width: 360 }} 360w, {{ card_product.featured_image | image_url: width: 540 }} 540w, {{ card_product.featured_image | image_url: width: 720 }} 720w"
+        sizes="(min-width: 990px) 30vw, 50vw"
+        width="{{ card_product.featured_image.width }}"
+        height="{{ card_product.featured_image.height }}"
+        alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+        loading="{{ img_loading }}"
       >
-        <div class="pack-tile__fallback-name">{{ card_product.title | escape }}</div>
-      </div>
-    {%- endif -%}
-    {%- if preview_url != blank -%}
-      <div class="pack-tile__hover-layer">
-        <button
-          type="button"
-          class="audio-play-btn pack-tile__hover-play"
-          data-tkd-play
-          data-track-id="{{ card_product.id }}-preview"
-          data-track-src="{{ preview_url }}"
-          data-track-name="{{ preview_name | escape }}"
-          data-pack-name="{{ card_product.title | escape }}"
-          data-pack-url="{{ card_product.url }}"
-          data-accent="{{ accent }}"
-          {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 144 }}"{% endif %}
-          aria-label="Play {{ card_product.title | escape }}"
-        >
-          <svg class="tkd-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          <svg class="tkd-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-        </button>
-      </div>
+    {%- else -%}
+      <div class="pack-card__fallback"><span>{{ card_product.title | escape }}</span></div>
     {%- endif -%}
   </a>
 
-  <div class="pack-tile__meta pack-tile__meta--wide">
+  {%- if badge_text != blank -%}
+    <span class="pack-card__badge {{ badge_class }}">{{ badge_text }}</span>
+  {%- endif -%}
+
+  {%- if preview_url != blank -%}
+    <div class="pack-card__play">
+      <button
+        type="button"
+        class="audio-play-btn"
+        data-tkd-play
+        data-track-id="{{ card_product.id }}-{{ midx }}"
+        data-track-src="{{ preview_url }}"
+        data-track-name="{{ preview_name | escape }}"
+        data-pack-name="{{ card_product.title | escape }}"
+        data-pack-url="{{ card_product.url }}"
+        {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 120 }}"{% endif %}
+        aria-label="Play preview — {{ card_product.title | escape }}"
+      >
+        <svg class="tkd-icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="tkd-icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      </button>
+    </div>
+  {%- endif -%}
+
+  <div class="pack-card__body">
     {%- if genre != blank or formats != blank -%}
-      <div class="pack-tile__row">
-        <span class="pack-tile__genre truncate">{{ genre }}</span>
-        <span class="pack-tile__fmt truncate">{{ formats }}</span>
+      <div class="pack-card__meta">
+        {%- if genre != blank -%}<span class="genre">{{ genre | escape }}</span>{%- endif -%}
+        {%- if formats != blank -%}<span>{{ formats | escape }}</span>{%- endif -%}
       </div>
     {%- endif -%}
 
-    <a href="{{ card_product.url }}" class="pack-tile__name-link">
-      <div class="pack-tile__name" title="{{ card_product.title | escape }}">{{ card_product.title | escape }}</div>
-    </a>
+    <h3 class="pack-card__name">
+      <a href="{{ card_product.url }}" style="color: inherit; text-decoration: none;">{{ card_product.title | escape }}</a>
+    </h3>
 
     {%- if tagline != blank -%}
-      <div class="pack-tile__tagline">{{ tagline }}</div>
+      <div class="pack-card__tagline">{{ tagline | escape }}</div>
     {%- endif -%}
 
-    {%- if features.size > 0 -%}
-      <ul class="pack-tile__features">
-        {%- for feature in features -%}
-          {%- if feature != blank -%}<li>{{ feature }}</li>{%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-
-    {%- if pill_tags.size > 0 -%}
-      <div class="pack-tile__tags">
-        {%- for tag in pill_tags -%}
-          {%- if tag != blank -%}<span class="pack-tile__tag-pill">{{ tag }}</span>{%- endif -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-
-    <div class="pack-tile__price-row">
-      <span class="pack-tile__price-current">
-        {%- if card_product.available -%}
-          {{ card_product.price | money_without_trailing_zeros }}
-        {%- else -%}
-          SOLD OUT
-        {%- endif -%}
-      </span>
-      {%- if card_product.compare_at_price > card_product.price -%}
-        <span class="pack-tile__price-was">{{ card_product.compare_at_price | money_without_trailing_zeros }}</span>
+    {%- if is_wide -%}
+      {%- liquid
+        assign sample_count = card_product.metafields.tkd.sample_count.value
+        assign one_shot_count = card_product.metafields.tkd.one_shot_count.value
+        assign bpm_range = card_product.metafields.tkd.bpm_range.value
+        assign includes_midi = card_product.metafields.tkd.includes_midi.value
+        assign includes_stems = card_product.metafields.tkd.includes_stems.value
+        assign file_size = card_product.metafields.tkd.file_size.value
+      -%}
+      {%- if sample_count or one_shot_count or bpm_range or includes_midi or includes_stems or file_size -%}
+        <ul class="pack-card__features">
+          {%- if sample_count -%}<li>{{ sample_count }} samples</li>{%- endif -%}
+          {%- if one_shot_count -%}<li>{{ one_shot_count }} one-shots</li>{%- endif -%}
+          {%- if bpm_range != blank -%}<li>{{ bpm_range | escape }} BPM</li>{%- endif -%}
+          {%- if includes_midi -%}<li>MIDI incluído</li>{%- endif -%}
+          {%- if includes_stems -%}<li>Stems incluídos</li>{%- endif -%}
+          {%- if file_size != blank -%}<li>{{ file_size | escape }}</li>{%- endif -%}
+        </ul>
       {%- endif -%}
-    </div>
 
-    {%- if card_product.available -%}
-      <div class="pack-tile__actions">
-        <a href="{{ card_product.url }}?variant={{ card_product.selected_or_first_available_variant.id }}" class="tkd-btn tkd-btn-solid">Buy now</a>
-        <product-form data-section-id="{{ section.id }}" data-hide-errors="true">
-          {%- form 'product', card_product, id: 'tkd-wide-card-form', class: 'tkd-product-form', novalidate: 'novalidate' -%}
-            <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-            <button type="submit" name="add" class="tkd-btn tkd-btn-outline">
-              <span>Add to cart</span>
-              {%- render 'loading-spinner' -%}
-            </button>
-          {%- endform -%}
-        </product-form>
+      <div class="pack-card__price-row">
+        <div>
+          <span class="pack-card__price">{{ card_product.price | money }}</span>
+          {%- if card_product.compare_at_price > card_product.price -%}
+            <span class="pack-card__was">{{ card_product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="pack-card__actions">
+        <a href="{{ card_product.url }}" class="tkd-btn tkd-btn-solid tkd-btn--sm">Ver pack</a>
+        {%- if preview_url != blank -%}
+          <button
+            type="button"
+            class="tkd-btn tkd-btn-outline tkd-btn--sm"
+            data-tkd-play
+            data-track-id="{{ card_product.id }}-{{ midx }}"
+            data-track-src="{{ preview_url }}"
+            data-track-name="{{ preview_name | escape }}"
+            data-pack-name="{{ card_product.title | escape }}"
+            data-pack-url="{{ card_product.url }}"
+            {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 120 }}"{% endif %}
+          >
+            Ouvir preview
+          </button>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="pack-card__price-row">
+        <div>
+          <span class="pack-card__price">{{ card_product.price | money }}</span>
+          {%- if card_product.compare_at_price > card_product.price -%}
+            <span class="pack-card__was">{{ card_product.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+        <a href="{{ card_product.url }}" class="pack-card__cta">Ver pack
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+        </a>
       </div>
     {%- endif -%}
   </div>
 </div>
-{%- else -%}
-<a href="{{ card_product.url }}" class="pack-tile reveal-item">
-  <div class="pack-art">
-    {%- if badge_text != blank -%}
-      <span class="pack-tile__badge{% if badge_amber %} pack-tile__badge--amber{% endif %}">{{ badge_text }}</span>
-    {%- endif -%}
-
-    {%- if card_product.featured_image -%}
-      <div class="pack-art-fallback">
-        {{
-          card_product.featured_image
-          | image_url: width: 630
-          | image_tag:
-            widths: '210,420,630',
-            sizes: '(min-width: 990px) 210px, (min-width: 750px) 200px, (min-width: 640px) 180px, 50vw',
-            class: 'pack-art-img',
-            loading: img_loading,
-            alt: card_product.featured_image.alt
-        }}
-      </div>
-    {%- else -%}
-      <div
-        class="pack-art-fallback pack-art-fallback--gradient"
-        style="background: radial-gradient(circle at 30% 30%, {{ accent }}66, #0d0906 75%);"
-      >
-        <div class="pack-tile__fallback-name">{{ card_product.title | escape }}</div>
-      </div>
-    {%- endif -%}
-
-    {%- if preview_url != blank -%}
-      <div class="pack-tile__hover-layer">
-        {%- if genre != blank or formats != blank -%}
-          <div class="pack-tile__hover-info">
-            {%- if genre != blank -%}{{ genre }}{%- endif -%}
-            {%- if genre != blank and formats != blank -%} · {%- endif -%}
-            {%- if formats != blank -%}{{ formats }}{%- endif -%}
-          </div>
-        {%- endif -%}
-        <button
-          type="button"
-          class="audio-play-btn pack-tile__hover-play"
-          data-tkd-play
-          data-track-id="{{ card_product.id }}-preview"
-          data-track-src="{{ preview_url }}"
-          data-track-name="{{ preview_name | escape }}"
-          data-pack-name="{{ card_product.title | escape }}"
-          data-pack-url="{{ card_product.url }}"
-          data-accent="{{ accent }}"
-          {% if card_product.featured_image %}data-cover="{{ card_product.featured_image | image_url: width: 144 }}"{% endif %}
-          aria-label="Play {{ card_product.title | escape }}"
-        >
-          <svg class="tkd-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <svg class="tkd-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
-            <rect x="6" y="5" width="4" height="14"/>
-            <rect x="14" y="5" width="4" height="14"/>
-          </svg>
-        </button>
-      </div>
-    {%- endif -%}
-  </div>
-
-  <div class="pack-tile__meta">
-    <div class="pack-tile__row">
-      <span class="pack-tile__genre truncate">{{ genre }}</span>
-      <span class="pack-tile__fmt truncate">{{ formats }}</span>
-    </div>
-    <div class="pack-tile__name truncate" title="{{ card_product.title | escape }}">
-      {{ card_product.title | escape }}
-    </div>
-    {%- if tagline != blank -%}
-      <div class="pack-tile__tagline truncate">{{ tagline }}</div>
-    {%- endif -%}
-
-    <div class="pack-tile__price-row">
-      <span class="tkd-btn tkd-btn-solid pack-tile__price-btn">
-        {%- if card_product.available -%}
-          {{ card_product.price | money_without_trailing_zeros }}
-        {%- else -%}
-          SOLD OUT
-        {%- endif -%}
-      </span>
-      {%- if card_product.compare_at_price > card_product.price -%}
-        <span class="pack-tile__price-was">{{ card_product.compare_at_price | money_without_trailing_zeros }}</span>
-      {%- endif -%}
-    </div>
-
-    {%- if pill_tags.size > 0 -%}
-      <div class="pack-tile__tags">
-        {%- for tag in pill_tags -%}
-          {%- if tag != blank -%}<span class="pack-tile__tag-pill">{{ tag }}</span>{%- endif -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-  </div>
-</a>
-{%- endif -%}

@@ -1,69 +1,55 @@
 {% comment %}
-  TKD Collection — "Archive Index" (portado de routes/packs.tsx).
-  Cabeçalho de terminal, janela ARCHIVE_INDEX.DB com a grade de packs
-  da coleção nativa e paginação retrô.
+  TKD Collection — listagem de packs com título gigante, contagem e
+  paginação em pills (design system v2).
 {% endcomment %}
 
-{%- assign per_page = section.settings.products_per_page -%}
-
-<div class="tkd-collection tkd-section tkd-section--wide-gutters">
-  <div class="tkd-section__inner tkd-section__inner--w1200">
-    {%- if section.settings.terminal_text != blank -%}
-      <div class="tkd-collection__terminal">{{ section.settings.terminal_text | escape }}</div>
-    {%- endif -%}
-
-    <div class="tkd-collection__head">
-      <div>
-        <h1 class="tkd-collection__title chroma">{{ collection.title | escape }}</h1>
-        <p class="tkd-collection__count">
-          &gt; {{ collection.products_count }}
-          {%- if collection.products_count == 1 %} pack{% else %} packs{% endif %}
-        </p>
-      </div>
-      {%- if section.settings.decor_text != blank -%}
-        <div class="tkd-collection__decor">{{ section.settings.decor_text | escape }}</div>
+<div class="tkd-collection tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-collection__head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
       {%- endif -%}
+      <h1 class="tkd-collection__title">
+        {%- if section.settings.title_override != blank -%}
+          {{ section.settings.title_override | escape }}
+        {%- else -%}
+          {{ collection.title | escape }}
+        {%- endif -%}
+      </h1>
+      <p class="tkd-collection__count">{{ collection.products_count }} pack{% if collection.products_count != 1 %}s{% endif %} disponíve{% if collection.products_count != 1 %}is{% else %}l{% endif %}</p>
     </div>
 
-    {%- paginate collection.products by per_page -%}
-      <div class="win">
-        <div class="win-title">
-          <span>{{ section.settings.window_title | escape }} — {{ collection.products_count }} RECORD(S)</span>
-          <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-        </div>
-        <div class="tkd-collection__pad">
-          {%- if collection.products.size == 0 -%}
-            <div class="tkd-collection__empty">&gt; Archive is empty.</div>
-          {%- else -%}
-            <div class="tkd-grid-packs">
-              {%- for product in collection.products -%}
-                <div class="tkd-grid-packs__item">
-                  {% render 'tkd-pack-card', card_product: product %}
-                </div>
-              {%- endfor -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="tkd-grid-packs">
+          {%- for product in collection.products -%}
+            <div class="tkd-grid-packs__item reveal" style="transition-delay: {{ forloop.index0 | modulo: 3 | times: 60 }}ms;">
+              {% render 'tkd-pack-card', card_product: product %}
             </div>
-          {%- endif -%}
-        </div>
-      </div>
-
-      {%- if paginate.pages > 1 -%}
-        <nav class="tkd-pagination" aria-label="{{ 'general.pagination.label' | t }}">
-          {%- if paginate.previous -%}
-            <a href="{{ paginate.previous.url }}" class="tkd-pagination__link">[&lt; PREV]</a>
-          {%- endif -%}
-          {%- for part in paginate.parts -%}
-            {%- if part.is_link -%}
-              <a href="{{ part.url }}" class="tkd-pagination__link">[{{ part.title }}]</a>
-            {%- elsif part.title == paginate.current_page -%}
-              <span class="tkd-pagination__link tkd-pagination__link--current" aria-current="page">[{{ part.title }}]</span>
-            {%- else -%}
-              <span class="tkd-pagination__gap">{{ part.title }}</span>
-            {%- endif -%}
           {%- endfor -%}
-          {%- if paginate.next -%}
-            <a href="{{ paginate.next.url }}" class="tkd-pagination__link">[NEXT &gt;]</a>
-          {%- endif -%}
-        </nav>
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="tkd-pagination" role="navigation" aria-label="Paginação">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" aria-label="Página anterior">&larr;</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {%- elsif part.title == paginate.current_page -%}
+                <span class="current" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span>{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" aria-label="Próxima página">&rarr;</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <p class="tkd-empty-note">{{ 'sections.collection_template.empty' | t }}</p>
       {%- endif -%}
     {%- endpaginate -%}
   </div>
@@ -73,34 +59,26 @@
 {
   "name": "TKD Collection",
   "tag": "section",
-  "class": "section-tkd-collection",
   "settings": [
     {
       "type": "text",
-      "id": "terminal_text",
-      "label": "Linha de terminal",
-      "default": "> DIR C:\\ARCHIVE\\"
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "The archive"
     },
     {
       "type": "text",
-      "id": "decor_text",
-      "label": "Texto decorativo (direita)",
-      "default": "SORT: [ RECENT ] · VIEW: [ GRID ]"
-    },
-    {
-      "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "ARCHIVE_INDEX.DB"
+      "id": "title_override",
+      "label": "Título (vazio = nome da coleção)"
     },
     {
       "type": "range",
       "id": "products_per_page",
-      "label": "Produtos por página",
+      "label": "Packs por página",
       "min": 6,
-      "max": 48,
-      "step": 6,
-      "default": 24
+      "max": 24,
+      "step": 3,
+      "default": 12
     }
   ]
 }

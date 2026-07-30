@@ -8,7 +8,7 @@
         "instagram": {
           "type": "link",
           "settings": {
-            "label": "INSTAGRAM @TKDPROD",
+            "label": "Instagram @tkdprod",
             "url": "https://instagram.com/tkdprod",
             "external": true
           }
@@ -16,6 +16,7 @@
         "email": {
           "type": "email",
           "settings": {
+            "label": "",
             "email": "prodbytkd@gmail.com"
           }
         }
@@ -25,10 +26,10 @@
         "email"
       ],
       "settings": {
-        "brand_text": "TKD SOUNDS",
-        "tagline": "> ARCHIVE.SYS · EST. 2019 · WAV/24-BIT",
-        "copyright_text": "TKD SOUNDS · ALL RIGHTS RESERVED",
-        "status_text": "READY"
+        "brand_text": "TKD Sounds",
+        "tagline": "Sample packs e sound kits royalty-free, direto do estúdio do TKD.",
+        "copyright_text": "TKD Sounds · All rights reserved",
+        "status_text": "WAV · 24-bit · Royalty-free"
       }
     }
   },

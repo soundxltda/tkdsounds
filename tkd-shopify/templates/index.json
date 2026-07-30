@@ -3,45 +3,151 @@
     "tkd_hero": {
       "type": "tkd-hero",
       "settings": {
-        "terminal_text": "> LOADING ARCHIVE_INDEX.DAT ... OK",
-        "title": "TKD Archives",
-        "button1_label": "▶ Browse Archive",
+        "kicker": "Sample packs & sound kits",
+        "title": "Your next sound starts here",
+        "accent_word_index": 3,
+        "subtitle": "Drum kits, loops e one-shots prontos pra produção — direto do arquivo do TKD.",
+        "button1_label": "Browse packs",
         "button2_label": "Contact",
-        "featured_label": "Featured Pack",
-        "featured_product": "lost-echoes",
-        "padding_top": 96,
-        "padding_bottom": 112
+        "button2_link": "/pages/contact",
+        "show_scroll_cue": true,
+        "scroll_cue_text": "Scroll",
+        "padding_top": 112,
+        "padding_bottom": 96
+      }
+    },
+    "tkd_featured": {
+      "type": "tkd-featured-duo",
+      "blocks": {
+        "bestseller": {
+          "type": "feature",
+          "settings": {
+            "label": "Bestseller",
+            "product": "lost-echoes"
+          }
+        }
+      },
+      "block_order": ["bestseller"],
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 72
       }
     },
     "tkd_latest": {
       "type": "tkd-latest-releases",
       "settings": {
-        "eyebrow": "// LATEST RELEASES",
+        "eyebrow": "Recent drops",
         "title": "Latest releases",
         "products_to_show": 6,
         "show_view_all": true,
-        "view_all_label": "[VIEW ALL →]",
+        "view_all_label": "View all",
         "bottom_button_label": "View all packs",
+        "padding_top": 24,
+        "padding_bottom": 96
+      }
+    },
+    "tkd_marquee": {
+      "type": "tkd-marquee",
+      "blocks": {
+        "m1": { "type": "item", "settings": { "text": "Drum kits" } },
+        "m2": { "type": "item", "settings": { "text": "Loops" } },
+        "m3": { "type": "item", "settings": { "text": "One-shots" } },
+        "m4": { "type": "item", "settings": { "text": "Royalty-free" } },
+        "m5": { "type": "item", "settings": { "text": "WAV 24-bit" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5"],
+      "settings": {
+        "eyebrow": "",
+        "duration": 30,
         "padding_top": 0,
-        "padding_bottom": 128
+        "padding_bottom": 0
+      }
+    },
+    "tkd_stats": {
+      "type": "tkd-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "10", "prefix": "", "suffix": "k+", "label": "Producers" } },
+        "s2": { "type": "stat", "settings": { "value": "5", "prefix": "", "suffix": "M+", "label": "Streams" } },
+        "s3": { "type": "stat", "settings": { "value": "50", "prefix": "", "suffix": "+", "label": "Packs released" } },
+        "s4": { "type": "stat", "settings": { "value": "100", "prefix": "", "suffix": "%", "label": "Royalty-free" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Made for producers",
+        "title": "",
+        "padding_top": 96,
+        "padding_bottom": 96
       }
     },
     "tkd_about": {
       "type": "tkd-about",
       "settings": {
         "anchor": "about",
+        "eyebrow": "About",
+        "title": "Behind the sounds",
         "show_embed": true,
         "embed_url": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0",
         "embed_title": "Produced by TKD — Spotify playlist",
         "embed_height": 352,
-        "padding_top": 0,
-        "padding_bottom": 128
+        "padding_top": 24,
+        "padding_bottom": 96
+      }
+    },
+    "tkd_faq": {
+      "type": "tkd-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Os packs são royalty-free?",
+            "answer": "<p>Sim — todos os sons podem ser usados em lançamentos comerciais sem custos extras.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Em quais DAWs funciona?",
+            "answer": "<p>Todos os arquivos são WAV 24-bit e funcionam em qualquer DAW: FL Studio, Ableton, Logic, Reaper e mais.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Como recebo o download?",
+            "answer": "<p>Depois da compra você recebe o link de download por e-mail, na hora.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3"],
+      "settings": {
+        "eyebrow": "FAQ",
+        "title": "Questions, answered",
+        "padding_top": 24,
+        "padding_bottom": 48
+      }
+    },
+    "tkd_newsletter": {
+      "type": "tkd-newsletter",
+      "settings": {
+        "eyebrow": "Early access",
+        "title": "Get new packs first",
+        "subtitle": "Entre na lista e receba lançamentos, descontos e sons exclusivos antes de todo mundo.",
+        "placeholder": "Seu melhor e-mail",
+        "button_label": "Sign up",
+        "success_text": "Feito! Você está na lista.",
+        "padding_top": 24,
+        "padding_bottom": 72
       }
     }
   },
   "order": [
     "tkd_hero",
+    "tkd_featured",
     "tkd_latest",
-    "tkd_about"
+    "tkd_marquee",
+    "tkd_stats",
+    "tkd_about",
+    "tkd_faq",
+    "tkd_newsletter"
   ]
 }

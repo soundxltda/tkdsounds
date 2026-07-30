@@ -1,0 +1,96 @@
+{% comment %}
+  TKD Featured Duo — dois destaques lado a lado (ex.: Bestseller e
+  Latest release), cada um com rótulo próprio e card "wide".
+  Blocks de produto no Theme Editor; com 1 block, o card ocupa a
+  linha inteira.
+{% endcomment %}
+
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-featured-duo {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-featured-duo {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="tkd-featured-duo tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-duo{% if section.blocks.size > 1 %} tkd-duo--side{% endif %}">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.product != blank -%}
+          <div class="tkd-duo__cell reveal" {{ block.shopify_attributes }}>
+            {%- if block.settings.label != blank -%}
+              <div class="tkd-duo__label">
+                <span class="tkd-eyebrow">{{ block.settings.label | escape }}</span>
+              </div>
+            {%- endif -%}
+            {% render 'tkd-pack-card', card_product: block.settings.product, layout: 'wide', lazy: forloop.first %}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Destaques (duo)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Destaque",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rótulo",
+          "default": "Bestseller"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TKD Destaques (duo)",
+      "blocks": [
+        { "type": "feature", "settings": { "label": "Bestseller" } },
+        { "type": "feature", "settings": { "label": "Latest release" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

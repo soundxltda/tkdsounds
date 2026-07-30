@@ -1,24 +1,43 @@
 {% comment %}
-  TKD Stats — contadores animados (ex.: "1B+ streams", "5000+ produtores").
-  Cada block anima de 0 até o valor final quando entra na viewport
-  (ver initCounters em tkd-exo-motion.js).
+  TKD Stats — números grandes com contador animado
+  ([data-tkd-counter] em assets/tkd-theme.js).
 {% endcomment %}
 
-<div class="tkd-stats tkd-section reveal-stagger">
+{% style %}
+  #shopify-section-{{ section.id }} .tkd-stats {
+    padding-top: {{ section.settings.padding_top | times: 0.7 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .tkd-stats {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="tkd-stats tkd-section">
   <div class="tkd-section__inner tkd-section__inner--w1200">
-    {%- if section.settings.eyebrow != blank -%}
-      <div class="tkd-eyebrow" style="text-align: center; margin-bottom: 24px;">{{ section.settings.eyebrow | escape }}</div>
+    {%- if section.settings.eyebrow != blank or section.settings.title != blank -%}
+      <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+      </div>
     {%- endif -%}
-    <div class="tkd-stats__grid" style="--tkd-stats-cols: {{ section.blocks.size }};">
+
+    <div class="tkd-stats__grid" style="--tkd-stats-cols: {{ section.blocks.size | at_least: 1 | at_most: 4 }};">
       {%- for block in section.blocks -%}
-        <div class="reveal-item" {{ block.shopify_attributes }}>
-          <div
-            class="tkd-stats__value"
-            data-count-to="{{ block.settings.value }}"
-            data-count-prefix="{{ block.settings.prefix | escape }}"
-            data-count-suffix="{{ block.settings.suffix | escape }}"
-          >{{ block.settings.prefix }}0{{ block.settings.suffix }}</div>
-          <div class="tkd-stats__label">{{ block.settings.label | escape }}</div>
+        <div class="tkd-stat reveal" style="transition-delay: {{ forloop.index0 | times: 80 }}ms;" {{ block.shopify_attributes }}>
+          <div class="tkd-stat__value">
+            {%- if block.settings.prefix != blank -%}<span class="suffix">{{ block.settings.prefix | escape }}</span>{%- endif -%}
+            <span data-tkd-counter="{{ block.settings.value | escape }}">0</span>
+            {%- if block.settings.suffix != blank -%}<span class="suffix">{{ block.settings.suffix | escape }}</span>{%- endif -%}
+          </div>
+          <div class="tkd-stat__label">{{ block.settings.label | escape }}</div>
         </div>
       {%- endfor -%}
     </div>
@@ -29,54 +48,80 @@
 {
   "name": "TKD Stats",
   "tag": "section",
-  "class": "section-tkd-stats",
   "settings": [
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow (opcional)"
+      "label": "Rótulo",
+      "default": "Made for producers"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título (vazio = oculto)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
     }
   ],
   "blocks": [
     {
       "type": "stat",
-      "name": "Contador",
+      "name": "Número",
+      "limit": 4,
       "settings": [
         {
           "type": "text",
           "id": "value",
-          "label": "Valor final",
-          "info": "Só números (aceita decimais, ex.: 1.2)",
-          "default": "1000"
+          "label": "Valor (número)",
+          "default": "10",
+          "info": "Somente dígitos (ex.: 10, 250, 1.5). Anima do zero até esse valor."
         },
         {
           "type": "text",
           "id": "prefix",
-          "label": "Prefixo (opcional)"
+          "label": "Prefixo (ex.: +)"
         },
         {
           "type": "text",
           "id": "suffix",
-          "label": "Sufixo (opcional)",
-          "default": "+"
+          "label": "Sufixo (ex.: k+, M+)",
+          "default": "k+"
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Rótulo",
+          "label": "Legenda",
           "default": "Producers"
         }
       ]
     }
   ],
-  "max_blocks": 4,
   "presets": [
     {
       "name": "TKD Stats",
       "blocks": [
-        { "type": "stat" },
-        { "type": "stat" },
-        { "type": "stat" }
+        { "type": "stat", "settings": { "value": "10", "suffix": "k+", "label": "Producers" } },
+        { "type": "stat", "settings": { "value": "5", "suffix": "M+", "label": "Streams" } },
+        { "type": "stat", "settings": { "value": "50", "suffix": "+", "label": "Packs released" } },
+        { "type": "stat", "settings": { "value": "100", "suffix": "%", "label": "Royalty-free" } }
       ]
     }
   ]

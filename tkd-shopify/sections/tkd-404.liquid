@@ -1,20 +1,19 @@
 {% comment %}
-  TKD 404 — janela "ERROR — FILE_NOT_FOUND.SYS" (portado do
-  NotFoundComponent de __root.tsx).
+  TKD 404 — página não encontrada: número gigante em outline,
+  mensagem e botão de volta (design system v2).
 {% endcomment %}
 
 <div class="tkd-404 tkd-section">
-  <div class="win tkd-404__win">
-    <div class="win-title">
-      <span>{{ section.settings.window_title | escape }}</span>
-      <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-    </div>
-    <div class="tkd-404__pad">
-      <h1 class="tkd-404__code chroma">404</h1>
-      <p class="tkd-404__msg">&gt; {{ section.settings.message | escape }}</p>
-      <div class="tkd-404__action">
-        <a href="{{ routes.root_url }}" class="tkd-btn tkd-btn-solid">{{ section.settings.button_label | escape }}</a>
-      </div>
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    <div class="tkd-404__code" aria-hidden="true">404</div>
+    <h1 class="tkd-404__title">{{ section.settings.title | escape }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="tkd-404__sub">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+    <div class="tkd-404__action">
+      <a href="{{ section.settings.button_link | default: routes.root_url }}" class="tkd-btn tkd-btn-solid">
+        {{- section.settings.button_label | escape -}}
+      </a>
     </div>
   </div>
 </div>
@@ -23,25 +22,30 @@
 {
   "name": "TKD 404",
   "tag": "section",
-  "class": "section-tkd-404",
   "settings": [
     {
       "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "ERROR — FILE_NOT_FOUND.SYS"
+      "id": "title",
+      "label": "Título",
+      "default": "This page doesn't exist"
     },
     {
-      "type": "text",
-      "id": "message",
-      "label": "Mensagem",
-      "default": "The requested resource could not be located on this volume."
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "O link pode ter mudado — mas os sons continuam no lugar."
     },
     {
       "type": "text",
       "id": "button_label",
       "label": "Texto do botão",
-      "default": "Return to Index"
+      "default": "Back to home"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "info": "Se vazio, aponta para a home."
     }
   ]
 }

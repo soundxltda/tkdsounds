@@ -3,68 +3,66 @@
     "tkd_hero": {
       "type": "tkd-product-hero",
       "settings": {
-        "back_label": "back to archive",
-        "buy_label": "▶ Buy Here",
-        "previews_label": "More Previews",
-        "stamp_text": "Royalty-Free for Sales",
-        "trust_text": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+        "show_breadcrumb": true,
+        "breadcrumb_label": "Back to packs",
+        "buy_label": "Add to cart",
+        "previews_label": "Listen to previews",
+        "stamp_text": "Royalty-free",
+        "trust_text": "Instant download · Secure checkout · Royalty-free license"
       }
     },
     "tkd_previews": {
       "type": "tkd-product-previews",
       "settings": {
-        "player_title": "TKD PLAYER v1.0"
+        "panel_title": "Preview player"
       }
     },
     "tkd_properties": {
       "type": "tkd-product-properties",
       "settings": {
-        "window_title": "PROPERTIES.INF",
-        "eyebrow": "// METADATA",
-        "royalty_sales_text": "Yes",
-        "royalty_placements_text": "No — clearance required",
-        "show_description": true
+        "eyebrow": "What's inside",
+        "royalty_text": "100% royalty-free",
+        "show_tags": true,
+        "show_description": true,
+        "download_title": "How to download"
       }
     },
     "tkd_credibility": {
       "type": "tkd-credibility",
       "settings": {
-        "window_title": "CREDENTIALS.LOG",
-        "eyebrow": "VERIFIED",
-        "show_embed": true,
-        "embed_url": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0",
-        "embed_title": "Produced by TKD — Spotify playlist",
+        "eyebrow": "Heard on streams worldwide",
+        "text": "Sons do arquivo TKD já rodaram em faixas com milhões de plays. Produção testada no mundo real, pronta pro seu próximo lançamento.",
         "embed_height": 152
       }
     },
     "tkd_cta": {
       "type": "tkd-product-cta",
       "settings": {
-        "window_title": "PURCHASE.DLG",
-        "eyebrow": "// AVAILABLE NOW",
-        "heading_prefix": "Get",
-        "buy_label": "▶ Buy Here",
-        "stamp_text": "Royalty-Free for Sales",
-        "trust_text": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+        "eyebrow": "Ready when you are",
+        "title": "Add this pack to your arsenal",
+        "buy_label": "Add to cart",
+        "trust_text": "Instant download · Secure checkout · Royalty-free license"
       }
     },
     "tkd_newsletter": {
       "type": "tkd-newsletter",
       "settings": {
-        "window_title": "SIGNUP.EXE",
-        "eyebrow": "JOIN THE LIST",
-        "heading": "Free loops, new pack alerts, early access",
-        "placeholder": "you@email.com",
-        "button_label": "▶ SIGN UP",
-        "success_text": "You're on the list. Check your inbox soon."
+        "eyebrow": "Early access",
+        "title": "Get new packs first",
+        "subtitle": "Entre na lista e receba lançamentos, descontos e sons exclusivos antes de todo mundo.",
+        "placeholder": "Seu melhor e-mail",
+        "button_label": "Sign up",
+        "success_text": "Feito! Você está na lista.",
+        "padding_top": 24,
+        "padding_bottom": 48
       }
     },
     "tkd_related": {
       "type": "tkd-related-products",
       "settings": {
-        "eyebrow": "// RELATED FILES",
+        "eyebrow": "Keep digging",
         "title": "More from the archive",
-        "products_to_show": 5
+        "products_to_show": 3
       }
     }
   },

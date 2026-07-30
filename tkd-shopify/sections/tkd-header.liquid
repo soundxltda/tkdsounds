@@ -1,121 +1,85 @@
 {% comment %}
-  TKD Header — "TKD_SOUNDS.EXE" (portado de Navbar.tsx).
-  Duas barras: title bar pixel (LED + título + relógio + botões de janela)
-  e menu bar (logo serif, navegação [Link], carrinho, [MENU] mobile).
+  TKD Header — barra de navegação fixa com blur (design system v2).
+  Logo à esquerda, menu nativo (link_list) ao centro, carrinho à direita.
+  O contador do carrinho é atualizado por assets/tkd-theme.js
+  ([data-tkd-cart-count]); menu mobile via [data-tkd-menu-toggle].
 {% endcomment %}
 
-<header class="tkd-header">
-  {%- # Barra de título estilo janela retrô -%}
-  <div class="tkd-header__titlebar">
-    <div class="tkd-header__titlebar-left">
-      <span class="tkd-header__led" aria-hidden="true"></span>
-      <span>{{ section.settings.title_text | escape }}</span>
-    </div>
-    <div class="tkd-header__titlebar-right">
-      {%- if section.settings.show_clock -%}
-        <span class="tkd-header__clock">SYS://<span data-tkd-clock>00:00:00</span></span>
-      {%- endif -%}
-      <span class="tkd-header__winbtns" aria-hidden="true">
-        <span>_</span><span>&#9633;</span><span>&times;</span>
-      </span>
-    </div>
-  </div>
-
-  {%- # Barra de menu -%}
-  <div class="tkd-header__menubar">
+<header class="tkd-header" data-tkd-header>
+  <div class="tkd-header__bar">
     <a href="{{ routes.root_url }}" class="tkd-header__logo">
-      {%- if section.settings.logo_image != blank -%}
-        {{
-          section.settings.logo_image
-          | image_url: width: 200
-          | image_tag: alt: shop.name, width: section.settings.logo_image.width, loading: 'eager'
-        }}
+      {%- if section.settings.logo != blank -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 200 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ section.settings.logo.width }}"
+          height="{{ section.settings.logo.height }}"
+          loading="eager"
+        >
       {%- else -%}
-        {%- assign logo_words = section.settings.logo_text | split: ' ' -%}
-        {%- if logo_words.size > 1 -%}
-          {{ logo_words.first | escape }} <span class="dot-sep">&middot;</span> <span>{{ logo_words | slice: 1, 10 | join: ' ' | escape }}</span>
-        {%- else -%}
-          {{ section.settings.logo_text | escape }}
-        {%- endif -%}
+        {{ section.settings.logo_text | default: shop.name | escape }}<span class="logo-dot" aria-hidden="true">.</span>
       {%- endif -%}
     </a>
 
-    <nav class="tkd-header__nav" aria-label="Menu">
+    <nav class="tkd-header__nav" aria-label="{{ 'sections.header.menu' | t | default: 'Menu' }}">
       {%- for link in section.settings.menu.links -%}
         <a
           href="{{ link.url }}"
           class="tkd-header__link{% if link.current %} tkd-header__link--active{% endif %}"
           {% if link.current %}aria-current="page"{% endif %}
-        >[{{ link.title | escape }}]</a>
+        >
+          {{- link.title | escape -}}
+        </a>
       {%- endfor -%}
-      {%- comment -%}
-        cart-drawer.js exige #cart-icon-bubble no DOM; se o link estiver
-        desativado, mantém o elemento oculto para não quebrar o drawer.
-      {%- endcomment -%}
-      <a
-        href="{{ routes.cart_url }}"
-        class="tkd-header__link"
-        id="cart-icon-bubble"
-        {% unless section.settings.show_cart %}style="display: none;" tabindex="-1" aria-hidden="true"{% endunless %}
-      >
-        [CART{%- if cart.item_count > 0 %} ({{ cart.item_count }}){% endif -%}]
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }} - {{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-      </a>
     </nav>
 
-    <button
-      type="button"
-      class="tkd-header__menu-toggle"
-      data-tkd-menu-toggle
-      aria-expanded="false"
-      aria-controls="tkd-mobile-menu"
-      aria-label="Menu"
-    >
-      [MENU]
-    </button>
+    <div class="tkd-header__actions">
+      {%- if section.settings.show_cart -%}
+        <a href="{{ routes.cart_url }}" class="tkd-header__cart" id="cart-icon-bubble" aria-label="{{ 'templates.cart.cart' | t | default: 'Cart' }}">
+          <span>Cart</span>
+          <span class="tkd-header__cart-count" data-tkd-cart-count>{{ cart.item_count }}</span>
+        </a>
+      {%- endif -%}
+
+      <button
+        type="button"
+        class="tkd-header__menu-toggle"
+        data-tkd-menu-toggle
+        aria-expanded="false"
+        aria-controls="TkdMobileMenu"
+        aria-label="Menu"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </div>
   </div>
 
-  {%- # Painel mobile -%}
-  <div class="tkd-header__mobile" id="tkd-mobile-menu" data-tkd-mobile-menu hidden>
+  <div class="tkd-header__mobile" id="TkdMobileMenu" data-tkd-mobile-menu hidden>
     {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>[{{ link.title | escape }}]</a>
+      <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
     {%- endfor -%}
-    {%- if section.settings.show_cart -%}
-      <a href="{{ routes.cart_url }}">
-        [CART<span data-tkd-cart-count>{%- if cart.item_count > 0 %} ({{ cart.item_count }}){% endif -%}</span>]
-      </a>
-    {%- endif -%}
   </div>
 </header>
 
 {% schema %}
 {
   "name": "TKD Header",
+  "tag": "div",
   "class": "section-tkd-header",
   "settings": [
     {
-      "type": "text",
-      "id": "title_text",
-      "label": "Texto da barra de título",
-      "default": "TKD_SOUNDS.EXE — SAMPLE ARCHIVE"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_clock",
-      "label": "Mostrar relógio SYS://",
-      "default": true
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (imagem)",
+      "info": "Se vazio, usa o texto abaixo."
     },
     {
       "type": "text",
       "id": "logo_text",
       "label": "Logo (texto)",
-      "info": "A primeira palavra fica separada por um ponto, como no site original (TKD · SOUNDS).",
-      "default": "TKD SOUNDS"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo_image",
-      "label": "Logo (imagem — opcional, substitui o texto)"
+      "default": "TKD Sounds"
     },
     {
       "type": "link_list",
@@ -126,13 +90,9 @@
     {
       "type": "checkbox",
       "id": "show_cart",
-      "label": "Mostrar link do carrinho",
-      "info": "O site original vendia fora da loja e não tinha carrinho; na Shopify o carrinho nativo é necessário.",
+      "label": "Mostrar carrinho",
       "default": true
     }
-  ],
-  "enabled_on": {
-    "groups": ["header"]
-  }
+  ]
 }
 {% endschema %}

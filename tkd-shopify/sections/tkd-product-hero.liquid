@@ -1,17 +1,15 @@
 {% comment %}
-  TKD Product Hero — janela INFO.TXT (portado do HERO/PRODUCT de pack.$id.tsx).
-  Vinil giratório, título, tagline, preço + compare-at + carimbo, botão de
-  compra pelo product form NATIVO da Shopify (AJAX + cart drawer via
-  product-form.js do Refresh) e preview master do player TKD.
+  TKD Product Hero — topo da página de produto (design system v2).
+  Capa quadrada arredondada à esquerda; formatos, título, tagline,
+  preço, form nativo (checkout Shopify) e master preview à direita.
+  Player: contrato data-* de assets/tkd-player.js.
 {% endcomment %}
 
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-
 {%- liquid
-  assign accent = product.metafields.tkd.accent_color.value | default: '#e6a635'
-  assign tagline = product.metafields.tkd.tagline.value
-  assign formats = product.metafields.tkd.formats.value
   assign previews = product.metafields.tkd.preview_files.value
+  assign titles = product.metafields.tkd.preview_titles.value
+  assign formats = product.metafields.tkd.formats.value
+  assign tagline = product.metafields.tkd.tagline.value
 
   assign psize = 0
   if previews
@@ -29,157 +27,145 @@
     assign master_url = master_file.url
   endif
 
-  assign back_url = section.settings.back_link
-  if back_url == blank
-    if product.collections.size > 0
-      assign back_url = product.collections.first.url
-    else
-      assign back_url = routes.all_products_collection_url
+  assign badge_text = ''
+  for tag in product.tags
+    assign tag_down = tag | downcase
+    if tag_down == 'bestseller'
+      assign badge_text = 'Bestseller'
+      break
+    elsif tag_down == 'new' or tag_down == 'novo'
+      assign badge_text = 'New'
     endif
-  endif
-
-  assign cover_small = ''
-  if product.featured_image
-    assign cover_small = product.featured_image | image_url: width: 144
-  endif
+  endfor
 -%}
 
 <div class="tkd-product-hero tkd-section">
   <div class="tkd-section__inner tkd-section__inner--w1300">
-    <a href="{{ back_url }}" class="tkd-backlink">&lt; {{ section.settings.back_label | escape }}</a>
+    {%- if section.settings.show_breadcrumb -%}
+      <a href="{{ section.settings.breadcrumb_link | default: routes.all_products_collection_url }}" class="tkd-backlink">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M19 12H5m0 0l6-6m-6 6l6 6"/></svg>
+        {{ section.settings.breadcrumb_label | escape }}
+      </a>
+    {%- endif -%}
 
-    <div class="win tkd-product-hero__win reveal">
-      <div class="win-title">
-        <span>C:\ARCHIVE\{{ product.handle | upcase | replace: '-', '_' }}\INFO.TXT</span>
-        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+    <div class="tkd-product-hero__grid">
+      <div class="tkd-product-hero__art reveal">
+        {%- if badge_text != blank -%}
+          <span class="tkd-product-hero__badge tkd-badge">{{ badge_text }}</span>
+        {%- endif -%}
+        {%- if product.featured_image -%}
+          <img
+            src="{{ product.featured_image | image_url: width: 1000 }}"
+            srcset="{{ product.featured_image | image_url: width: 500 }} 500w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
+            sizes="(min-width: 990px) 45vw, 100vw"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="pack-card__fallback"><span>{{ product.title | escape }}</span></div>
+        {%- endif -%}
       </div>
 
-      <div class="tkd-product-hero__grid">
-        {%- # Capa em vinil — gira enquanto qualquer faixa deste pack toca -%}
-        <div class="tkd-product-hero__art">
-          <div
-            class="tkd-vinyl"
-            data-tkd-vinyl
-            data-track-prefix="{{ product.id }}-"
-            style="
-              {%- if product.featured_image -%}
-                background: center / cover no-repeat url('{{ product.featured_image | image_url: width: 880 }}');
+      <div class="tkd-product-hero__details">
+        {%- if formats != blank -%}
+          <div class="tkd-product-hero__formats reveal">{{ formats | escape }}</div>
+        {%- endif -%}
+
+        <h1 class="tkd-product-hero__title reveal">{{ product.title | escape }}</h1>
+
+        {%- if tagline != blank -%}
+          <p class="tkd-product-hero__tagline reveal">{{ tagline | escape }}</p>
+        {%- endif -%}
+
+        <div class="tkd-price-row reveal">
+          <span class="tkd-price-row__price">{{ product.price | money_without_trailing_zeros }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="tkd-price-row__was">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+          {%- if section.settings.stamp_text != blank -%}
+            <span class="stamp">{{ section.settings.stamp_text | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="tkd-product-hero__actions reveal">
+          <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
+            {%- form 'product', product, id: 'tkd-product-form-hero', class: 'tkd-product-form', novalidate: 'novalidate' -%}
+              {%- if product.variants.size > 1 -%}
+                <select name="id" class="tkd-variant-select" aria-label="{{ 'products.product.product_variants' | t }}">
+                  {%- for variant in product.variants -%}
+                    <option
+                      value="{{ variant.id }}"
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}
+                    >
+                      {{ variant.title | escape }} — {{ variant.price | money_without_trailing_zeros }}
+                    </option>
+                  {%- endfor -%}
+                </select>
               {%- else -%}
-                background: radial-gradient(circle at 30% 30%, {{ accent }}66, #0a0704 72%);
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
               {%- endif -%}
-              --tkd-vinyl-accent: {{ accent }}66;
-            "
-            role="img"
-            aria-label="{{ product.featured_image.alt | default: product.title | escape }}"
-          >
-            {%- unless product.featured_image -%}
-              <div class="tkd-vinyl__name">{{ product.title | escape }}</div>
-            {%- endunless -%}
-            <div class="tkd-vinyl__hole" aria-hidden="true"></div>
-          </div>
-        </div>
 
-        {%- # Detalhes -%}
-        <div class="tkd-product-hero__details">
-          {%- if formats != blank -%}
-            <div class="tkd-product-hero__formats">&gt; {{ formats }}</div>
-          {%- endif -%}
+              <button
+                type="submit"
+                name="add"
+                class="tkd-btn tkd-btn-solid tkd-buy-btn"
+                {% unless product.available %}disabled aria-disabled="true"{% endunless %}
+              >
+                <span>
+                  {%- if product.available -%}
+                    {{ section.settings.buy_label | escape }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
 
-          <h1 class="tkd-product-hero__title chroma">{{ product.title | escape }}</h1>
-
-          {%- if tagline != blank -%}
-            <p class="tkd-product-hero__tagline">&gt; {{ tagline }}</p>
-          {%- endif -%}
-
-          <div class="tkd-price-row font-tkd-pixel">
-            <span class="tkd-price-row__price">{{ product.price | money_without_trailing_zeros }}</span>
-            {%- if product.compare_at_price > product.price -%}
-              <span class="tkd-price-row__was">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
-            {%- endif -%}
-            {%- if section.settings.stamp_text != blank -%}
-              <span class="stamp stamp-olive">{{ section.settings.stamp_text | escape }}</span>
-            {%- endif -%}
-          </div>
-
-          <div class="tkd-product-hero__actions">
-            <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
-              {%- form 'product', product, id: 'tkd-product-form-hero', class: 'tkd-product-form', novalidate: 'novalidate' -%}
-                {%- if product.variants.size > 1 -%}
-                  <select name="id" class="tkd-variant-select" aria-label="{{ 'products.product.product_variants' | t }}">
-                    {%- for variant in product.variants -%}
-                      <option
-                        value="{{ variant.id }}"
-                        {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
-                        {% unless variant.available %}disabled{% endunless %}
-                      >
-                        {{ variant.title | escape }} — {{ variant.price | money_without_trailing_zeros }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                {%- else -%}
-                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                {%- endif -%}
-
-                <button
-                  type="submit"
-                  name="add"
-                  class="tkd-btn tkd-btn-solid tkd-buy-btn"
-                  {% unless product.available %}disabled aria-disabled="true"{% endunless %}
-                >
-                  <span>
-                    {%- if product.available -%}
-                      {{ section.settings.buy_label | escape }}
-                    {%- else -%}
-                      {{ 'products.product.sold_out' | t }}
-                    {%- endif -%}
-                  </span>
-                  <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
-                  {%- render 'loading-spinner' -%}
-                </button>
-
-                <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
-                  <span class="product-form__error-message"></span>
-                </div>
-              {%- endform -%}
-            </product-form>
-
-            {%- if psize > 1 -%}
-              <a href="#preview" class="tkd-btn tkd-btn-outline">♪ {{ section.settings.previews_label | escape }}</a>
-            {%- endif -%}
-          </div>
-
-          {%- if master_url != blank -%}
-            <div class="tkd-master-preview-wrap">
-              <div class="audio-row tkd-master-preview" data-tkd-row>
-                <button
-                  type="button"
-                  class="audio-play-btn tkd-master-preview__btn"
-                  data-tkd-play
-                  data-track-id="{{ product.id }}-{{ midx }}"
-                  data-track-src="{{ master_url }}"
-                  data-track-name="PREVIEW"
-                  data-pack-name="{{ product.title | escape }}"
-                  data-pack-url="{{ product.url }}"
-                  data-accent="{{ accent }}"
-                  {% if cover_small != blank %}data-cover="{{ cover_small }}"{% endif %}
-                  aria-label="Play preview"
-                >
-                  <svg class="tkd-icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                  <svg class="tkd-icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-                </button>
-                <div class="tkd-master-preview__label font-tkd-pixel">Preview</div>
-                <div class="tkd-master-preview__wave">
-                  <div class="waveform waveform--hero" data-tkd-waveform data-for="{{ product.id }}-{{ midx }}" data-bars="48" data-seek="playing"></div>
-                </div>
-                <span class="tkd-master-preview__time font-tkd-pixel" data-tkd-time data-for="{{ product.id }}-{{ midx }}" data-mode="both" hidden></span>
+              <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
+                <span class="product-form__error-message"></span>
               </div>
-            </div>
-          {%- endif -%}
+            {%- endform -%}
+          </product-form>
 
-          {%- if section.settings.trust_text != blank -%}
-            <div class="tkd-trust-line">{{ section.settings.trust_text | escape }}</div>
+          {%- if psize > 1 -%}
+            <a href="#preview" class="tkd-btn tkd-btn-outline">{{ section.settings.previews_label | escape }}</a>
           {%- endif -%}
         </div>
+
+        {%- if master_url != blank -%}
+          <div class="tkd-master-preview-wrap reveal">
+            <div class="audio-row tkd-master-preview" data-tkd-row>
+              <button
+                type="button"
+                class="audio-play-btn tkd-master-preview__btn"
+                data-tkd-play
+                data-track-id="{{ product.id }}-{{ midx }}"
+                data-track-src="{{ master_url }}"
+                data-track-name="PREVIEW"
+                data-pack-name="{{ product.title | escape }}"
+                data-pack-url="{{ product.url }}"
+                {% if product.featured_image %}data-cover="{{ product.featured_image | image_url: width: 120 }}"{% endif %}
+                aria-label="Play preview"
+              >
+                <svg class="tkd-icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="tkd-icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+              </button>
+              <span class="tkd-master-preview__label">Preview</span>
+              <div class="tkd-master-preview__wave">
+                <div class="waveform waveform--hero" data-tkd-waveform data-for="{{ product.id }}-{{ midx }}" data-bars="48" data-seek="playing"></div>
+              </div>
+              <span class="tkd-master-preview__time" data-tkd-time data-for="{{ product.id }}-{{ midx }}" data-mode="both" hidden></span>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.trust_text != blank -%}
+          <p class="tkd-trust-line reveal">{{ section.settings.trust_text | escape }}</p>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -187,46 +173,50 @@
 
 {% schema %}
 {
-  "name": "TKD Produto — Hero",
+  "name": "TKD Product Hero",
   "tag": "section",
-  "class": "section-tkd-product-hero",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Mostrar link de voltar",
+      "default": true
+    },
+    {
       "type": "text",
-      "id": "back_label",
-      "label": "Texto do link de volta",
-      "default": "back to archive"
+      "id": "breadcrumb_label",
+      "label": "Texto do link de voltar",
+      "default": "Back to packs"
     },
     {
       "type": "url",
-      "id": "back_link",
-      "label": "Link de volta",
-      "info": "Se vazio, usa a primeira coleção do produto."
+      "id": "breadcrumb_link",
+      "label": "Link de voltar",
+      "info": "Se vazio, aponta para todos os produtos."
     },
     {
       "type": "text",
       "id": "buy_label",
       "label": "Texto do botão de compra",
-      "info": "O botão adiciona ao carrinho nativo da Shopify (abre o cart drawer).",
-      "default": "▶ Buy Here"
+      "default": "Add to cart"
     },
     {
       "type": "text",
       "id": "previews_label",
       "label": "Texto do botão de previews",
-      "default": "More Previews"
+      "default": "Listen to previews"
     },
     {
       "type": "text",
       "id": "stamp_text",
-      "label": "Carimbo ao lado do preço",
-      "default": "Royalty-Free for Sales"
+      "label": "Selo ao lado do preço (vazio = oculto)",
+      "default": "Royalty-free"
     },
     {
       "type": "text",
       "id": "trust_text",
       "label": "Linha de confiança",
-      "default": "[ SECURE CHECKOUT · CARD & PAYPAL · INSTANT DELIVERY · CLEARED FOR COMMERCIAL USE ]"
+      "default": "Instant download · Secure checkout · Royalty-free license"
     }
   ]
 }

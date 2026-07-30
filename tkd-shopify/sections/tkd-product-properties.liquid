@@ -1,133 +1,110 @@
 {% comment %}
-  TKD Product Properties — janela PROPERTIES.INF (portado de PRODUCT DETAILS
-  de pack.$id.tsx). Tabela de metadados vinda dos metafields tkd.* e das
-  tags nativas do produto. Linhas vazias são omitidas automaticamente.
+  TKD Product Properties — especificações do pack (metafields tkd.*)
+  em tabela de linhas alternadas + descrição do produto.
 {% endcomment %}
 
 {%- liquid
-  assign sample_count = product.metafields.tkd.sample_count.value
-  assign one_shot_count = product.metafields.tkd.one_shot_count.value
-  assign composition_count = product.metafields.tkd.composition_count.value
-  assign bpm_range = product.metafields.tkd.bpm_range.value
-  assign key_info = product.metafields.tkd.key_info.value
-  assign formats = product.metafields.tkd.formats.value
-  assign mood = product.metafields.tkd.mood.value
-  assign file_size = product.metafields.tkd.file_size.value
-  assign includes_midi = product.metafields.tkd.includes_midi.value
-  assign includes_stems = product.metafields.tkd.includes_stems.value
-  assign contents_summary = product.metafields.tkd.contents_summary.value
-  assign credits = product.metafields.tkd.credits.value
-
-  assign folders = ''
-  if contents_summary != blank
-    assign folders = contents_summary | newline_to_br | split: '<br />' | join: ', ' | strip_newlines
-  endif
+  assign m = product.metafields.tkd
 -%}
 
 <div class="tkd-product-properties tkd-section">
-  <div class="tkd-section__inner tkd-section__inner--w1200">
-    <div class="win reveal">
-      <div class="win-title">
-        <span>{{ section.settings.window_title | escape }}</span>
-        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
-      </div>
-      <div class="tkd-product-properties__pad">
-        <div class="tkd-product-properties__inner">
-          <div class="tkd-eyebrow text-amber tkd-product-properties__eyebrow">{{ section.settings.eyebrow | escape }}</div>
-          <dl class="tkd-proplist">
-            {%- if composition_count != blank -%}
-              <div class="tkd-proplist__row"><dt>Compositions</dt><dd>{{ composition_count }}</dd></div>
-            {%- endif -%}
-            {%- if sample_count != blank -%}
-              <div class="tkd-proplist__row"><dt>Samples</dt><dd>{{ sample_count }}</dd></div>
-            {%- endif -%}
-            {%- if one_shot_count != blank -%}
-              <div class="tkd-proplist__row"><dt>One-Shots</dt><dd>{{ one_shot_count }}</dd></div>
-            {%- endif -%}
-            {%- if bpm_range != blank -%}
-              <div class="tkd-proplist__row"><dt>BPM Range</dt><dd>{{ bpm_range }}</dd></div>
-            {%- endif -%}
-            {%- if key_info != blank -%}
-              <div class="tkd-proplist__row"><dt>Key</dt><dd>{{ key_info }}</dd></div>
-            {%- endif -%}
-            {%- if formats != blank -%}
-              <div class="tkd-proplist__row"><dt>Format</dt><dd>{{ formats }}</dd></div>
-            {%- endif -%}
-            {%- if mood != blank -%}
-              <div class="tkd-proplist__row"><dt>Mood</dt><dd>{{ mood }}</dd></div>
-            {%- endif -%}
-            {%- if file_size != blank -%}
-              <div class="tkd-proplist__row"><dt>Download Size</dt><dd>{{ file_size }}</dd></div>
-            {%- endif -%}
-            {%- if includes_midi -%}
-              <div class="tkd-proplist__row"><dt>MIDI Included</dt><dd>Yes</dd></div>
-            {%- endif -%}
-            {%- if includes_stems -%}
-              <div class="tkd-proplist__row"><dt>Stems Included</dt><dd>Yes</dd></div>
-            {%- endif -%}
-            {%- if section.settings.royalty_sales_text != blank -%}
-              <div class="tkd-proplist__row"><dt>Royalty-Free (Sales)</dt><dd>{{ section.settings.royalty_sales_text | escape }}</dd></div>
-            {%- endif -%}
-            {%- if section.settings.royalty_placements_text != blank -%}
-              <div class="tkd-proplist__row"><dt>Royalty-Free (Placements)</dt><dd>{{ section.settings.royalty_placements_text | escape }}</dd></div>
-            {%- endif -%}
-            {%- if folders != blank -%}
-              <div class="tkd-proplist__row tkd-proplist__row--top"><dt>Folders</dt><dd class="tkd-proplist__dd-wide">{{ folders }}</dd></div>
-            {%- endif -%}
-            {%- if product.tags.size > 0 -%}
-              <div class="tkd-proplist__row tkd-proplist__row--top"><dt>Tags</dt><dd class="tkd-proplist__dd-wide">{{ product.tags | join: ', ' }}</dd></div>
-            {%- endif -%}
-            {%- if credits != blank -%}
-              <div class="tkd-proplist__row tkd-proplist__row--top"><dt>Credits</dt><dd class="tkd-proplist__dd-wide">{{ credits | newline_to_br }}</dd></div>
-            {%- endif -%}
-          </dl>
+  <div class="tkd-card tkd-product-properties__pad tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-product-properties__inner">
+      <div class="tkd-eyebrow tkd-product-properties__eyebrow reveal">{{ section.settings.eyebrow | escape }}</div>
 
-          {%- if section.settings.show_description and product.description != blank -%}
-            <div class="tkd-product-description">
-              {{ product.description }}
-            </div>
-          {%- endif -%}
+      <dl class="tkd-proplist reveal">
+        {%- if m.sample_count.value -%}
+          <div class="tkd-proplist__row"><dt>Samples</dt><dd>{{ m.sample_count.value }}</dd></div>
+        {%- endif -%}
+        {%- if m.one_shot_count.value -%}
+          <div class="tkd-proplist__row"><dt>One-shots</dt><dd>{{ m.one_shot_count.value }}</dd></div>
+        {%- endif -%}
+        {%- if m.composition_count.value -%}
+          <div class="tkd-proplist__row"><dt>Compositions</dt><dd>{{ m.composition_count.value }}</dd></div>
+        {%- endif -%}
+        {%- if m.bpm_range.value != blank -%}
+          <div class="tkd-proplist__row"><dt>BPM range</dt><dd>{{ m.bpm_range.value | escape }}</dd></div>
+        {%- endif -%}
+        {%- if m.key_info.value != blank -%}
+          <div class="tkd-proplist__row"><dt>Key</dt><dd>{{ m.key_info.value | escape }}</dd></div>
+        {%- endif -%}
+        {%- if m.formats.value != blank -%}
+          <div class="tkd-proplist__row"><dt>Format</dt><dd>{{ m.formats.value | escape }}</dd></div>
+        {%- endif -%}
+        {%- if m.mood.value != blank -%}
+          <div class="tkd-proplist__row"><dt>Mood</dt><dd>{{ m.mood.value | escape }}</dd></div>
+        {%- endif -%}
+        {%- if m.file_size.value != blank -%}
+          <div class="tkd-proplist__row"><dt>Download size</dt><dd>{{ m.file_size.value | escape }}</dd></div>
+        {%- endif -%}
+        <div class="tkd-proplist__row"><dt>MIDI included</dt><dd>{% if m.includes_midi.value %}Yes{% else %}No{% endif %}</dd></div>
+        <div class="tkd-proplist__row"><dt>Stems included</dt><dd>{% if m.includes_stems.value %}Yes{% else %}No{% endif %}</dd></div>
+        {%- if section.settings.royalty_text != blank -%}
+          <div class="tkd-proplist__row"><dt>License</dt><dd>{{ section.settings.royalty_text | escape }}</dd></div>
+        {%- endif -%}
+        {%- if m.contents_summary.value != blank -%}
+          <div class="tkd-proplist__row tkd-proplist__row--top"><dt>Contents</dt><dd class="tkd-proplist__dd-wide">{{ m.contents_summary.value | escape | newline_to_br }}</dd></div>
+        {%- endif -%}
+        {%- if product.tags.size > 0 and section.settings.show_tags -%}
+          <div class="tkd-proplist__row tkd-proplist__row--top"><dt>Tags</dt><dd class="tkd-proplist__dd-wide">{{ product.tags | join: ', ' }}</dd></div>
+        {%- endif -%}
+      </dl>
+
+      {%- if section.settings.show_description and product.description != blank -%}
+        <div class="tkd-product-description reveal">{{ product.description }}</div>
+      {%- endif -%}
+
+      {%- if m.credits.value != blank -%}
+        <div class="tkd-product-description reveal">
+          <strong>Credits</strong>
+          <p>{{ m.credits.value | escape | newline_to_br }}</p>
         </div>
-      </div>
+      {%- endif -%}
+
+      {%- if m.download_instructions.value != blank -%}
+        <div class="tkd-product-description reveal">
+          <strong>{{ section.settings.download_title | escape }}</strong>
+          <p>{{ m.download_instructions.value | escape | newline_to_br }}</p>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "TKD Propriedades",
+  "name": "TKD Product Properties",
   "tag": "section",
-  "class": "section-tkd-product-properties",
   "settings": [
     {
       "type": "text",
-      "id": "window_title",
-      "label": "Título da janela",
-      "default": "PROPERTIES.INF"
-    },
-    {
-      "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "\/\/ METADATA"
+      "label": "Rótulo",
+      "default": "What's inside"
     },
     {
       "type": "text",
-      "id": "royalty_sales_text",
-      "label": "Royalty-Free (Sales)",
-      "default": "Yes"
+      "id": "royalty_text",
+      "label": "Linha de licença",
+      "default": "100% royalty-free"
     },
     {
-      "type": "text",
-      "id": "royalty_placements_text",
-      "label": "Royalty-Free (Placements)",
-      "default": "No — clearance required"
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Mostrar tags do produto",
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "show_description",
-      "label": "Mostrar descrição do produto abaixo da tabela",
+      "label": "Mostrar descrição do produto",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "download_title",
+      "label": "Título das instruções de download",
+      "default": "How to download"
     }
   ]
 }
