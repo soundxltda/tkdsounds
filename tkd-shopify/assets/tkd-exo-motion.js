@@ -58,40 +58,114 @@
   }
 
   /* ------------------------------------------------------------
-   * 5) REVEAL ON SCROLL (+ stagger em grids)
+   * 5) REVEAL ACOPLADO AO SCROLL (estilo Exo Audio)
+   * Em vez de um fade único disparado por observer, cada elemento
+   * tem um "progresso" em função da posição do scroll, suavizado
+   * com lerp: os blocos ACOMPANHAM a rolagem deslizando pra cima
+   * até assentar — rolou devagar, entram devagar; rolou rápido,
+   * deslizam com um atraso curto e assentam. Scroll segue nativo.
    * ---------------------------------------------------------- */
+  var scrubItems = [];
+  var scrubRunning = false;
+
+  function collectScrubTargets() {
+    var els = document.querySelectorAll('.reveal:not([data-tkd-scrub]), .reveal-stagger .reveal-item:not([data-tkd-scrub])');
+    els.forEach(function (el) {
+      el.setAttribute('data-tkd-scrub', '');
+      // dentro de marquee os cards são sempre visíveis (os clones nunca
+      // seriam observados) — entrega o estado final direto
+      if (el.closest('.tkd-marquee')) {
+        el.classList.add('revealed', 'is-in');
+        return;
+      }
+      // neutraliza o sistema antigo (classe .revealed do tkd-theme.js
+      // da loja) — o estilo inline do motor manda até o fim
+      el.classList.add('revealed');
+      el.style.transition = 'none';
+      // stagger espacial: irmãos na mesma fileira entram em cascata
+      var off = 0;
+      if (el.parentElement) {
+        var sib = el.parentElement.children;
+        var idx = Array.prototype.indexOf.call(sib, el);
+        if (idx > 0) off = (idx % 3) * 0.07;
+      }
+      scrubItems.push({ el: el, p: 0, y: 0, off: off, done: false });
+    });
+  }
+
+  function scrubFrame() {
+    var vh = window.innerHeight;
+    var pending = false;
+
+    scrubItems.forEach(function (it) {
+      if (it.done) return;
+
+      var rect = it.el.getBoundingClientRect();
+      if (rect.height === 0) return; // oculto (ex.: display none)
+
+      var top = rect.top - it.y; // remove o translate aplicado pelo motor
+      var raw = (vh * 0.95 - top) / (vh * 0.5) - it.off;
+      raw = Math.max(0, Math.min(1, raw));
+      // acompanha o scroll na entrada; passado 35% da janela, completa
+      // sozinho — nada fica estacionado semi-transparente na tela
+      if (raw > 0.35) raw = 1;
+
+      // só mantém o loop acordado enquanto algo estiver em movimento;
+      // itens parados fora da tela esperam o próximo scroll
+      if (Math.abs(raw - it.p) > 0.001) pending = true;
+
+      it.p += (raw - it.p) * 0.16; // glide: persegue o alvo com suavização
+
+      if (it.p > 0.995 && raw >= 1) {
+        it.done = true;
+        it.el.style.opacity = '';
+        it.el.style.transform = '';
+        it.el.style.transition = '';
+        it.el.classList.add('is-in');
+        return;
+      }
+
+      var eased = 1 - Math.pow(1 - it.p, 3);
+      var ty = (1 - eased) * 56;
+      it.y = ty;
+      it.el.style.opacity = Math.min(1, eased * 1.08).toFixed(3);
+      it.el.style.transform = 'translate3d(0, ' + ty.toFixed(2) + 'px, 0)';
+    });
+
+    if (pending) {
+      requestAnimationFrame(scrubFrame);
+    } else {
+      scrubRunning = false;
+    }
+  }
+
+  function wakeScrub() {
+    if (scrubRunning) return;
+    scrubRunning = true;
+    requestAnimationFrame(scrubFrame);
+  }
+
   function initReveal() {
-    var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+    var targets = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-stagger .reveal-item');
     if (!targets.length) return;
 
-    if (reducedMotion || typeof IntersectionObserver !== 'function') {
+    if (reducedMotion) {
       targets.forEach(function (el) {
         el.classList.add('revealed', 'is-in');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
       });
       return;
     }
 
     document.querySelectorAll('.reveal-stagger').forEach(function (group) {
-      var items = group.querySelectorAll('.reveal-item');
-      items.forEach(function (item, i) {
-        item.style.setProperty('--tkd-stagger-i', i);
-      });
+      group.classList.add('is-in');
     });
 
-    var observer = new IntersectionObserver(
-      function (entries, obs) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('revealed', 'is-in');
-          obs.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.18, rootMargin: '0px 0px -10% 0px' }
-    );
-
-    targets.forEach(function (el) {
-      observer.observe(el);
-    });
+    collectScrubTargets();
+    window.addEventListener('scroll', wakeScrub, { passive: true });
+    window.addEventListener('resize', wakeScrub);
+    wakeScrub();
   }
 
   /* ------------------------------------------------------------

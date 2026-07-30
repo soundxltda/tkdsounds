@@ -28,7 +28,13 @@
       {%- endif -%}
     </div>
 
-    <div class="tkd-about__cols">
+    {%- liquid
+      assign has_side = false
+      if section.settings.streams_image != blank or section.settings.body != blank
+        assign has_side = true
+      endif
+    -%}
+    <div class="tkd-about__cols{% unless has_side %} tkd-about__cols--single{% endunless %}">
       {%- if section.settings.show_embed and section.settings.embed_url != blank -%}
         <div class="tkd-about__embed reveal">
           <iframe
@@ -41,6 +47,7 @@
         </div>
       {%- endif -%}
 
+      {%- if has_side -%}
       <div class="tkd-about__side reveal">
         {%- if section.settings.streams_image != blank -%}
           <img
@@ -58,6 +65,7 @@
           <div class="tkd-about__body">{{ section.settings.body }}</div>
         {%- endif -%}
       </div>
+      {%- endif -%}
     </div>
   </div>
 </div>

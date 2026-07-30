@@ -113,7 +113,7 @@
           </span>
           <span class="tkd-hero__featured-text">{{ section.settings.featured_label | escape }}</span>
         </div>
-        {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide' %}
+        {% render 'tkd-pack-card', card_product: section.settings.featured_product, lazy: false, layout: 'wide', custom_tagline: section.settings.featured_description %}
       </div>
     </div>
   {%- endif -%}
@@ -227,6 +227,12 @@
       "type": "product",
       "id": "featured_product",
       "label": "Produto em destaque"
+    },
+    {
+      "type": "textarea",
+      "id": "featured_description",
+      "label": "Breve descrição do kit",
+      "info": "Aparece embaixo do nome no card em destaque."
     },
     {
       "type": "header",

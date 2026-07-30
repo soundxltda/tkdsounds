@@ -16,7 +16,7 @@
   assign titles = card_product.metafields.tkd.preview_titles.value
   assign genre = card_product.metafields.tkd.genre.value
   assign formats = card_product.metafields.tkd.formats.value
-  assign tagline = card_product.metafields.tkd.tagline.value
+  assign tagline = custom_tagline | default: card_product.metafields.tkd.tagline.value
 
   assign psize = 0
   if previews

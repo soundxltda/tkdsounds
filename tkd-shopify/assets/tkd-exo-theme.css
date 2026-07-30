@@ -149,7 +149,7 @@ body::after {
   inset: -5%;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   mix-blend-mode: overlay;
-  opacity: 0.35;
+  opacity: 0.55; /* presença igual à textura do header */
   z-index: 90;
   pointer-events: none;
 }
@@ -318,11 +318,14 @@ h1, h2, h3, h4, h5,
   border: 1.5px solid var(--amber);
   box-shadow: none;
 }
+/* Hover do outline: NÃO troca de cor — só clareia um pouco e faz a
+   mesma animaçãozinha do botão sólido (sobe + glow) */
 .tkd-btn-outline:hover {
-  background: var(--amber);
-  color: #0b1826;
+  background: rgba(95, 178, 230, 0.1);
+  color: #7cc4ef;
+  border-color: #7cc4ef;
   transform: translateY(-2px);
-  box-shadow: 0 0 24px var(--amber-glow);
+  box-shadow: 0 0 20px rgba(95, 178, 230, 0.28);
 }
 .tkd-btn-outline:active { transform: translateY(0); }
 
@@ -526,10 +529,11 @@ h1, h2, h3, h4, h5,
 /* ============================================================
    5) REVEAL ON SCROLL
    ============================================================ */
-/* Reveals discretos e rápidos — presença, não espetáculo */
+/* Estado inicial dos reveals — quem anima é o motor de scrub do
+   tkd-exo-motion.js, acoplado à posição do scroll (estilo Exo) */
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(56px);
   transition: opacity 450ms var(--exo-ease), transform 450ms var(--exo-ease);
 }
 .reveal.revealed { opacity: 1; transform: translateY(0); }
@@ -619,9 +623,15 @@ a.pack-tile:visited,
 .pack-tile__name {
   color: var(--fg);
   font-family: var(--font-tkd-serif);
+  font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+/* No grid de releases o card é grande — nome e valor à altura */
+.tkd-grid-packs .pack-tile__name { font-size: 26px; }
+.tkd-grid-packs .pack-tile__price-btn { font-size: 19px; }
+.tkd-grid-packs .pack-tile__meta { padding: 20px 18px 22px; }
+.tkd-grid-packs .pack-tile__price-row { margin-top: 8px; }
 .pack-tile__genre,
 .pack-tile__fmt {
   color: var(--fg-dim);
@@ -1016,13 +1026,21 @@ a.pack-tile:visited,
 @media screen and (min-width: 750px) {
   .tkd-about__cols { grid-template-columns: 1.5fr 1fr; gap: 36px; }
 }
+/* Sem coluna lateral (texto/foto ainda vazios) a playlist fica
+   centralizada no meio da section */
+.tkd-about__cols--single {
+  grid-template-columns: 1fr;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .tkd-about__embed { margin: 0; }
 .tkd-about__embed iframe {
   display: block;
   width: 100%;
-  border: 1px solid var(--line);
+  border: none; /* só a playlist, sem moldura */
   border-radius: 0;
-  background: var(--surface);
+  background: transparent;
 }
 .tkd-about__streams {
   display: block;

@@ -7,6 +7,7 @@
         "title": "TKD Archives",
         "button1_label": "▶ Browse Archive",
         "button2_label": "Contact",
+        "show_scroll_cue": false,
         "show_strip": true,
         "strip_count": 10,
         "strip_duration": 45,
