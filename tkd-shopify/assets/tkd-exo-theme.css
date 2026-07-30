@@ -356,8 +356,19 @@ h1, h2, h3, h4, h5,
    azul/dourada girando devagar por cima
    ============================================================ */
 .tkd-ambient-bg {
-  position: fixed;
-  inset: -20vh -20vw;
+  /* absolute (não fixed): rola JUNTO com a página em vez de ficar
+     grudada na tela — cobre a abertura e depois some pra cima
+     enquanto o resto do conteúdo passa por cima dela normalmente.
+     altura generosa (~460vh) pra durar o scroll inteiro da cena
+     travada do Hero (título → featured → esteira): como a cena é
+     sticky, o scroll continua rolando por baixo dela — sem essa
+     folga o fundo sumiria no meio da cena, com o conteúdo ainda
+     "grudado" na tela (visual quebrado) */
+  position: absolute;
+  top: -20vh;
+  left: -20vw;
+  right: -20vw;
+  height: 460vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -375,8 +386,15 @@ div.tkd-ambient-bg__photo {
   display: block;
 }
 .tkd-ambient-bg__photo {
+  /* altura FIXA (não inset:0/100%): o container ficou alto (460vh)
+     só pra segurar o scroll da cena travada — sem isso a foto
+     esticaria e o background-size:cover zoomaria numa fatia minúscula
+     dela pra cobrir uma caixa gigante */
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140vh;
   background-size: cover;
   background-position: center 38%;
   filter: blur(6px) saturate(1.05) brightness(0.55);
@@ -388,9 +406,15 @@ div.tkd-ambient-bg__photo {
    brilho central) — garante leitura em QUALQUER parte da página, já
    que a foto é fixa e o conteúdo passa por cima dela ao rolar */
 .tkd-ambient-bg::after {
+  /* mesma altura fixa da foto (140vh): se esticasse pros 460vh do
+     container, o degradê ficaria "esticado" e perderia força bem
+     onde mais precisa — logo em cima da foto/hero */
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140vh;
   background: linear-gradient(180deg, rgba(8, 15, 24, 0.55) 0%, rgba(8, 15, 24, 0.72) 45%, rgba(8, 15, 24, 0.85) 100%);
 }
 div.tkd-ambient-bg__shape {
@@ -398,7 +422,7 @@ div.tkd-ambient-bg__shape {
 }
 .tkd-ambient-bg__shape {
   position: absolute;
-  top: 50%;
+  top: 70vh; /* equivale ao antigo "top: 50%" de quando o container tinha 140vh fixo */
   left: 50%;
   width: min(130vw, 1500px);
   height: min(130vw, 1500px);
