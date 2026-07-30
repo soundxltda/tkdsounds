@@ -203,28 +203,28 @@
       "type": "tkd-faq",
       "blocks": {
         "faq1": {
-          "type": "item",
+          "type": "faq",
           "settings": {
             "question": "IS THIS KIT ROYALTY FREE?",
             "answer": "<p>All sounds and samples in this kit are royalty free under 1,000,000 streams or unless major placement.</p>"
           }
         },
         "faq2": {
-          "type": "item",
+          "type": "faq",
           "settings": {
             "question": "HOW DO I GET THE FILES?",
             "answer": "<p>After purchasing, you're taken to a page where you can download the files, and you will also receive an email with a link to download all the files. The link in your email never expires. If you run into any issues, you can contact us.</p>"
           }
         },
         "faq3": {
-          "type": "item",
+          "type": "faq",
           "settings": {
             "question": "DOES IT WORK IN ANY DAW?",
             "answer": "<p>Yes, the files within the kit are either audio files or MIDI files that can be opened in any DAW.</p>"
           }
         },
         "faq4": {
-          "type": "item",
+          "type": "faq",
           "settings": {
             "question": "WHAT'S YOUR REFUND POLICY?",
             "answer": "<p>Since this is a digital product, it cannot be returned or refunded.</p>"
