@@ -357,25 +357,26 @@ h1, h2, h3, h4, h5,
    ============================================================ */
 .tkd-ambient-bg {
   /* absolute (não fixed): rola JUNTO com a página em vez de ficar
-     grudada na tela — cobre a abertura e depois some pra cima
-     enquanto o resto do conteúdo passa por cima dela normalmente.
-     altura generosa (~460vh) pra durar o scroll inteiro da cena
-     travada do Hero (título → featured → esteira): como a cena é
-     sticky, o scroll continua rolando por baixo dela — sem essa
-     folga o fundo sumiria no meio da cena, com o conteúdo ainda
-     "grudado" na tela (visual quebrado) */
+     grudada na tela. top E bottom com -20vh (sem height fixo) fazem
+     esse container esticar sozinho até a altura real da página
+     inteira (ele mora dentro do body, que tem position:relative) —
+     assim a foto de fundo dura até o rodapé, não importa quão longa
+     a página seja. */
   position: absolute;
   top: -20vh;
+  bottom: -20vh;
   left: -20vw;
   right: -20vw;
-  height: 460vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
 }
-/* Foto de fundo: escalada e desfocada só nela (o filter não vaza pro
-   conteúdo porque ele mora em outra camada, com z-index acima) —
-   scale(1.1) esconde a borda amaciada do blur nas margens.
+/* Foto de fundo: repete verticalmente (repeat-y) do topo ao rodapé,
+   em vez de esticar uma cópia única (que ficaria zoomada/distorcida
+   numa página tão mais alta que larga). background-size: 100% auto
+   mantém a proporção original do quadrado da foto, só escalando pela
+   largura. O blur/escurecido é só nesta div (não vaza pro conteúdo,
+   que mora em outra camada, com z-index acima).
    display:block explícito é NECESSÁRIO: o base.css da loja tem uma
    regra genérica "div:empty { display: none }" que, por não ter
    filhos, esconde essa div (e por tabela, a .tkd-ambient-bg__shape
@@ -386,36 +387,25 @@ div.tkd-ambient-bg__photo {
   display: block;
 }
 .tkd-ambient-bg__photo {
-  /* altura FIXA (não inset:0/100%): o container ficou alto (460vh)
-     só pra segurar o scroll da cena travada — sem isso a foto
-     esticaria e o background-size:cover zoomaria numa fatia minúscula
-     dela pra cobrir uma caixa gigante */
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 140vh;
-  background-size: cover;
-  background-position: center 38%;
+  inset: 0;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: center top;
   filter: blur(6px) saturate(1.05) brightness(0.55);
   transform: scale(1.1);
   opacity: 0.75;
 }
-/* Véu escuro por cima da foto: sem isso, textos claros perdem
-   contraste quando caem sobre um trecho mais claro da imagem (ex.: o
-   brilho central) — garante leitura em QUALQUER parte da página, já
-   que a foto é fixa e o conteúdo passa por cima dela ao rolar */
+/* Véu escuro uniforme por cima da foto (cor sólida, não degradê):
+   sem isso, textos claros perdem contraste quando caem sobre um
+   trecho mais claro da imagem — como a foto se repete a página
+   inteira, o véu precisa ser igual em qualquer altura, não só perto
+   do topo */
 .tkd-ambient-bg::after {
-  /* mesma altura fixa da foto (140vh): se esticasse pros 460vh do
-     container, o degradê ficaria "esticado" e perderia força bem
-     onde mais precisa — logo em cima da foto/hero */
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 140vh;
-  background: linear-gradient(180deg, rgba(8, 15, 24, 0.55) 0%, rgba(8, 15, 24, 0.72) 45%, rgba(8, 15, 24, 0.85) 100%);
+  inset: 0;
+  background: rgba(8, 15, 24, 0.62);
 }
 div.tkd-ambient-bg__shape {
   display: block;
