@@ -2,10 +2,10 @@
    TKD SOUNDS — camada "VAULT" (retrofuturista Fallout, azul-marinho)
    Carregado DEPOIS de tkd-theme.css. A ideia da camada:
 
-   · VISUAL vintage — fontes retrô do tema original (stencil militar,
-     mono de terminal, typewriter), paleta Vault-Tec: azul-marinho
-     escuro + creme de papel envelhecido + dourado de macacão vault,
-     cantos quase retos, scanlines/CRT, stamps e ticks de dossiê.
+   · VISUAL vintage — calibrado pela capa "Lost Echoes": aço
+     azul-marinho + branco-osso granulado + azul-céu de acento,
+     título em sans condensada de pôster (Anton), labels técnicos
+     estilo Eurostile (Michroma), mono de terminal, scanlines/CRT.
 
    · MOTION futurista — tudo da camada de motion continua (Lenis
      smooth scroll, reveal on scroll, stagger, contadores, marquees
@@ -17,37 +17,45 @@
    ============================================================ */
 
 :root {
-  /* Paleta Vault-Tec — aço azul-marinho + papel envelhecido + dourado */
-  --bg: #0d1a2b;
-  --bg-2: #091220;
-  --surface: #142942;
-  --surface-2: #1b3355;
-  --surface-3: #274672;
+  /* Tipografia calibrada pela capa "Lost Echoes": título em sans
+     condensada de pôster (Anton) e labels técnicos estilo Eurostile
+     (Michroma, como o "PRODUCED BY TKD"). Mono/pixel/typewriter
+     continuam vindo do tkd-theme.css. */
+  --font-tkd-serif: "Anton", "Oxanium", Impact, sans-serif;
+  --font-tkd-display: "Michroma", "Oxanium", sans-serif;
 
-  --fg: #eee3c4;
-  --fg-mid: rgba(238, 227, 196, 0.82);
-  --fg-dim: rgba(238, 227, 196, 0.6);
-  --fg-ghost: rgba(238, 227, 196, 0.26);
+  /* Paleta da capa — aço azul-marinho + branco-osso + azul-céu */
+  --bg: #122233;
+  --bg-2: #0b1826;
+  --surface: #1a2f45;
+  --surface-2: #223c58;
+  --surface-3: #2f5174;
 
-  /* Dourado vault — acento principal (botões, preço, player ativo) */
-  --amber: #f3b73f;
-  --amber-glow: rgba(243, 183, 63, 0.38);
-  --mustard: #cfa435;
-  --olive: #93a06b;
-  --oxide: #b07a3f;
+  --fg: #e6dfd3;
+  --fg-mid: rgba(230, 223, 211, 0.82);
+  --fg-dim: rgba(230, 223, 211, 0.6);
+  --fg-ghost: rgba(230, 223, 211, 0.26);
+
+  /* Azul-céu da capa — acento principal (botões, preço, player ativo).
+     "--amber" é o nome histórico da variável de acento no tema todo. */
+  --amber: #5fb2e6;
+  --amber-glow: rgba(95, 178, 230, 0.4);
+  --mustard: #8fb6d4;
+  --olive: #7d94a6;
+  --oxide: #5d7f9c;
   --phosphor: #7ed695;
   --phosphor-glow: rgba(126, 214, 149, 0.32);
   --rust: #d1704f;
 
-  --line: rgba(238, 227, 196, 0.16);
-  --line-h: rgba(238, 227, 196, 0.32);
+  --line: rgba(230, 223, 211, 0.16);
+  --line-h: rgba(230, 223, 211, 0.32);
 
   /* Tokens da camada — cantos discretos (hardware de vault, não app) */
   --exo-radius-sm: 3px;
   --exo-radius-md: 6px;
   --exo-radius-lg: 10px;
   --exo-shadow-card: 0 2px 0 rgba(0, 0, 0, 0.28), 0 16px 34px -18px rgba(0, 0, 0, 0.6);
-  --exo-shadow-card-hover: 0 4px 14px rgba(0, 0, 0, 0.35), 0 26px 50px -20px rgba(0, 0, 0, 0.65), 0 0 24px rgba(243, 183, 63, 0.12);
+  --exo-shadow-card-hover: 0 4px 14px rgba(0, 0, 0, 0.35), 0 26px 50px -20px rgba(0, 0, 0, 0.65), 0 0 24px rgba(95, 178, 230, 0.14);
   --exo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -56,34 +64,39 @@
 body,
 [class^="color-scheme"],
 [class*=" color-scheme"] {
-  --color-background: 13, 26, 43;
-  --gradient-background: #0d1a2b;
-  --color-foreground: 238, 227, 196;
-  --color-background-contrast: 39, 70, 114;
+  --color-background: 18, 34, 51;
+  --gradient-background: #122233;
+  --color-foreground: 230, 223, 211;
+  --color-background-contrast: 47, 81, 116;
   --color-shadow: 0, 0, 0;
-  --color-button: 243, 183, 63;
-  --color-button-text: 13, 20, 32;
-  --color-secondary-button: 20, 41, 66;
-  --color-secondary-button-text: 238, 227, 196;
-  --color-link: 238, 227, 196;
-  --color-badge-foreground: 238, 227, 196;
-  --color-badge-background: 27, 51, 85;
-  --color-badge-border: 243, 183, 63;
+  --color-button: 95, 178, 230;
+  --color-button-text: 11, 24, 38;
+  --color-secondary-button: 26, 47, 69;
+  --color-secondary-button-text: 230, 223, 211;
+  --color-link: 230, 223, 211;
+  --color-badge-foreground: 230, 223, 211;
+  --color-badge-background: 34, 60, 88;
+  --color-badge-border: 95, 178, 230;
 }
 
 html { background: var(--bg); }
 
-/* Fundo: glow dourado de monitor no topo + vinheta + grain de papel
-   levemente azulado (o grain do tkd-theme.css era âmbar/marrom) */
+/* Fundo como o da capa: glow frio de "orbe" no topo + vinheta +
+   grain de filme levemente azulado */
 body {
   position: relative;
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse at 50% 36%, rgba(243, 183, 63, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 36%, rgba(150, 200, 240, 0.055) 0%, transparent 55%),
     radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 60%),
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.16 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-attachment: fixed;
   background-size: auto, auto, 260px 260px;
+}
+
+/* Glow central do CRT recolorido (era âmbar fixo no tkd-theme.css) */
+.crt-glow {
+  background: radial-gradient(ellipse at 50% 45%, rgba(95, 178, 230, 0.05) 0%, transparent 60%);
 }
 
 /* Overlays CRT ficam LIGADOS no visual vault — só levemente
@@ -98,8 +111,8 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--amber); }
 
 /* ============================================================
-   1) TIPOGRAFIA — stencil militar nos títulos, terminal no resto
-   (as famílias vêm do tkd-theme.css; aqui só reforça hierarquia)
+   1) TIPOGRAFIA — Anton (pôster) nos títulos, Michroma nos labels,
+   terminal no resto (mono/pixel/typewriter vêm do tkd-theme.css)
    ============================================================ */
 h1, h2, h3, h4,
 .tkd-hero__title,
@@ -111,83 +124,71 @@ h1, h2, h3, h4,
 .tkd-about__title,
 .tkd-related__title {
   font-family: var(--font-tkd-serif);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 400; /* Anton só tem 400 — 700 geraria faux-bold borrado */
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 .pack-tile__name,
 .pack-tile__fallback-name {
-  font-weight: 700;
+  font-weight: 400;
 }
 
-/* Aberração cromática dos títulos, recolorida pro dourado/fósforo */
+/* Aberração cromática dos títulos, recolorida pro azul da capa */
 .chroma {
   text-shadow:
-    0.6px 0 0 rgba(243, 183, 63, 0.45),
-    -0.6px 0 0 rgba(126, 214, 149, 0.3);
+    0.6px 0 0 rgba(95, 178, 230, 0.5),
+    -0.6px 0 0 rgba(230, 223, 211, 0.3);
 }
 
-/* Eyebrows de terminal — dourado vault, tracking largo */
+/* Eyebrows — Michroma azul-céu, como o "PRODUCED BY TKD" da capa */
 .tkd-eyebrow,
 .tkd-eyebrow.text-amber {
-  font-family: var(--font-tkd-mono);
-  font-size: 11px;
+  font-family: var(--font-tkd-display);
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.2em;
   color: var(--amber);
 }
 
-/* Botões — chapa de vault: bevel retrô, mas com motion suave */
+/* Botões — a pill da capa ("PHRASE KIT - DRUM KIT - SAMPLE PACK"):
+   formato pílula, Michroma, flat, azul-céu */
 .tkd-btn {
-  border-radius: var(--exo-radius-sm);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  border-radius: 999px;
+  font-family: var(--font-tkd-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   transition: transform 200ms var(--exo-ease), box-shadow 200ms var(--exo-ease), background-color 200ms var(--exo-ease), color 200ms var(--exo-ease), border-color 200ms var(--exo-ease), opacity 200ms var(--exo-ease);
 }
 .tkd-btn-solid {
   background: var(--amber);
-  color: #0d1420; /* cor fixa no antigo: #1a1006 (marrom) */
-  border: 1px solid #8a6414; /* cor fixa no antigo: #6b4a10 */
-  box-shadow:
-    inset 1px 1px 0 rgba(255, 236, 190, 0.55),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.3),
-    2px 2px 0 rgba(0, 0, 0, 0.5);
+  color: #0b1826; /* cor fixa no antigo: #1a1006 (marrom) */
+  border: 1px solid rgba(11, 24, 38, 0.35); /* cor fixa no antigo: #6b4a10 */
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
 }
 .tkd-btn-solid:hover {
-  background: #f7c65e; /* cor fixa no antigo: #f2b64a */
-  color: #0d1420;
-  transform: translate(-1px, -1px);
-  box-shadow:
-    inset 1px 1px 0 rgba(255, 236, 190, 0.55),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.3),
-    3px 3px 0 rgba(0, 0, 0, 0.5),
-    0 0 22px var(--amber-glow);
+  background: #7cc4ef; /* cor fixa no antigo: #f2b64a */
+  color: #0b1826;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35), 0 0 24px var(--amber-glow);
 }
 .tkd-btn-solid:active {
-  transform: translate(1px, 1px);
-  box-shadow:
-    inset -1px -1px 0 rgba(255, 236, 190, 0.4),
-    inset 1px 1px 0 rgba(0, 0, 0, 0.35);
+  transform: translateY(0);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 .tkd-btn-outline {
-  background: var(--surface);
-  color: var(--fg);
-  border: 1px solid var(--line-h);
-  box-shadow:
-    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.4),
-    2px 2px 0 rgba(0, 0, 0, 0.45);
+  background: transparent;
+  color: var(--amber);
+  border: 1.5px solid var(--amber);
+  box-shadow: none;
 }
 .tkd-btn-outline:hover {
-  color: var(--amber);
-  border-color: var(--amber);
-  transform: translate(-1px, -1px);
-  box-shadow:
-    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
-    inset -1px -1px 0 rgba(0, 0, 0, 0.4),
-    3px 3px 0 rgba(0, 0, 0, 0.45);
+  background: var(--amber);
+  color: #0b1826;
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px var(--amber-glow);
 }
-.tkd-btn-outline:active { transform: translate(1px, 1px); }
+.tkd-btn-outline:active { transform: translateY(0); }
 
 /* Janelas "win" — painel de terminal vault (mantém o bevel retrô) */
 .win {
@@ -195,7 +196,7 @@ h1, h2, h3, h4,
   border: 1px solid var(--line-h);
   border-radius: var(--exo-radius-sm);
   box-shadow:
-    inset 1px 1px 0 rgba(238, 227, 196, 0.08),
+    inset 1px 1px 0 rgba(230, 223, 211, 0.08),
     inset -1px -1px 0 rgba(0, 0, 0, 0.5),
     3px 3px 0 rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -229,9 +230,9 @@ h1, h2, h3, h4,
   height: min(130vw, 1500px);
   margin: calc(min(130vw, 1500px) / -2) 0 0 calc(min(130vw, 1500px) / -2);
   background:
-    radial-gradient(circle at 30% 30%, rgba(90, 140, 220, 0.11), transparent 55%),
-    radial-gradient(circle at 70% 60%, rgba(243, 183, 63, 0.06), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(238, 227, 196, 0.04), transparent 60%);
+    radial-gradient(circle at 30% 30%, rgba(90, 140, 220, 0.12), transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(95, 178, 230, 0.07), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(230, 223, 211, 0.04), transparent 60%);
   filter: blur(90px);
   animation: tkd-ambient-spin 110s linear infinite;
   will-change: transform;
@@ -469,7 +470,8 @@ h1, h2, h3, h4,
 .pack-tile .pack-art::after { display: none; } /* scanline por-card sai (a global cobre) */
 .pack-tile__meta { border-radius: 0 0 var(--exo-radius-md) var(--exo-radius-md); overflow: hidden; }
 
-/* Badge de classificação atravessando a borda de cima (estilo Exo) */
+/* Badge de classificação atravessando a borda de cima (estilo Exo),
+   no formato pill da capa */
 .pack-tile__badge {
   position: absolute;
   top: 0;
@@ -480,20 +482,20 @@ h1, h2, h3, h4,
   align-items: center;
   white-space: nowrap;
   padding: 5px 12px;
-  border-radius: var(--exo-radius-sm);
+  border-radius: 999px;
   background: var(--bg-2);
-  color: var(--fg);
-  border: 1px solid var(--line-h);
-  font-family: var(--font-tkd-mono);
-  font-size: 10px;
-  font-weight: 700;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  font-family: var(--font-tkd-display);
+  font-size: 9px;
+  font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .pack-tile__badge--amber {
   background: var(--amber);
-  color: #0d1420;
-  border: 1px solid #8a6414;
+  color: #0b1826;
+  border: 1px solid rgba(11, 24, 38, 0.35);
 }
 
 .pack-tile__hover-layer {
@@ -538,8 +540,8 @@ h1, h2, h3, h4,
   justify-content: center;
   border-radius: 999px;
   background: var(--amber);
-  color: #0d1420;
-  border: 1px solid #8a6414;
+  color: #0b1826;
+  border: none;
   transform: scale(0.9);
   opacity: 0;
   transition: transform 250ms var(--exo-ease), opacity 250ms var(--exo-ease), background-color 250ms var(--exo-ease);
@@ -549,7 +551,7 @@ h1, h2, h3, h4,
   transform: scale(1);
   opacity: 1;
 }
-.pack-tile__hover-play:hover { background: #f7c65e; }
+.pack-tile__hover-play:hover { background: #7cc4ef; }
 
 .pack-tile__price-btn { border-radius: var(--exo-radius-sm); }
 .pack-tile__price-row {
@@ -770,7 +772,7 @@ cart-drawer .drawer__inner {
 .tkd-faq__item[open] .tkd-faq__toggle {
   transform: rotate(45deg);
   background: var(--amber);
-  color: #0d1420;
+  color: #0b1826;
   border-color: var(--amber);
 }
 .tkd-faq__a-inner {
