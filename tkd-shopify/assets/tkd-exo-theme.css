@@ -886,7 +886,9 @@ a.pack-tile:visited,
   transition: opacity 300ms var(--exo-ease);
 }
 .pack-tile:hover .pack-tile__hover-layer,
-.pack-tile:focus-within .pack-tile__hover-layer {
+.pack-tile:focus-within .pack-tile__hover-layer,
+.tkd-strip-card:hover .pack-tile__hover-layer,
+.tkd-strip-card:focus-within .pack-tile__hover-layer {
   opacity: 1;
 }
 .pack-tile__hover-info {
@@ -919,7 +921,9 @@ a.pack-tile:visited,
   transition: transform 250ms var(--exo-ease), opacity 250ms var(--exo-ease), background-color 250ms var(--exo-ease);
 }
 .pack-tile:hover .pack-tile__hover-play,
-.pack-tile:focus-within .pack-tile__hover-play {
+.pack-tile:focus-within .pack-tile__hover-play,
+.tkd-strip-card:hover .pack-tile__hover-play,
+.tkd-strip-card:focus-within .pack-tile__hover-play {
   transform: scale(1);
   opacity: 1;
 }

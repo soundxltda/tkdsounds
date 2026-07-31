@@ -109,6 +109,28 @@
                 style="--tkd-marquee-duration: {{ section.settings.strip_duration }}s; --tkd-marquee-card-w: 190px;"
               >
                 {%- for product in strip_col.products limit: section.settings.strip_count -%}
+                  {%- liquid
+                    assign strip_previews = product.metafields.tkd.preview_files.value
+                    assign strip_titles = product.metafields.tkd.preview_titles.value
+                    assign strip_psize = 0
+                    if strip_previews
+                      assign strip_psize = strip_previews.size
+                    endif
+                    assign strip_midx = product.metafields.tkd.master_preview_index.value | default: 0 | at_least: 0
+                    if strip_midx >= strip_psize
+                      assign strip_midx = 0
+                    endif
+                    assign strip_preview_url = ''
+                    assign strip_preview_name = product.title
+                    if strip_psize > 0
+                      assign strip_preview_file = strip_previews[strip_midx]
+                      assign strip_preview_url = strip_preview_file.url
+                      if strip_titles[strip_midx] != blank
+                        assign strip_preview_name = strip_titles[strip_midx]
+                      endif
+                    endif
+                    assign strip_accent = product.metafields.tkd.accent_color.value | default: '#5fb2e6'
+                  -%}
                   <div class="tkd-marquee__card">
                     <a href="{{ product.url }}" class="tkd-strip-card">
                       <div class="tkd-strip-card__art">
@@ -122,6 +144,26 @@
                               loading: 'eager',
                               alt: product.featured_image.alt
                           }}
+                        {%- endif -%}
+                        {%- if strip_preview_url != blank -%}
+                          <div class="pack-tile__hover-layer">
+                            <button
+                              type="button"
+                              class="audio-play-btn pack-tile__hover-play"
+                              data-tkd-play
+                              data-track-id="{{ product.id }}-preview"
+                              data-track-src="{{ strip_preview_url }}"
+                              data-track-name="{{ strip_preview_name | escape }}"
+                              data-pack-name="{{ product.title | escape }}"
+                              data-pack-url="{{ product.url }}"
+                              data-accent="{{ strip_accent }}"
+                              {% if product.featured_image %}data-cover="{{ product.featured_image | image_url: width: 144 }}"{% endif %}
+                              aria-label="Play {{ product.title | escape }}"
+                            >
+                              <svg class="tkd-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                              <svg class="tkd-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+                            </button>
+                          </div>
                         {%- endif -%}
                       </div>
                       <div class="tkd-strip-card__name">{{ product.title | escape }}</div>
