@@ -123,11 +123,16 @@
                     assign strip_preview_url = ''
                     assign strip_preview_name = product.title
                     if strip_psize > 0
-                      assign strip_preview_file = strip_previews[strip_midx]
-                      assign strip_preview_url = strip_preview_file.url
-                      if strip_titles[strip_midx] != blank
-                        assign strip_preview_name = strip_titles[strip_midx]
-                      endif
+                      for strip_preview_file in strip_previews
+                        if forloop.index0 == strip_midx
+                          assign strip_preview_url = strip_preview_file.url
+                        endif
+                      endfor
+                      for strip_preview_title in strip_titles
+                        if forloop.index0 == strip_midx and strip_preview_title != blank
+                          assign strip_preview_name = strip_preview_title
+                        endif
+                      endfor
                     endif
                     assign strip_accent = product.metafields.tkd.accent_color.value | default: '#5fb2e6'
                   -%}

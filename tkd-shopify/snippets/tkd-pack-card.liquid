@@ -28,14 +28,23 @@
     assign midx = 0
   endif
 
+  # Listas de metafield (list.file_reference / list.single_line_text_field) não
+  # suportam indexação por posição (previews[midx], .first etc. retornam nil) —
+  # só percorrem via for. Por isso o preview escolhido sai de um loop com
+  # forloop.index0, em vez de acesso direto por índice.
   assign preview_url = ''
   assign preview_name = card_product.title
   if psize > 0
-    assign preview_file = previews[midx]
-    assign preview_url = preview_file.url
-    if titles[midx] != blank
-      assign preview_name = titles[midx]
-    endif
+    for preview_file in previews
+      if forloop.index0 == midx
+        assign preview_url = preview_file.url
+      endif
+    endfor
+    for preview_title in titles
+      if forloop.index0 == midx and preview_title != blank
+        assign preview_name = preview_title
+      endif
+    endfor
   endif
 
   if lazy == false
@@ -43,6 +52,8 @@
   else
     assign img_loading = 'lazy'
   endif
+-%}
+{%- liquid
 
   # Badge (opcional): via tags "bestseller" / "new" — sem precisar de metafield novo
   assign badge_text = ''
