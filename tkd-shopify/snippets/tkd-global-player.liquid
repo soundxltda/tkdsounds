@@ -7,9 +7,8 @@
 <div class="tkd-global-player" data-tkd-player role="region" aria-label="Global audio player" hidden>
   <div class="tkd-global-player__inner">
     <div class="tkd-global-player__top">
-      <button type="button" class="audio-play-btn" data-tkd-player-toggle aria-label="Play">
-        <svg class="tkd-icon-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="tkd-icon-pause" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      <button type="button" class="audio-play-btn tkd-global-player__toggle" data-tkd-player-toggle aria-label="Play">
+        <svg class="tkd-icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
       </button>
 
       <div class="tkd-global-player__cover" data-tkd-player-cover aria-hidden="true"></div>
@@ -35,10 +34,10 @@
         >
       </div>
 
-      <a class="tkd-btn tkd-btn-solid tkd-global-player__buy" data-tkd-player-buy href="#" hidden>
+      <button type="button" class="tkd-btn tkd-btn-solid tkd-global-player__buy" data-tkd-player-buy hidden>
         <span class="tkd-global-player__buy-full">{{ settings.tkd_player_buy_label | default: '▶ BUY NOW' }}</span>
         <span class="tkd-global-player__buy-short">BUY</span>
-      </a>
+      </button>
 
       <button type="button" class="tkd-global-player__close" data-tkd-player-close aria-label="Close player" title="Close">
         &times;
@@ -54,3 +53,13 @@
     </div>
   </div>
 </div>
+
+{%- if settings.cart_type == 'drawer' -%}
+  {%- # tkd-header.liquid substitui sections/header.liquid, que é quem
+      normalmente carrega este script — sem ele, o <cart-drawer> (já
+      renderizado em theme.liquid) nunca vira um popup: o clique no
+      ícone do carrinho só navegava pra /cart. Carregado aqui (script
+      defer, então a ordem no body não importa) por ser um arquivo que
+      atualiza de forma confiável neste tema. -%}
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

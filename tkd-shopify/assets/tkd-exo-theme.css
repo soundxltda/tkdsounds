@@ -449,6 +449,15 @@ div.tkd-ambient-bg__shape {
   position: relative;
   z-index: 1;
 }
+/* O header e #MainContent empatavam em z-index:1 (regra acima), então
+   quem ganhava era só quem vinha depois no DOM — o #MainContent, que
+   contém a cena presa do hero. Resultado: perto do topo da página, a
+   camada do hero roubava clique do header (nav, cart) mesmo com o
+   header sticky por cima visualmente. O header precisa de fato vencer. */
+.shopify-section-group-header-group {
+  position: relative;
+  z-index: 2;
+}
 
 /* ============================================================
    3b) CENA GRUDADA DA ABERTURA (estilo Exo Audio)
@@ -881,7 +890,7 @@ a.pack-tile:visited,
   gap: 12px;
   padding: 16px;
   text-align: center;
-  background: linear-gradient(to top, rgba(9, 18, 32, 0.9), rgba(9, 18, 32, 0.4) 55%, transparent);
+  background: rgba(9, 18, 32, 0.72);
   opacity: 0;
   transition: opacity 300ms var(--exo-ease);
 }
@@ -928,6 +937,19 @@ a.pack-tile:visited,
   opacity: 1;
 }
 .pack-tile__hover-play:hover { background: #7cc4ef; }
+
+/* Toggle da barra global: mesmo botão circular azul do hover dos
+   cards (só play, sem ícone de pause) — "o mesmo botão" em todo lugar */
+.tkd-global-player__toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #0b1826;
+  border: none;
+  flex-shrink: 0;
+}
+.tkd-global-player__toggle:hover { background: #7cc4ef; }
 
 .pack-tile__price-btn { border-radius: var(--exo-radius-sm); }
 .pack-tile__price-row {
@@ -1163,9 +1185,10 @@ a.pack-tile:visited,
 .tkd-about__streams {
   display: block;
   width: 100%;
+  max-width: 220px;
   height: auto;
   border: 1px solid var(--line);
-  margin-bottom: 16px;
+  margin: 16px auto 0;
 }
 .tkd-about__side .tkd-about__body {
   font-family: var(--font-tkd-mono);

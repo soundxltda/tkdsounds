@@ -5,7 +5,7 @@
    Contrato de DOM (semeado pelas sections/snippets Liquid):
    - [data-tkd-play]      botão de faixa; carrega data-track-id, data-track-src,
                           data-track-name, data-pack-name, data-pack-url,
-                          data-cover, data-accent
+                          data-variant-id, data-cover, data-accent
    - [data-tkd-row]       linha clicável que contém um [data-tkd-play]
    - [data-tkd-waveform]  container de waveform; data-for=<track-id|@current>,
                           data-bars=N, data-seek=always|playing
@@ -17,6 +17,22 @@
    duração/volume persistido em localStorage — como no site original. */
 (function () {
   'use strict';
+
+  /* tkd-header.liquid substitui sections/header.liquid, que é quem
+     normalmente carrega cart-drawer.js (o script que registra o
+     <cart-drawer> como popup em vez de navegar pra /cart). Injeta o
+     script a partir da própria URL deste arquivo, sem depender de
+     outra tag <script> no tema. */
+  (function loadCartDrawerScript() {
+    if (document.querySelector('script[src*="cart-drawer.js"]')) return;
+    var selfSrc = document.currentScript ? document.currentScript.src : '';
+    var cartDrawerSrc = selfSrc.replace(/tkd-player\.js(\?.*)?$/, 'cart-drawer.js');
+    if (!cartDrawerSrc || cartDrawerSrc === selfSrc) return;
+    var s = document.createElement('script');
+    s.src = cartDrawerSrc;
+    s.defer = true;
+    document.head.appendChild(s);
+  })();
 
   var audio = null;
   var currentId = null;      /* faixa tocando agora (null = pausado/nada) */
@@ -141,6 +157,7 @@
       trackName: btn.dataset.trackName || '',
       packName: btn.dataset.packName || '',
       packUrl: btn.dataset.packUrl || '',
+      variantId: btn.dataset.variantId || '',
       cover: btn.dataset.cover || '',
       accent: btn.dataset.accent || '#e6a635'
     };
@@ -193,6 +210,49 @@
     }
   }
 
+  /* ---------- Buy now (adiciona ao carrinho a faixa tocando) ---------- */
+
+  function addCurrentToCart(buyBtn) {
+    if (!currentInfo || !currentInfo.variantId || buyBtn.dataset.loading === 'true') return;
+    buyBtn.dataset.loading = 'true';
+    buyBtn.setAttribute('aria-disabled', 'true');
+
+    var cartEl = document.querySelector('cart-drawer') || document.querySelector('cart-notification');
+    var formData = new FormData();
+    formData.append('id', currentInfo.variantId);
+    formData.append('quantity', '1');
+    if (cartEl) {
+      formData.append('sections', cartEl.getSectionsToRender().map(function (s) { return s.id; }));
+      formData.append('sections_url', window.location.pathname);
+      cartEl.setActiveElement(document.activeElement);
+    }
+
+    var config = fetchConfig('javascript');
+    config.headers['X-Requested-With'] = 'XMLHttpRequest';
+    delete config.headers['Content-Type'];
+    config.body = formData;
+
+    fetch(window.routes.cart_add_url, config)
+      .then(function (response) { return response.json(); })
+      .then(function (response) {
+        if (response.status) {
+          console.warn('[tkd-player] add to cart failed', response.description || response.message);
+          return;
+        }
+        if (cartEl) {
+          cartEl.renderContents(response);
+          cartEl.classList.remove('is-empty');
+        } else {
+          window.location = window.routes.cart_url;
+        }
+      })
+      .catch(function (e) { console.error('[tkd-player] add to cart error', e); })
+      .finally(function () {
+        buyBtn.dataset.loading = 'false';
+        buyBtn.removeAttribute('aria-disabled');
+      });
+  }
+
   /* ---------- Render ---------- */
 
   function render() {
@@ -201,14 +261,11 @@
     var dur = audio && isFinite(audio.duration) ? audio.duration : 0;
     var progress = dur > 0 && currentInfo ? curTime / dur : 0;
 
-    /* botões de faixa */
+    /* botões de faixa — ícone é sempre o triângulo de play; só a cor
+       (via data-active) marca qual card está tocando agora */
     document.querySelectorAll('[data-tkd-play]').forEach(function (btn) {
       var active = playing && btn.dataset.trackId === currentId;
       btn.dataset.active = active ? 'true' : 'false';
-      var iconPlay = btn.querySelector('.tkd-icon-play');
-      var iconPause = btn.querySelector('.tkd-icon-pause');
-      if (iconPlay) iconPlay.hidden = active;
-      if (iconPause) iconPause.hidden = !active;
       if (btn.hasAttribute('aria-label')) {
         var name = btn.dataset.trackName || 'track';
         btn.setAttribute('aria-label', (active ? 'Pause ' : 'Play ') + name);
@@ -267,11 +324,7 @@
 
         var toggle = bar.querySelector('[data-tkd-player-toggle]');
         if (toggle) {
-          var ip = toggle.querySelector('.tkd-icon-play');
-          var ipa = toggle.querySelector('.tkd-icon-pause');
           toggle.dataset.active = playing ? 'true' : 'false';
-          if (ip) ip.hidden = playing;
-          if (ipa) ipa.hidden = !playing;
           toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
         }
 
@@ -291,14 +344,7 @@
         }
 
         var buy = bar.querySelector('[data-tkd-player-buy]');
-        if (buy) {
-          if (currentInfo.packUrl) {
-            buy.href = currentInfo.packUrl;
-            buy.hidden = false;
-          } else {
-            buy.hidden = true;
-          }
-        }
+        if (buy) buy.hidden = !currentInfo.variantId;
 
         var curEl = bar.querySelector('[data-tkd-player-current]');
         if (curEl) curEl.textContent = fmt(curTime);
@@ -362,6 +408,12 @@
     if (toggle) {
       if (currentId) pause();
       else if (currentInfo) play(currentInfo);
+      return;
+    }
+
+    var buy = e.target.closest('[data-tkd-player-buy]');
+    if (buy) {
+      addCurrentToCart(buy);
       return;
     }
 

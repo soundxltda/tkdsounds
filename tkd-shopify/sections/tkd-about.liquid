@@ -49,20 +49,20 @@
 
       {%- if has_side -%}
       <div class="tkd-about__side reveal">
+        {%- if section.settings.body != blank -%}
+          <div class="tkd-about__body">{{ section.settings.body }}</div>
+        {%- endif -%}
         {%- if section.settings.streams_image != blank -%}
           <img
             class="tkd-about__streams"
-            src="{{ section.settings.streams_image | image_url: width: 900 }}"
-            srcset="{{ section.settings.streams_image | image_url: width: 480 }} 480w, {{ section.settings.streams_image | image_url: width: 900 }} 900w"
-            sizes="(min-width: 750px) 40vw, 100vw"
+            src="{{ section.settings.streams_image | image_url: width: 480 }}"
+            srcset="{{ section.settings.streams_image | image_url: width: 280 }} 280w, {{ section.settings.streams_image | image_url: width: 480 }} 480w"
+            sizes="220px"
             width="{{ section.settings.streams_image.width }}"
             height="{{ section.settings.streams_image.height }}"
             alt="{{ section.settings.streams_image.alt | default: 'Streams' }}"
             loading="lazy"
           >
-        {%- endif -%}
-        {%- if section.settings.body != blank -%}
-          <div class="tkd-about__body">{{ section.settings.body }}</div>
         {%- endif -%}
       </div>
       {%- endif -%}
