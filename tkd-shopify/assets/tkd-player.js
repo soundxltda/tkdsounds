@@ -261,11 +261,17 @@
     var dur = audio && isFinite(audio.duration) ? audio.duration : 0;
     var progress = dur > 0 && currentInfo ? curTime / dur : 0;
 
-    /* botões de faixa — ícone é sempre o triângulo de play; só a cor
-       (via data-active) marca qual card está tocando agora */
+    /* botões de faixa — todo botão cujo track-id bate com a faixa atual
+       vira "pause" (ícone + cor), não só o que foi clicado: o mesmo pack
+       pode aparecer em vários lugares da página (hero, vault, etc.) e
+       todos precisam refletir que está tocando */
     document.querySelectorAll('[data-tkd-play]').forEach(function (btn) {
       var active = playing && btn.dataset.trackId === currentId;
       btn.dataset.active = active ? 'true' : 'false';
+      var iconPlay = btn.querySelector('.tkd-icon-play');
+      var iconPause = btn.querySelector('.tkd-icon-pause');
+      if (iconPlay) iconPlay.hidden = active;
+      if (iconPause) iconPause.hidden = !active;
       if (btn.hasAttribute('aria-label')) {
         var name = btn.dataset.trackName || 'track';
         btn.setAttribute('aria-label', (active ? 'Pause ' : 'Play ') + name);
@@ -325,6 +331,10 @@
         var toggle = bar.querySelector('[data-tkd-player-toggle]');
         if (toggle) {
           toggle.dataset.active = playing ? 'true' : 'false';
+          var toggleIconPlay = toggle.querySelector('.tkd-icon-play');
+          var toggleIconPause = toggle.querySelector('.tkd-icon-pause');
+          if (toggleIconPlay) toggleIconPlay.hidden = playing;
+          if (toggleIconPause) toggleIconPause.hidden = !playing;
           toggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
         }
 

@@ -897,7 +897,9 @@ a.pack-tile:visited,
 .pack-tile:hover .pack-tile__hover-layer,
 .pack-tile:focus-within .pack-tile__hover-layer,
 .tkd-strip-card:hover .pack-tile__hover-layer,
-.tkd-strip-card:focus-within .pack-tile__hover-layer {
+.tkd-strip-card:focus-within .pack-tile__hover-layer,
+.pack-tile:has([data-tkd-play][data-active="true"]) .pack-tile__hover-layer,
+.tkd-strip-card:has([data-tkd-play][data-active="true"]) .pack-tile__hover-layer {
   opacity: 1;
 }
 .pack-tile__hover-info {
@@ -932,7 +934,9 @@ a.pack-tile:visited,
 .pack-tile:hover .pack-tile__hover-play,
 .pack-tile:focus-within .pack-tile__hover-play,
 .tkd-strip-card:hover .pack-tile__hover-play,
-.tkd-strip-card:focus-within .pack-tile__hover-play {
+.tkd-strip-card:focus-within .pack-tile__hover-play,
+.pack-tile:has([data-tkd-play][data-active="true"]) .pack-tile__hover-play,
+.tkd-strip-card:has([data-tkd-play][data-active="true"]) .pack-tile__hover-play {
   transform: scale(1);
   opacity: 1;
 }
