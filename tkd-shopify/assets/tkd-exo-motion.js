@@ -119,10 +119,19 @@
       requestAnimationFrame(frame);
     }
 
+    function headerOffset() {
+      // O header é sticky e ocupa espaço real no fluxo antes da cena;
+      // sem compensar essa altura, os 100vh do 1º ato centralizam
+      // longe do meio real da viewport (ficam empurrados pra baixo).
+      var header = document.querySelector('.section-tkd-header');
+      return header ? header.getBoundingClientRect().height : 0;
+    }
+
     function arm() {
       armed = true;
       scene.classList.add('is-armed');
       scene.style.height = (acts * 110 + 90) + 'vh';
+      scene.style.marginTop = (-headerOffset()) + 'px';
       apply();
       wake();
     }
@@ -131,6 +140,7 @@
       armed = false;
       scene.classList.remove('is-armed');
       scene.style.height = '';
+      scene.style.marginTop = '';
       [lTitle, lFeat, lKits].forEach(function (el) {
         if (el) {
           el.style.transform = '';
@@ -153,6 +163,7 @@
     window.addEventListener('scroll', wake, { passive: true });
     window.addEventListener('resize', function () {
       evaluate();
+      if (armed) scene.style.marginTop = (-headerOffset()) + 'px';
       wake();
     });
   }

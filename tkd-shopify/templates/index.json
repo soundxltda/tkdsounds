@@ -1,26 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tkd_hero": {
       "type": "tkd-hero",
       "settings": {
-        "terminal_text": "> LOADING ARCHIVE_INDEX.DAT ... OK",
+        "terminal_text": "",
         "title": "TKD Archives",
         "button1_label": "▶ Browse Archive",
+        "button1_link": "",
         "button2_label": "Contact",
+        "button2_link": "",
         "show_scroll_cue": false,
+        "scroll_cue_text": "Scroll",
+        "enable_scene": true,
         "show_strip": true,
+        "featured_label": "Featured Packs",
+        "strip_collection": "",
         "strip_count": 10,
         "strip_duration": 45,
-        "featured_label": "Featured Packs",
         "padding_top": 96,
         "padding_bottom": 112
       }
     },
     "tkd_latest": {
       "type": "tkd-latest-releases",
+      "disabled": true,
       "settings": {
         "eyebrow": "// LATEST RELEASES",
         "title": "Latest releases",
+        "collection": "",
         "products_to_show": 6,
         "show_view_all": true,
         "view_all_label": "[VIEW ALL →]",
@@ -34,6 +50,7 @@
       "settings": {
         "eyebrow": "// FULL ARCHIVE",
         "title": "Browse the vault",
+        "collection": "",
         "products_to_show": 8,
         "direction": "right",
         "duration": 55,
@@ -48,10 +65,13 @@
       "type": "tkd-about",
       "settings": {
         "anchor": "about",
+        "eyebrow": "About",
+        "title": "Behind the sounds",
         "show_embed": true,
         "embed_url": "https://open.spotify.com/embed/playlist/61uarkAciS1ZHvgaCpR3vr?utm_source=generator&theme=0",
         "embed_title": "Produced by TKD — Spotify playlist",
         "embed_height": 416,
+        "body": "",
         "padding_top": 0,
         "padding_bottom": 128
       }
