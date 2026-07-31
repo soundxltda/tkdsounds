@@ -433,6 +433,16 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 .audio-play-btn:hover { color: var(--amber); }
 .audio-play-btn[data-active="true"]:hover { color: #1a1006; }
 
+/* Play e pause se revezam no mesmo lugar: parado mostra play, tocando
+   mostra pause. Quem manda é o data-active, que o JS já mantém em todo
+   botão da faixa atual. Não dá pra usar o atributo `hidden` aqui: ele
+   não vale pra <svg> (o `[hidden]{display:none}` do navegador só cobre
+   o namespace HTML) e a propriedade `.hidden` do JS também não existe
+   em SVG, então os dois ícones apareciam juntos. */
+.audio-play-btn .tkd-icon-pause { display: none; }
+.audio-play-btn[data-active="true"] .tkd-icon-play { display: none; }
+.audio-play-btn[data-active="true"] .tkd-icon-pause { display: block; }
+
 /* Winamp-style container */
 .player-shell {
   background: linear-gradient(to bottom, var(--surface-2), var(--surface));

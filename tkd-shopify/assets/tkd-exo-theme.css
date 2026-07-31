@@ -557,6 +557,11 @@ div.tkd-ambient-bg__shape {
   transform: translateY(0);
 }
 
+/* O splitWords do tkd-theme.js quebra o título em <span class="tkd-word">
+   sem deixar nó de texto entre eles, e o título saía todo grudado
+   ("TKDArchives"). Devolve o respiro entre as palavras. */
+.tkd-word + .tkd-word { margin-left: 0.26em; }
+
 .tkd-scroll-cue {
   display: inline-flex;
   align-items: center;
