@@ -432,10 +432,6 @@ body.tkd-crt-on #MainContent { animation: crt-boot 700ms ease-out both; }
 }
 .audio-play-btn:hover { color: var(--amber); }
 .audio-play-btn[data-active="true"]:hover { color: #1a1006; }
-/* O `[hidden]{display:none}` do navegador só vale pro namespace HTML,
-   então o atributo `hidden` não esconde <svg>. Sem esta regra os ícones
-   play e pause aparecem os dois ao mesmo tempo dentro do botão. */
-.audio-play-btn svg[hidden] { display: none; }
 
 /* Winamp-style container */
 .player-shell {
