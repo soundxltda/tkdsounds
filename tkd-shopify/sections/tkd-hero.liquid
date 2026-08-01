@@ -63,6 +63,10 @@
 
           <h1 class="tkd-hero__title tkd-hero__title--center" data-tkd-stagger>{{ section.settings.title | escape }}</h1>
 
+          {%- if section.settings.subtitle != blank -%}
+            <p class="tkd-hero__subtitle reveal">{{ section.settings.subtitle | escape }}</p>
+          {%- endif -%}
+
           <div class="tkd-hero__ctas tkd-hero__ctas--center reveal">
             {%- if section.settings.button1_label != blank -%}
               <a href="{{ section.settings.button1_link | default: routes.all_products_collection_url }}" class="tkd-btn tkd-btn-solid">
@@ -209,6 +213,12 @@
       "id": "title",
       "label": "Título",
       "default": "TKD Archives"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo (linha de contexto abaixo do título)",
+      "default": "Analog textures, vintage instruments and timeless sounds."
     },
     {
       "type": "header",

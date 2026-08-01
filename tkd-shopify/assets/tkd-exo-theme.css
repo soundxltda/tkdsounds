@@ -145,7 +145,7 @@ body {
   background-image:
     radial-gradient(ellipse at 50% 36%, rgba(150, 200, 240, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 60%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.46 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch' seed='9'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.8  0 0 0 0 0.92  0 0 0 0.62 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-attachment: fixed;
   background-size: auto, auto, 260px 260px;
 }
@@ -158,10 +158,33 @@ body::after {
   position: fixed;
   inset: -5%;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  mix-blend-mode: overlay;
-  opacity: 0.55; /* presença igual à textura do header */
+  /* screen, não overlay: sobre fundo quase preto o overlay some (ele
+     multiplica quando a base é escura), e o grão praticamente não
+     aparecia. Medido no navegador, screen rende ~2x mais granulação
+     pro mesmo clareamento. */
+  mix-blend-mode: screen;
+  opacity: 0.16;
   z-index: 90;
   pointer-events: none;
+}
+
+/* Papel antigo por baixo do grain de filme: manchas grandes e irregulares
+   (turbulência de frequência baixa, como envelhecimento/foxing) mais
+   fibras horizontais finas (turbulência esticada num eixo, que é como o
+   papel de verdade se comporta). Em soft-light as manchas escurecem e
+   clareiam o azul sem tingir tudo de sépia. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.62;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='5' stitchTiles='stitch' seed='11'/><feColorMatrix values='0 0 0 0 0.64  0 0 0 0 0.52  0 0 0 0 0.32  0 0 0 0.62 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.022' numOctaves='2' stitchTiles='stitch' seed='5'/><feColorMatrix values='0 0 0 0 0.56  0 0 0 0 0.46  0 0 0 0 0.29  0 0 0 0.3 0'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  background-size: 900px 900px, 420px 420px;
 }
 
 /* Glow central do CRT recolorido (era âmbar fixo no tkd-theme.css) */
@@ -178,7 +201,7 @@ body::after {
 }
 .grain-overlay {
   display: block;
-  opacity: 0.18;
+  opacity: 0.3;
 }
 
 /* Textura de filme também nas superfícies (cards, painéis, rodapé) */
@@ -525,6 +548,18 @@ div.tkd-ambient-bg__shape {
   line-height: 0.98;
 }
 .tkd-hero__ctas--center { justify-content: center; }
+
+/* Linha de contexto abaixo do título: bem menor que o H1, em mono de
+   terminal, pra situar quem cai no site sem competir com o lettering */
+.tkd-hero__subtitle {
+  margin: 18px auto 0;
+  max-width: 620px;
+  font-family: var(--font-tkd-mono);
+  font-size: clamp(13px, 1.4vw, 16px);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--fg-mid);
+}
 .tkd-hero__scroll-wrap { display: flex; justify-content: center; }
 
 .tkd-hero__featured--floating {
