@@ -597,6 +597,15 @@ div.tkd-ambient-bg__shape {
    ("TKDArchives"). Devolve o respiro entre as palavras. */
 .tkd-word + .tkd-word { margin-left: 0.26em; }
 
+/* No hero cada palavra ocupa uma linha: TKD em cima, ARCHIVES embaixo.
+   Como viram blocos, o margin-left acima deslocaria a linha e quebraria
+   a centralização — zerado aqui. */
+.tkd-hero__title .tkd-word {
+  display: block;
+  width: 100%;
+  margin-left: 0;
+}
+
 .tkd-scroll-cue {
   display: inline-flex;
   align-items: center;
