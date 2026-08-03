@@ -1991,3 +1991,51 @@ cart-drawer .cart__checkout-button:hover {
   justify-content: center;
 }
 .tkd-product-hero__art .tkd-vinyl { margin-inline: auto; }
+
+/* ============================================================
+   15) PÁGINA DE PRODUTO — faixas de ponta a ponta
+   Em vez de cards soltos com respiro entre eles, cada seção vira uma
+   faixa que ocupa a largura toda e encosta na seguinte. O que separa
+   uma da outra é o tom, alternando claro/escuro. Os fundos são
+   semitransparentes de propósito: a foto e o grão do site continuam
+   passando por baixo, senão viraria bloco chapado.
+
+   Escopo pelo :has() do hero do produto — assim nada disso vaza pra
+   home ou pras coleções, e não precisei mexer nas outras sections só
+   pra pendurar uma classe nelas.
+
+   A conta da alternância usa `nth-child(... of S)`, que numera só as
+   seções que TÊM conteúdo. Section vazia (a tracklist antes de ter
+   faixas, os previews quando só existe um) não entra na conta nem
+   ganha faixa — senão sobraria uma tira colorida com nada dentro, e
+   ao cadastrar as faixas a alternância inverteria do meio pra frente.
+   ============================================================ */
+#MainContent:has(.tkd-product-hero) > .shopify-section:has(.tkd-section):not(:first-of-type) {
+  margin: 0;
+  background-color: rgba(26, 47, 69, 0.5); /* --surface, mais claro */
+  border-top: 1px solid rgba(230, 223, 211, 0.07);
+}
+#MainContent:has(.tkd-product-hero)
+  > .shopify-section:has(.tkd-section):not(:first-of-type):nth-child(even of .shopify-section:has(.tkd-section)) {
+  background-color: rgba(11, 24, 38, 0.55); /* --bg-2, mais escuro */
+}
+
+/* Dentro das faixas o card perde a moldura: quem dá o corpo agora é a
+   própria faixa. Sem isto ficaria caixa dentro de caixa. */
+#MainContent:has(.tkd-product-hero) > .shopify-section:has(.tkd-section):not(:first-of-type) .tkd-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* Respiro maior dentro das faixas, já que o espaço entre elas sumiu */
+#MainContent:has(.tkd-product-hero) > .shopify-section:has(.tkd-section):not(:first-of-type) .tkd-section {
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+@media screen and (min-width: 750px) {
+  #MainContent:has(.tkd-product-hero) > .shopify-section:has(.tkd-section):not(:first-of-type) .tkd-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+}
