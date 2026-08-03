@@ -23,21 +23,6 @@
         "trust_text": "Instant download · Secure checkout · Royalty-free license"
       }
     },
-    "tkd_contents": {
-      "type": "tkd-archive-contents",
-      "settings": {
-        "eyebrow": "Archive contents",
-        "title": "Every composition",
-        "anchor": "contents",
-        "note": ""
-      }
-    },
-    "tkd_previews": {
-      "type": "tkd-product-previews",
-      "settings": {
-        "panel_title": "Preview player"
-      }
-    },
     "tkd_properties": {
       "type": "tkd-product-properties",
       "blocks": {
@@ -91,37 +76,17 @@
         "show_specs": true,
         "show_tags": false,
         "show_description": true,
-        "download_title": "How to download"
+        "download_title": "How to download",
+        "title": "Everything in this archive"
       }
     },
-    "tkd_archive_info": {
-      "type": "tkd-archive-info",
+    "tkd_contents": {
+      "type": "tkd-archive-contents",
       "settings": {
-        "eyebrow": "Archive record",
-        "label_no": "Archive No.",
-        "label_recorded": "Recorded",
-        "recorded": "São Paulo, Brazil",
-        "label_format": "Format",
-        "format": "24-bit WAV",
-        "label_processing": "Processing",
-        "processing": "Analog instruments\nVintage pedals\nPremium outboard"
-      }
-    },
-    "tkd_credibility": {
-      "type": "tkd-credibility",
-      "settings": {
-        "eyebrow": "Heard on streams worldwide",
-        "text": "These sounds come from sessions that ended up on records with millions of streams. Every composition was played on real instruments and printed through analog processing — tested in actual productions before it ever became a library.",
-        "embed_height": 152
-      }
-    },
-    "tkd_producer": {
-      "type": "tkd-producer-note",
-      "settings": {
-        "eyebrow": "About",
-        "name": "TKD",
-        "image": "shopify://shop_images/tkd-about-studio-2.jpg",
-        "text": "<p>TKD is a multi-platinum producer from Brazil with over 1 billion streams across his productions. Every library is built with real instruments, analog processing and vintage gear, chasing timeless sound for modern records.</p>"
+        "eyebrow": "Previews",
+        "title": "Listen to every composition",
+        "anchor": "contents",
+        "note": ""
       }
     },
     "tkd_cta": {
@@ -157,12 +122,8 @@
   },
   "order": [
     "tkd_hero",
-    "tkd_contents",
-    "tkd_previews",
     "tkd_properties",
-    "tkd_archive_info",
-    "tkd_credibility",
-    "tkd_producer",
+    "tkd_contents",
     "tkd_cta",
     "tkd_newsletter",
     "tkd_related"

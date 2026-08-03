@@ -15,6 +15,11 @@
     assign tcount = tracks.size
   endif
   assign accent = product.metafields.tkd.accent_color.value | default: '#5fb2e6'
+  assign track_rows = tcount | divided_by: 2
+  assign track_rest = tcount | modulo: 2
+  if track_rest > 0
+    assign track_rows = track_rows | plus: 1
+  endif
   assign cover_small = ''
   if product.featured_image
     assign cover_small = product.featured_image | image_url: width: 144
@@ -33,7 +38,7 @@
         {%- endif -%}
       </div>
 
-      <ol class="tkd-tracklist reveal">
+      <ol class="tkd-tracklist reveal" style="--tkd-track-rows: {{ track_rows }};">
         {%- for track in tracks -%}
           {%- liquid
             assign t_title = track.title.value | default: 'Untitled'
@@ -104,13 +109,13 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Rótulo",
-      "default": "Archive contents"
+      "default": "Previews"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Título",
-      "default": "Every composition"
+      "default": "Listen to every composition"
     },
     {
       "type": "text",

@@ -10,7 +10,14 @@
 <div class="tkd-product-properties tkd-section">
   <div class="tkd-card tkd-product-properties__pad tkd-section__inner tkd-section__inner--w1300">
     <div class="tkd-product-properties__inner">
-      <div class="tkd-eyebrow tkd-product-properties__eyebrow reveal">{{ section.settings.eyebrow | escape }}</div>
+      <div class="tkd-product-properties__head reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow tkd-product-properties__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+      </div>
 
       {%- comment -%}
         Checklist no lugar da tabela técnica: a ficha longa (BPM, tom, tamanho)
@@ -89,6 +96,12 @@
       "id": "eyebrow",
       "label": "Rótulo",
       "default": "What's inside"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "What's included"
     },
     {
       "type": "text",

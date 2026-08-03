@@ -2039,3 +2039,108 @@ cart-drawer .cart__checkout-button:hover {
     padding-bottom: 60px;
   }
 }
+
+/* ============================================================
+   16) PÁGINA DE PRODUTO — faixas centralizadas e hierarquia
+   Cada faixa vinha começando num ponto diferente (a de inclusos tem
+   inner de 680px centralizado, as outras ocupavam 1300), e o conjunto
+   lia como conteúdo jogado à esquerda. Aqui todas passam a ter o mesmo
+   eixo e a mesma escada: rótulo pequeno, título grande, corpo no meio.
+   ============================================================ */
+
+/* Cabeçalho de faixa: rótulo em cima, título grande embaixo, centralizado */
+.tkd-product-properties__head,
+.tkd-archive-contents__head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.tkd-product-properties__head .tkd-h2,
+.tkd-archive-contents__head .tkd-h2 {
+  margin: 10px 0 0;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.05;
+}
+
+/* O bloco de inclusos ganha o mesmo eixo das outras faixas e cresce.
+   A grade de duas colunas deixava buraco com número ímpar de itens (3 de
+   um lado, 2 do outro) e puxava o conjunto pra esquerda. Como linha que
+   quebra e centraliza, cada linha fica equilibrada e o número de itens
+   pode variar — inclusive quando a edição com stems acende o item extra. */
+.tkd-product-properties__inner { max-width: 820px; }
+#MainContent:has(.tkd-product-hero) .tkd-included {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 34px;
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+#MainContent:has(.tkd-product-hero) .tkd-included__item {
+  flex: 0 0 auto;
+  font-size: 16px;
+}
+/* No celular cada item cai numa linha só. Centralizar linha a linha
+   deixaria a coluna dos ✓ em zigue-zague; então a lista vira bloco de
+   largura própria, centralizado, com os itens alinhados entre si. */
+@media screen and (max-width: 749px) {
+  #MainContent:has(.tkd-product-hero) .tkd-included {
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    max-width: 100%;
+    gap: 12px;
+  }
+}
+
+/* Ficha detalhada: sobrou só a linha de origem, e a diagramação de tabela
+   (rótulo à esquerda, valor à direita) abria um vão no meio da faixa.
+   Vira legenda centralizada — rótulo pequeno em cima, texto embaixo. */
+#MainContent:has(.tkd-product-hero) .tkd-proplist--compact {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+#MainContent:has(.tkd-product-hero) .tkd-proplist--compact .tkd-proplist__row {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 14px 0 0;
+  background: transparent;
+  text-align: center;
+}
+#MainContent:has(.tkd-product-hero) .tkd-proplist--compact .tkd-proplist__row + .tkd-proplist__row {
+  border-top: none;
+}
+#MainContent:has(.tkd-product-hero) .tkd-proplist--compact dd {
+  max-width: none;
+  text-align: center;
+}
+#MainContent:has(.tkd-product-hero) .tkd-product-description { text-align: center; }
+
+/* Previews em duas colunas: preenche coluna a coluna (1–5 à esquerda,
+   6–10 à direita), com o número de linhas vindo do Liquid — assim a
+   grade acompanha quantas faixas existirem, sem fixar 5 no CSS. */
+@media screen and (min-width: 750px) {
+  .tkd-tracklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(var(--tkd-track-rows, 5), auto);
+    grid-auto-flow: column;
+    column-gap: 48px;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: none;
+  }
+  .tkd-tracklist .tkd-track:first-child,
+  .tkd-tracklist .tkd-track:nth-child(n + 1) { border-top: none; }
+}
+#MainContent:has(.tkd-product-hero) .tkd-track__name { font-size: 16px; }
+#MainContent:has(.tkd-product-hero) .tkd-track__meta { font-size: 12px; }
+#MainContent:has(.tkd-product-hero) .tkd-track__num { font-size: 13px; }
