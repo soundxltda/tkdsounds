@@ -1974,3 +1974,20 @@ cart-drawer .cart__checkout-button:hover {
   max-width: 62ch;
 }
 .tkd-producer-note__text p { margin: 0; }
+
+/* A capa do produto vinha dentro de uma moldura quadrada (borda + fundo
+   em .tkd-product-hero__art), e sobrar um quadrado em volta de um disco
+   redondo ficava esquisito — já existe a janela do "win" por fora. Aqui
+   a moldura sai e o disco passa a ser centralizado na própria coluna,
+   em vez de encostar na esquerda. */
+.tkd-product-hero__art {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  aspect-ratio: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tkd-product-hero__art .tkd-vinyl { margin-inline: auto; }
