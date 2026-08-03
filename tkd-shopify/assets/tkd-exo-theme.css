@@ -1807,6 +1807,36 @@ cart-drawer .cart__checkout-button:hover {
   font-size: 15px;
 }
 
+/* Add to cart na mesma linha das opções de edição.
+   O botão vinha depois do bloco inteiro (rótulo + opções + nota) e
+   encostava no topo dele — ou seja, na altura do rótulo, sobrando pra
+   cima das caixas de edição. Aqui rótulo e caixas ganham altura fixa,
+   e o botão desce exatamente a altura do rótulo: topo e base batem com
+   as opções. Continua no flex do formulário de propósito — em telas
+   apertadas o botão ainda quebra pra linha de baixo em vez de vazar. */
+@media screen and (min-width: 750px) {
+  .tkd-product-hero__actions {
+    --tkd-edition-h: 46px;
+    --tkd-edition-label-h: 26px;
+  }
+  .tkd-product-hero__actions .tkd-edition__label {
+    line-height: 18px;
+    margin-bottom: 8px;
+  }
+  .tkd-product-hero__actions .tkd-edition__opt {
+    height: var(--tkd-edition-h);
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .tkd-product-hero__actions .tkd-product-form:has(.tkd-edition) > .tkd-buy-btn {
+    margin-top: var(--tkd-edition-label-h);
+    height: var(--tkd-edition-h);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
 /* --- What's included (checklist) --- */
 .tkd-included {
   list-style: none;
