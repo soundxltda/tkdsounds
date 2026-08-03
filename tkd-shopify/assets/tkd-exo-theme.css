@@ -1254,6 +1254,39 @@ a.pack-tile:visited,
    snap. Sem JS: é overflow-x + scroll-snap, que já dá swipe nativo no
    celular e trackpad no desktop. */
 .tkd-reels { margin-top: 18px; }
+
+/* Cabeçalho do módulo: glifo do Instagram + @ do perfil, tudo clicável.
+   É o que diz de onde vem o conteúdo antes mesmo de olhar os cards. */
+.tkd-reels__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: var(--fg);
+}
+.tkd-reels__ig {
+  display: inline-flex;
+  color: var(--fg);
+  flex-shrink: 0;
+}
+.tkd-reels__handle {
+  font-family: var(--font-tkd-mono);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+}
+.tkd-reels__cta {
+  margin-left: auto;
+  font-family: var(--font-tkd-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.tkd-reels__head:hover .tkd-reels__cta,
+.tkd-reels__head:hover .tkd-reels__handle { color: #7cc4ef; }
+.tkd-reels__head:hover .tkd-reels__ig { color: #7cc4ef; }
 .tkd-reels__track {
   display: flex;
   gap: 10px;
@@ -1290,15 +1323,47 @@ a.pack-tile:visited,
   object-fit: cover;
   display: block;
 }
-.tkd-reels__play {
+/* Glifo de Reels no canto de cima, com sombra pra não sumir em capa
+   clara — é o marcador que faz o card ler como reel à primeira vista. */
+.tkd-reels__badge {
   position: absolute;
-  left: 8px;
-  bottom: 8px;
-  width: 30px;
-  height: 30px;
+  top: 7px;
+  right: 7px;
+  display: inline-flex;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.75));
+  pointer-events: none;
+}
+
+/* Faixa de baixo no estilo post: véu escuro + play + @ do perfil */
+.tkd-reels__foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 18px 8px 8px;
+  background: linear-gradient(to top, rgba(6, 13, 22, 0.88), transparent);
+  pointer-events: none;
+}
+.tkd-reels__foot-handle {
+  font-family: var(--font-tkd-mono);
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tkd-reels__play {
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   border-radius: 999px;
   background: var(--amber);
   color: #0b1826;
@@ -1321,18 +1386,7 @@ a.pack-tile:visited,
   letter-spacing: 0.04em;
   color: var(--fg-dim);
 }
-.tkd-reels__more {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 12px;
-  font-family: var(--font-tkd-display);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--amber);
-  text-decoration: none;
-}
-.tkd-reels__more:hover { color: #7cc4ef; }
+
 .tkd-about__side .tkd-about__body {
   font-family: var(--font-tkd-mono);
   font-size: 14px;
@@ -1627,12 +1681,14 @@ cart-drawer .cart__checkout-button:hover {
   .tkd-header__cart { min-height: 44px; }
   .tkd-header__menu-toggle { width: 44px; height: 44px; }
   .tkd-kits-marquee__viewall,
-  .tkd-footer__links a,
-  .tkd-reels__more {
+  .tkd-footer__links a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
   }
+  /* o cabeçalho dos reels já é flex de largura cheia: aqui só cresce a
+     altura, senão inline-flex encolhe a barra e o link perde a direita */
+  .tkd-reels__head { min-height: 44px; }
   .tkd-global-player__toggle { width: 44px; height: 44px; }
   .tkd-global-player__close { width: 44px; height: 44px; }
 

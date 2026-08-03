@@ -64,9 +64,48 @@
     },
     "tkd_about": {
       "type": "tkd-about",
+      "blocks": {
+        "reel_JTTVEF": {
+          "type": "reel",
+          "settings": {
+            "cover": "shopify://shop_images/752334428_18091013867381765_5020086108352194956_n.jpg",
+            "url": "https://www.instagram.com/reel/DbWdHQ5BAYc/",
+            "caption": ""
+          }
+        },
+        "reel_eePHe6": {
+          "type": "reel",
+          "settings": {
+            "cover": "shopify://shop_images/754202582_18091322798381765_627154848836387942_n.jpg",
+            "url": "https://www.instagram.com/reel/DbgwYDJhKkd/",
+            "caption": ""
+          }
+        },
+        "reel_WwYWE6": {
+          "type": "reel",
+          "settings": {
+            "cover": "shopify://shop_images/760545727_1361358705435557_4667371248848465215_n.jpg",
+            "url": "https://www.instagram.com/reel/DbRVXpKhnuS/",
+            "caption": ""
+          }
+        },
+        "reel_nWFf6w": {
+          "type": "reel",
+          "settings": {
+            "cover": "shopify://shop_images/757305032_18091514807381765_4671265850734022873_n.jpg",
+            "url": "https://www.instagram.com/reel/DbJs8DtBjr1/",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "reel_JTTVEF",
+        "reel_eePHe6",
+        "reel_WwYWE6",
+        "reel_nWFf6w"
+      ],
       "settings": {
         "anchor": "about",
-        "instagram_url": "https://www.instagram.com/tkdprod/",
         "eyebrow": "About",
         "title": "Behind the sounds",
         "show_embed": true,
@@ -75,6 +114,8 @@
         "embed_height": 416,
         "streams_image": "shopify://shop_images/tkd-about-studio-2.jpg",
         "body": "<p>TKD is a multi-platinum producer from Brazil with over <strong>1 billion streams</strong> across his productions. His work is centered around <strong>analog instruments, vintage synthesizers, guitars, and premium outboard gear</strong>, creating sounds with timeless character and depth. His work has been used by <strong>top producers</strong> and featured on <strong>major releases</strong>, shaping records across multiple genres.</p>",
+        "instagram_url": "https://www.instagram.com/tkdprod/",
+        "instagram_label": "View more",
         "padding_top": 0,
         "padding_bottom": 128
       }

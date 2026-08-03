@@ -59,7 +59,34 @@
           nunca fica vazia enquanto o TKD ainda não subiu as capas.
         {%- endcomment -%}
         {%- if reels.size > 0 -%}
+          {%- liquid
+            comment
+              Handle sai do próprio link do perfil, pra não ter dois campos
+              dizendo a mesma coisa e saírem diferentes.
+            endcomment
+            assign ig_handle = section.settings.instagram_handle
+            if ig_handle == blank and section.settings.instagram_url != blank
+              assign ig_handle = section.settings.instagram_url | split: '?' | first | split: '/' | last
+            endif
+            assign ig_handle = ig_handle | remove: '@'
+          -%}
           <div class="tkd-reels">
+            {%- if section.settings.instagram_url != blank -%}
+              <a class="tkd-reels__head" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">
+                <span class="tkd-reels__ig" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/>
+                    <circle cx="12" cy="12" r="4.3"/>
+                    <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/>
+                  </svg>
+                </span>
+                {%- if ig_handle != blank -%}
+                  <span class="tkd-reels__handle">@{{ ig_handle }}</span>
+                {%- endif -%}
+                <span class="tkd-reels__cta">{{ section.settings.instagram_label | default: 'View more' | escape }}</span>
+              </a>
+            {%- endif -%}
+
             <div class="tkd-reels__track" role="list">
               {%- for block in reels -%}
                 <a
@@ -80,11 +107,26 @@
                           sizes: '150px',
                           loading: 'lazy',
                           class: 'tkd-reels__img',
-                          alt: block.settings.caption | default: 'Reel de TKD no Instagram'
+                          alt: block.settings.caption | default: 'Instagram reel by TKD'
                       }}
                     {%- endif -%}
-                    <span class="tkd-reels__play" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    {%- comment -%} Glifo de Reels no canto: é o que diz "isso é um reel" de cara {%- endcomment -%}
+                    <span class="tkd-reels__badge" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+                        <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+                        <path d="M2.7 8.4h18.6"/>
+                        <path d="M8.7 2.7 12 8.4"/>
+                        <path d="M15.3 2.7 18.6 8.4"/>
+                        <path d="M10.3 12.3v5.2l4.6-2.6z" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </span>
+                    <span class="tkd-reels__foot">
+                      <span class="tkd-reels__play" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      </span>
+                      {%- if ig_handle != blank -%}
+                        <span class="tkd-reels__foot-handle">@{{ ig_handle }}</span>
+                      {%- endif -%}
                     </span>
                   </span>
                   {%- if block.settings.caption != blank -%}
@@ -93,11 +135,6 @@
                 </a>
               {%- endfor -%}
             </div>
-            {%- if section.settings.instagram_url != blank -%}
-              <a class="tkd-reels__more" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">
-                {{- section.settings.instagram_label | default: 'Ver mais no Instagram' | escape -}}
-              </a>
-            {%- endif -%}
           </div>
         {%- elsif section.settings.streams_image != blank -%}
           <img
@@ -204,9 +241,15 @@
     },
     {
       "type": "text",
+      "id": "instagram_handle",
+      "label": "@ do perfil",
+      "info": "Se vazio, sai automaticamente do link acima."
+    },
+    {
+      "type": "text",
       "id": "instagram_label",
-      "label": "Texto do \"ver mais\"",
-      "default": "Ver mais no Instagram"
+      "label": "Texto do link (o site é em inglês)",
+      "default": "View more"
     },
     {
       "type": "header",
