@@ -1837,6 +1837,19 @@ cart-drawer .cart__checkout-button:hover {
   }
 }
 
+/* Preview do pack sem moldura: a caixa em volta do player repetia a
+   borda do bloco do hero, virando quadro dentro de quadro. Sem borda e
+   sem fundo o player encosta no mesmo eixo do resto da coluna; o
+   destaque de hover fica só no leve clareamento. */
+.tkd-master-preview {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.tkd-master-preview:hover { background: transparent; }
+
 /* --- What's included (checklist) --- */
 .tkd-included {
   list-style: none;
