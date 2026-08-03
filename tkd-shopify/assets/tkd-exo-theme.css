@@ -1219,6 +1219,11 @@ a.pack-tile:visited,
 @media screen and (min-width: 750px) {
   .tkd-about__cols { grid-template-columns: 1.5fr 1fr; gap: 36px; }
 }
+/* Item de grid tem min-width:auto, ou seja, não encolhe abaixo do
+   próprio conteúdo. Sem isso a fileira de reels empurrava a coluna da
+   direita pra ~790px e comia o espaço da playlist, em vez de rolar
+   dentro da coluna. */
+.tkd-about__cols > * { min-width: 0; }
 /* Sem coluna lateral (texto/foto ainda vazios) a playlist fica
    centralizada no meio da section */
 .tkd-about__cols--single {
@@ -1243,6 +1248,91 @@ a.pack-tile:visited,
   border: 1px solid var(--line);
   margin: 16px auto 0;
 }
+
+/* Carrossel de reels — mesma moldura dos cards de pack (canto reto,
+   grão, borda que acende no azul), em 9:16 e deslizando de lado com
+   snap. Sem JS: é overflow-x + scroll-snap, que já dá swipe nativo no
+   celular e trackpad no desktop. */
+.tkd-reels { margin-top: 18px; }
+.tkd-reels__track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.tkd-reels__track::-webkit-scrollbar { display: none; }
+.tkd-reels__item {
+  flex: 0 0 auto;
+  width: 150px;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+}
+.tkd-reels__art {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: var(--surface);
+  background-image: var(--tkd-noise);
+  border: 1px solid var(--line);
+  border-radius: var(--exo-radius-md);
+  box-shadow: var(--exo-shadow-card);
+  transition: transform 300ms var(--exo-ease), border-color 300ms var(--exo-ease), box-shadow 300ms var(--exo-ease);
+}
+.tkd-reels__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tkd-reels__play {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #0b1826;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 250ms var(--exo-ease), background-color 250ms var(--exo-ease);
+}
+.tkd-reels__item:hover .tkd-reels__art,
+.tkd-reels__item:focus-visible .tkd-reels__art {
+  transform: translateY(-4px);
+  border-color: var(--amber);
+  box-shadow: var(--exo-shadow-card-hover);
+}
+.tkd-reels__item:hover .tkd-reels__play { transform: scale(1.08); background: #7cc4ef; }
+.tkd-reels__caption {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-tkd-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+.tkd-reels__more {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  font-family: var(--font-tkd-display);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-decoration: none;
+}
+.tkd-reels__more:hover { color: #7cc4ef; }
 .tkd-about__side .tkd-about__body {
   font-family: var(--font-tkd-mono);
   font-size: 14px;
@@ -1537,7 +1627,8 @@ cart-drawer .cart__checkout-button:hover {
   .tkd-header__cart { min-height: 44px; }
   .tkd-header__menu-toggle { width: 44px; height: 44px; }
   .tkd-kits-marquee__viewall,
-  .tkd-footer__links a {
+  .tkd-footer__links a,
+  .tkd-reels__more {
     display: inline-flex;
     align-items: center;
     min-height: 44px;

@@ -66,6 +66,7 @@
       "type": "tkd-about",
       "settings": {
         "anchor": "about",
+        "instagram_url": "https://www.instagram.com/tkdprod/",
         "eyebrow": "About",
         "title": "Behind the sounds",
         "show_embed": true,

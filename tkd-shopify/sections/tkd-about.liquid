@@ -29,8 +29,9 @@
     </div>
 
     {%- liquid
+      assign reels = section.blocks | where: 'type', 'reel'
       assign has_side = false
-      if section.settings.streams_image != blank or section.settings.body != blank
+      if section.settings.streams_image != blank or section.settings.body != blank or reels.size > 0
         assign has_side = true
       endif
     -%}
@@ -52,7 +53,53 @@
         {%- if section.settings.body != blank -%}
           <div class="tkd-about__body">{{ section.settings.body }}</div>
         {%- endif -%}
-        {%- if section.settings.streams_image != blank -%}
+        {%- comment -%}
+          Carrossel de reels: cada bloco é uma capa + o link do reel. Sem
+          blocos cadastrados, cai na foto única de sempre — assim a section
+          nunca fica vazia enquanto o TKD ainda não subiu as capas.
+        {%- endcomment -%}
+        {%- if reels.size > 0 -%}
+          <div class="tkd-reels">
+            <div class="tkd-reels__track" role="list">
+              {%- for block in reels -%}
+                <a
+                  class="tkd-reels__item"
+                  role="listitem"
+                  href="{{ block.settings.url | default: section.settings.instagram_url }}"
+                  target="_blank"
+                  rel="noopener"
+                  {{ block.shopify_attributes }}
+                >
+                  <span class="tkd-reels__art">
+                    {%- if block.settings.cover != blank -%}
+                      {{
+                        block.settings.cover
+                        | image_url: width: 450
+                        | image_tag:
+                          widths: '150,300,450',
+                          sizes: '150px',
+                          loading: 'lazy',
+                          class: 'tkd-reels__img',
+                          alt: block.settings.caption | default: 'Reel de TKD no Instagram'
+                      }}
+                    {%- endif -%}
+                    <span class="tkd-reels__play" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                  </span>
+                  {%- if block.settings.caption != blank -%}
+                    <span class="tkd-reels__caption">{{ block.settings.caption | escape }}</span>
+                  {%- endif -%}
+                </a>
+              {%- endfor -%}
+            </div>
+            {%- if section.settings.instagram_url != blank -%}
+              <a class="tkd-reels__more" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">
+                {{- section.settings.instagram_label | default: 'Ver mais no Instagram' | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- elsif section.settings.streams_image != blank -%}
           <img
             class="tkd-about__streams"
             src="{{ section.settings.streams_image | image_url: width: 480 }}"
@@ -131,8 +178,8 @@
     {
       "type": "image_picker",
       "id": "streams_image",
-      "label": "Foto das streams",
-      "info": "Aparece acima do texto."
+      "label": "Foto (usada só se não houver reels)",
+      "info": "Assim que você adicionar o primeiro reel abaixo, o carrossel entra no lugar desta foto."
     },
     {
       "type": "richtext",
@@ -143,6 +190,23 @@
       "type": "image_picker",
       "id": "portrait",
       "label": "Retrato (não usado neste layout)"
+    },
+    {
+      "type": "header",
+      "content": "Carrossel de reels",
+      "info": "Use \"Adicionar reel\" no fim do painel. Cada reel = uma capa (print do vídeo, em pé) + o link do reel."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Link do perfil",
+      "info": "Aparece como \"ver mais\" embaixo do carrossel."
+    },
+    {
+      "type": "text",
+      "id": "instagram_label",
+      "label": "Texto do \"ver mais\"",
+      "default": "Ver mais no Instagram"
     },
     {
       "type": "header",
@@ -169,6 +233,32 @@
       "unit": "px"
     }
   ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Reel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "cover",
+          "label": "Capa do reel",
+          "info": "Print do vídeo, em pé (9:16). É o que aparece no card."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link do reel",
+          "info": "Abre o reel no Instagram ao clicar."
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Legenda curta (opcional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
   "presets": [{ "name": "TKD About" }]
 }
 {% endschema %}
