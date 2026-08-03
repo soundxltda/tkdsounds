@@ -1266,6 +1266,49 @@ cart-drawer .drawer__inner {
   background: rgba(4, 9, 17, 0.6);
 }
 
+/* O rodapé (total + checkout) tinha ficado com a pele do design v2:
+   fundo opaco próprio, que virava uma placa lisa por cima do painel
+   granulado do drawer e ainda recuada pelo padding lateral — parecia
+   um bloco solto. Transparente, a superfície corre contínua e quem
+   separa é só a linha de cima, como no resto do site. */
+cart-drawer .drawer__footer {
+  background-color: transparent;
+  border-top: 1px solid var(--line);
+}
+cart-drawer .totals__total {
+  font-family: var(--font-tkd-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+cart-drawer .totals__total-value {
+  font-family: var(--font-tkd-mono);
+  color: var(--amber);
+}
+cart-drawer .tax-note {
+  font-family: var(--font-tkd-mono);
+  color: var(--fg-dim);
+}
+
+/* Checkout na mesma linguagem dos botões sólidos do site (azul da capa,
+   canto reto, mesma sombra e hover) — era creme, herdado do v2, e
+   destoava de tudo. */
+cart-drawer .cart__checkout-button {
+  background: var(--amber);
+  color: #0b1826;
+  border: 1px solid rgba(11, 24, 38, 0.35);
+  border-radius: var(--exo-radius-sm);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  font-family: var(--font-tkd-display);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+cart-drawer .cart__checkout-button:hover {
+  background: #7cc4ef;
+  color: #0b1826;
+}
+
 /* ============================================================
    10) FAQ EM ACCORDION
    ============================================================ */
