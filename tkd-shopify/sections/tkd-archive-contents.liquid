@@ -1,0 +1,130 @@
+{% comment %}
+  TKD Archive Contents — tracklist do pack. Uma linha por composição, no
+  espírito de encarte de disco: número, nome, BPM · tom · duração e um play
+  pequeno. O preview oficial do pack continua sendo o do hero; aqui é só
+  para ouvir cada faixa antes de comprar.
+
+  Os dados vêm do metafield tkd.tracks (lista de metaobjects archive_track).
+  Sem faixas cadastradas a section não renderiza nada.
+{% endcomment %}
+
+{%- liquid
+  assign tracks = product.metafields.tkd.tracks.value
+  assign tcount = 0
+  if tracks
+    assign tcount = tracks.size
+  endif
+  assign accent = product.metafields.tkd.accent_color.value | default: '#5fb2e6'
+  assign cover_small = ''
+  if product.featured_image
+    assign cover_small = product.featured_image | image_url: width: 144
+  endif
+-%}
+
+{%- if tcount > 0 -%}
+  <div class="tkd-archive-contents tkd-section" id="{{ section.settings.anchor | default: 'contents' | escape }}">
+    <div class="tkd-section__inner tkd-section__inner--w1300">
+      <div class="tkd-archive-contents__head reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+      </div>
+
+      <ol class="tkd-tracklist reveal">
+        {%- for track in tracks -%}
+          {%- liquid
+            assign t_title = track.title.value | default: 'Untitled'
+            assign t_bpm = track.bpm.value
+            assign t_key = track.musical_key.value
+            assign t_dur = track.duration.value
+            assign t_audio = track.audio.value
+            assign t_num = forloop.index | prepend: '0' | slice: -2, 2
+          -%}
+          <li class="tkd-track">
+            <span class="tkd-track__num font-tkd-pixel">{{ t_num }}</span>
+
+            {%- if t_audio != blank -%}
+              <button
+                type="button"
+                class="audio-play-btn tkd-track__play"
+                data-tkd-play
+                data-track-id="{{ product.id }}-t{{ forloop.index }}"
+                data-track-src="{{ t_audio.url }}"
+                data-track-name="{{ t_title | escape }}"
+                data-pack-name="{{ product.title | escape }}"
+                data-pack-url="{{ product.url }}"
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                data-accent="{{ accent }}"
+                {% if cover_small != blank %}data-cover="{{ cover_small }}"{% endif %}
+                aria-label="Play {{ t_title | escape }}"
+              >
+                <svg class="tkd-icon-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="tkd-icon-pause" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+              </button>
+            {%- else -%}
+              <span class="tkd-track__play tkd-track__play--empty" aria-hidden="true"></span>
+            {%- endif -%}
+
+            <span class="tkd-track__name">{{ t_title | escape }}</span>
+
+            <span class="tkd-track__meta font-tkd-pixel">
+              {%- if t_bpm != blank -%}<span>{{ t_bpm | escape }} BPM</span>{%- endif -%}
+              {%- if t_key != blank -%}<span>{{ t_key | escape }}</span>{%- endif -%}
+              {%- comment -%}
+                Duração vazia: o player preenche sozinho ao ler os metadados
+                do áudio, então o encarte não fica com buraco.
+              {%- endcomment -%}
+              {%- if t_dur != blank -%}
+                <span>{{ t_dur | escape }}</span>
+              {%- elsif t_audio != blank -%}
+                <span data-tkd-duration data-src="{{ t_audio.url }}">--:--</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- if section.settings.note != blank -%}
+        <p class="tkd-archive-contents__note reveal">{{ section.settings.note | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "TKD Archive Contents",
+  "tag": "section",
+  "class": "section-tkd-archive-contents",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Archive contents"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Every composition"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Âncora (id p/ links #)",
+      "default": "contents"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Nota abaixo da lista",
+      "info": "Opcional. Ex.: aviso de que os previews são versões reduzidas."
+    }
+  ],
+  "presets": [{ "name": "TKD Archive Contents" }]
+}
+{% endschema %}

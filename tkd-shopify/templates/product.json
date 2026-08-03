@@ -15,9 +15,21 @@
         "show_breadcrumb": true,
         "breadcrumb_label": "Back to packs",
         "buy_label": "Add to cart",
+        "edition_label": "Edition",
+        "edition_note_base": "Includes every composition in WAV.",
+        "edition_note_stems": "Includes every composition plus the individual instrument stems, for full flexibility.",
         "previews_label": "Listen to previews",
         "stamp_text": "Royalty-free",
         "trust_text": "Instant download · Secure checkout · Royalty-free license"
+      }
+    },
+    "tkd_contents": {
+      "type": "tkd-archive-contents",
+      "settings": {
+        "eyebrow": "Archive contents",
+        "title": "Every composition",
+        "anchor": "contents",
+        "note": ""
       }
     },
     "tkd_previews": {
@@ -28,27 +40,95 @@
     },
     "tkd_properties": {
       "type": "tkd-product-properties",
+      "blocks": {
+        "inc_wav": {
+          "type": "item",
+          "settings": {
+            "text": "WAV 24-bit",
+            "stems_only": false
+          }
+        },
+        "inc_bpm": {
+          "type": "item",
+          "settings": {
+            "text": "BPM & key included",
+            "stems_only": false
+          }
+        },
+        "inc_dl": {
+          "type": "item",
+          "settings": {
+            "text": "Instant download",
+            "stems_only": false
+          }
+        },
+        "inc_lic": {
+          "type": "item",
+          "settings": {
+            "text": "Royalty-free license",
+            "stems_only": false
+          }
+        },
+        "inc_stems": {
+          "type": "item",
+          "settings": {
+            "text": "Individual instrument stems",
+            "stems_only": true
+          }
+        }
+      },
+      "block_order": [
+        "inc_wav",
+        "inc_bpm",
+        "inc_dl",
+        "inc_lic",
+        "inc_stems"
+      ],
       "settings": {
-        "eyebrow": "What's inside",
-        "royalty_text": "100% royalty-free",
-        "show_tags": true,
+        "eyebrow": "What's included",
+        "royalty_text": "Royalty-free for sales",
+        "sound_source_text": "100% analog",
+        "show_specs": true,
+        "show_tags": false,
         "show_description": true,
         "download_title": "How to download"
+      }
+    },
+    "tkd_archive_info": {
+      "type": "tkd-archive-info",
+      "settings": {
+        "eyebrow": "Archive record",
+        "label_no": "Archive No.",
+        "label_recorded": "Recorded",
+        "recorded": "São Paulo, Brazil",
+        "label_format": "Format",
+        "format": "24-bit WAV",
+        "label_processing": "Processing",
+        "processing": "Analog instruments\nVintage pedals\nPremium outboard"
       }
     },
     "tkd_credibility": {
       "type": "tkd-credibility",
       "settings": {
         "eyebrow": "Heard on streams worldwide",
-        "text": "Sounds from the TKD archive have already run on tracks with millions of plays. Production tested in the real world, ready for your next release.",
+        "text": "These sounds come from sessions that ended up on records with millions of streams. Every composition was played on real instruments and printed through analog processing — tested in actual productions before it ever became a library.",
         "embed_height": 152
+      }
+    },
+    "tkd_producer": {
+      "type": "tkd-producer-note",
+      "settings": {
+        "eyebrow": "About",
+        "name": "TKD",
+        "image": "shopify://shop_images/tkd-about-studio-2.jpg",
+        "text": "<p>TKD is a multi-platinum producer from Brazil with over 1 billion streams across his productions. Every library is built with real instruments, analog processing and vintage gear, chasing timeless sound for modern records.</p>"
       }
     },
     "tkd_cta": {
       "type": "tkd-product-cta",
       "settings": {
         "eyebrow": "Ready when you are",
-        "title": "Add this pack to your arsenal",
+        "title": "Add this archive to your collection",
         "buy_label": "Add to cart",
         "trust_text": "Instant download · Secure checkout · Royalty-free license"
       }
@@ -57,8 +137,8 @@
       "type": "tkd-newsletter",
       "settings": {
         "eyebrow": "Early access",
-        "title": "Get new packs first",
-        "subtitle": "Join the list and get new releases, discounts, and exclusive sounds before everyone else.",
+        "title": "Join the archive",
+        "subtitle": "Get early access to upcoming releases, exclusive discounts and sounds shared only with the list.",
         "placeholder": "Your best email",
         "button_label": "Sign up",
         "success_text": "Done! You're on the list.",
@@ -77,9 +157,12 @@
   },
   "order": [
     "tkd_hero",
+    "tkd_contents",
     "tkd_previews",
     "tkd_properties",
+    "tkd_archive_info",
     "tkd_credibility",
+    "tkd_producer",
     "tkd_cta",
     "tkd_newsletter",
     "tkd_related"

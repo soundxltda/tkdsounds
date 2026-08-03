@@ -1,0 +1,72 @@
+{% comment %}
+  TKD Producer Note — bloco discreto sobre o produtor, entre a credibilidade
+  e o CTA final. Foto pequena de um lado, texto curto do outro. Existe para
+  dar confiança, não para roubar a atenção do produto.
+{% endcomment %}
+
+<div class="tkd-producer-note tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-card tkd-producer-note__card reveal">
+      {%- if section.settings.image != blank -%}
+        <div class="tkd-producer-note__art">
+          {{
+            section.settings.image
+            | image_url: width: 320
+            | image_tag:
+              widths: '160,240,320',
+              sizes: '160px',
+              loading: 'lazy',
+              class: 'tkd-producer-note__img',
+              alt: section.settings.name | default: 'TKD'
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="tkd-producer-note__body">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+        {%- if section.settings.name != blank -%}
+          <h3 class="tkd-producer-note__name">{{ section.settings.name | escape }}</h3>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="tkd-producer-note__text">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Producer Note",
+  "tag": "section",
+  "class": "section-tkd-producer-note",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "About"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Nome",
+      "default": "TKD"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Foto"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>TKD is a multi-platinum producer from Brazil with over 1 billion streams across his productions. Every library is built with real instruments, analog processing and vintage gear, chasing timeless sound for modern records.</p>"
+    }
+  ],
+  "presets": [{ "name": "TKD Producer Note" }]
+}
+{% endschema %}

@@ -1716,3 +1716,261 @@ cart-drawer .cart__checkout-button:hover {
     background: rgba(9, 18, 32, 0.72);
   }
 }
+
+/* ============================================================
+   14) PÁGINA DE PRODUTO — ficha de acervo
+   Tudo aqui reusa os tokens já existentes (--amber, --line, --surface,
+   --font-tkd-*, --exo-*): nenhuma cor, fonte ou raio novo entra no site.
+   ============================================================ */
+
+/* Intro curta abaixo do player do hero */
+.tkd-product-hero__intro {
+  margin: 18px 0 0;
+  max-width: 52ch;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--fg-mid);
+}
+
+/* --- Seletor de edição --- */
+.tkd-edition { margin-bottom: 14px; }
+.tkd-edition__label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-tkd-display);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.tkd-edition__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tkd-edition__opt {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--exo-radius-sm);
+  color: var(--fg-mid);
+  cursor: pointer;
+  transition: border-color 200ms var(--exo-ease), background-color 200ms var(--exo-ease), color 200ms var(--exo-ease), transform 200ms var(--exo-ease);
+}
+.tkd-edition__opt:hover {
+  border-color: var(--line-h);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+.tkd-edition__opt[aria-checked="true"] {
+  border-color: var(--amber);
+  background: rgba(95, 178, 230, 0.1);
+  color: var(--fg);
+}
+.tkd-edition__opt-name {
+  font-family: var(--font-tkd-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tkd-edition__opt-price {
+  font-family: var(--font-tkd-mono);
+  font-size: 13px;
+  color: var(--amber);
+}
+.tkd-edition__note {
+  margin: 10px 0 0;
+  max-width: 46ch;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+/* Troca de preço: some e volta, sem pular o layout */
+.tkd-price-row__price {
+  display: inline-block;
+  transition: opacity 140ms var(--exo-ease), transform 140ms var(--exo-ease);
+}
+.tkd-price-row__price.is-swapping {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* Botão de compra com um pouco mais de presença */
+.tkd-buy-btn {
+  padding: 16px 34px;
+  font-size: 15px;
+}
+
+/* --- What's included (checklist) --- */
+.tkd-included {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+@media screen and (min-width: 750px) {
+  .tkd-included { grid-template-columns: 1fr 1fr; gap: 10px 28px; }
+}
+.tkd-included__item {
+  position: relative;
+  padding-left: 26px;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+.tkd-included__item::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--amber);
+  font-size: 13px;
+}
+.tkd-included__item[hidden] { display: none; }
+
+/* Ficha detalhada agora é secundária: menor e mais apagada */
+.tkd-proplist--compact { font-size: 13px; }
+.tkd-proplist--compact dt { color: var(--fg-dim); }
+
+/* --- Tracklist (Archive Contents) --- */
+.tkd-archive-contents__head { margin-bottom: 22px; }
+.tkd-tracklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.tkd-track {
+  display: grid;
+  grid-template-columns: 28px 30px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
+  transition: background-color 200ms var(--exo-ease);
+}
+.tkd-track:hover { background: rgba(95, 178, 230, 0.05); }
+.tkd-track__num {
+  font-size: 12px;
+  color: var(--fg-ghost);
+  letter-spacing: 0.04em;
+}
+.tkd-track__play {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--line-h);
+  background: transparent;
+  color: var(--fg-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 200ms var(--exo-ease), color 200ms var(--exo-ease), background-color 200ms var(--exo-ease);
+}
+.tkd-track:hover .tkd-track__play { border-color: var(--amber); color: var(--amber); }
+.tkd-track__play[data-active="true"] {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #0b1826;
+}
+.tkd-track__play--empty { border-style: dashed; opacity: 0.35; }
+.tkd-track__name {
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tkd-track__meta {
+  display: flex;
+  gap: 14px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+@media screen and (max-width: 749px) {
+  .tkd-track { grid-template-columns: 24px 28px 1fr; row-gap: 4px; }
+  .tkd-track__meta { grid-column: 3; gap: 10px; }
+}
+.tkd-archive-contents__note {
+  margin-top: 14px;
+  font-family: var(--font-tkd-mono);
+  font-size: 12px;
+  color: var(--fg-ghost);
+}
+
+/* --- Ficha do arquivo --- */
+.tkd-archive-info__card { padding: 26px 24px; }
+.tkd-archive-info__eyebrow { margin-bottom: 18px; }
+.tkd-archive-info__grid {
+  display: grid;
+  gap: 22px 32px;
+  margin: 0;
+}
+@media screen and (min-width: 750px) {
+  .tkd-archive-info__grid { grid-template-columns: repeat(4, 1fr); }
+}
+.tkd-archive-info__item dt {
+  font-family: var(--font-tkd-display);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-ghost);
+  margin-bottom: 6px;
+}
+.tkd-archive-info__item dd {
+  margin: 0;
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.tkd-archive-info__no { font-size: 22px; color: var(--amber); }
+.tkd-archive-info__list { list-style: none; margin: 0; padding: 0; }
+.tkd-archive-info__list li { line-height: 1.7; }
+
+/* --- Nota do produtor --- */
+.tkd-producer-note__card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 26px 24px;
+}
+@media screen and (min-width: 750px) {
+  .tkd-producer-note__card { flex-direction: row; align-items: center; gap: 28px; }
+}
+.tkd-producer-note__art { flex-shrink: 0; }
+.tkd-producer-note__img {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  height: auto;
+  border: 1px solid var(--line);
+}
+.tkd-producer-note__name {
+  margin: 6px 0 10px;
+  font-family: var(--font-tkd-serif);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.tkd-producer-note__text {
+  font-family: var(--font-tkd-mono);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--fg-mid);
+  max-width: 62ch;
+}
+.tkd-producer-note__text p { margin: 0; }

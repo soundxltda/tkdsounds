@@ -444,3 +444,93 @@
   /* Theme Editor: re-inicializa waveforms quando sections recarregam */
   document.addEventListener('shopify:section:load', initWaveforms);
 })();
+
+/* ============================================================
+   Seletor de edição da página de produto + durações da tracklist.
+   Mora aqui porque este arquivo já carrega em todas as páginas e
+   nunca falha; o seletor precisa reagir antes de qualquer clique.
+   ============================================================ */
+(function initEditionPicker() {
+  function boot() {
+    var wrap = document.querySelector('[data-tkd-edition]');
+    if (!wrap) return;
+    var input = document.querySelector('[data-tkd-edition-input]');
+    var note = wrap.querySelector('[data-tkd-edition-note]');
+    var priceEl = document.querySelector('[data-tkd-price]');
+    var opts = [].slice.call(wrap.querySelectorAll('[data-tkd-edition-opt]'));
+
+    function aplicar(btn, animar) {
+      opts.forEach(function (o) { o.setAttribute('aria-checked', o === btn ? 'true' : 'false'); });
+      if (input) {
+        input.value = btn.dataset.variantId;
+        /* o product form do Refresh escuta change no select */
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      if (note && btn.dataset.note) note.textContent = btn.dataset.note;
+      if (priceEl && btn.dataset.price && priceEl.textContent.trim() !== btn.dataset.price) {
+        if (animar) {
+          priceEl.classList.add('is-swapping');
+          setTimeout(function () {
+            priceEl.textContent = btn.dataset.price;
+            priceEl.classList.remove('is-swapping');
+          }, 140);
+        } else {
+          priceEl.textContent = btn.dataset.price;
+        }
+      }
+      var comStems = btn.dataset.hasStems === 'true';
+      document.querySelectorAll('[data-tkd-stems-only]').forEach(function (el) {
+        el.hidden = !comStems;
+      });
+    }
+
+    opts.forEach(function (btn) {
+      btn.addEventListener('click', function () { aplicar(btn, true); });
+    });
+
+    var inicial = opts.filter(function (o) { return o.getAttribute('aria-checked') === 'true'; })[0] || opts[0];
+    if (inicial) aplicar(inicial, false);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+
+/* Duração das faixas da tracklist: lê só os metadados do arquivo, sob
+   demanda quando a linha entra na tela, pra não baixar 10 áudios à toa. */
+(function initTrackDurations() {
+  function fmt(s) {
+    if (!isFinite(s)) return '--:--';
+    var m = Math.floor(s / 60), r = Math.floor(s % 60);
+    return m + ':' + (r < 10 ? '0' : '') + r;
+  }
+  function carregar(el) {
+    var src = el.dataset.src;
+    if (!src || el.dataset.loaded === 'true') return;
+    el.dataset.loaded = 'true';
+    var a = new Audio();
+    a.preload = 'metadata';
+    a.addEventListener('loadedmetadata', function () { el.textContent = fmt(a.duration); });
+    a.addEventListener('error', function () { el.textContent = ''; });
+    a.src = src;
+  }
+  function boot() {
+    var alvos = [].slice.call(document.querySelectorAll('[data-tkd-duration]'));
+    if (!alvos.length) return;
+    if (!('IntersectionObserver' in window)) { alvos.forEach(carregar); return; }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { carregar(e.target); obs.unobserve(e.target); }
+      });
+    }, { rootMargin: '200px' });
+    alvos.forEach(function (el) { obs.observe(el); });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();

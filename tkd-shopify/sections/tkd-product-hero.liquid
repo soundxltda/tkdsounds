@@ -12,6 +12,7 @@
   assign tagline = product.metafields.tkd.tagline.value
   assign formats = product.metafields.tkd.formats.value
   assign previews = product.metafields.tkd.preview_files.value
+  assign intro = product.metafields.tkd.intro.value
 
   assign psize = 0
   if previews
@@ -107,7 +108,7 @@
           {%- endif -%}
 
           <div class="tkd-price-row font-tkd-pixel">
-            <span class="tkd-price-row__price">{{ product.price | money_without_trailing_zeros }}</span>
+            <span class="tkd-price-row__price" data-tkd-price>{{ product.price | money_without_trailing_zeros }}</span>
             {%- if product.compare_at_price > product.price -%}
               <span class="tkd-price-row__was">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
             {%- endif -%}
@@ -120,14 +121,46 @@
             <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
               {%- form 'product', product, id: 'tkd-product-form-hero', class: 'tkd-product-form', novalidate: 'novalidate' -%}
                 {%- if product.variants.size > 1 -%}
-                  <select name="id" class="tkd-variant-select" aria-label="{{ 'products.product.product_variants' | t }}">
+                  {%- comment -%}
+                    Seletor de edição: mesmo <select> nativo por baixo (é ele que
+                    o product form envia), mas apresentado como escolha de edição.
+                    O JS troca preço, descrição e as linhas de stems da ficha.
+                  {%- endcomment -%}
+                  <div class="tkd-edition" data-tkd-edition>
+                    <span class="tkd-edition__label">{{ section.settings.edition_label | escape }}</span>
+                    <div class="tkd-edition__options" role="radiogroup" aria-label="{{ section.settings.edition_label | escape }}">
+                      {%- for variant in product.variants -%}
+                        {%- assign is_sel = false -%}
+                        {%- if variant == product.selected_or_first_available_variant -%}{%- assign is_sel = true -%}{%- endif -%}
+                        <button
+                          type="button"
+                          class="tkd-edition__opt"
+                          role="radio"
+                          aria-checked="{% if is_sel %}true{% else %}false{% endif %}"
+                          data-tkd-edition-opt
+                          data-variant-id="{{ variant.id }}"
+                          data-price="{{ variant.price | money_without_trailing_zeros }}"
+                          data-has-stems="{% if variant.title contains 'Stems' %}true{% else %}false{% endif %}"
+                          data-note="{% if variant.title contains 'Stems' %}{{ section.settings.edition_note_stems | escape }}{% else %}{{ section.settings.edition_note_base | escape }}{% endif %}"
+                          {% unless variant.available %}disabled{% endunless %}
+                        >
+                          <span class="tkd-edition__opt-name">{{ variant.title | escape }}</span>
+                          <span class="tkd-edition__opt-price">{{ variant.price | money_without_trailing_zeros }}</span>
+                        </button>
+                      {%- endfor -%}
+                    </div>
+                    <p class="tkd-edition__note" data-tkd-edition-note>
+                      {%- if product.selected_or_first_available_variant.title contains 'Stems' -%}
+                        {{ section.settings.edition_note_stems | escape }}
+                      {%- else -%}
+                        {{ section.settings.edition_note_base | escape }}
+                      {%- endif -%}
+                    </p>
+                  </div>
+                  <select name="id" class="tkd-variant-select visually-hidden" data-tkd-edition-input tabindex="-1" aria-hidden="true">
                     {%- for variant in product.variants -%}
-                      <option
-                        value="{{ variant.id }}"
-                        {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
-                        {% unless variant.available %}disabled{% endunless %}
-                      >
-                        {{ variant.title | escape }} — {{ variant.price | money_without_trailing_zeros }}
+                      <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                        {{ variant.title | escape }}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -191,6 +224,10 @@
             </div>
           {%- endif -%}
 
+          {%- if intro != blank -%}
+            <p class="tkd-product-hero__intro">{{ intro | escape | newline_to_br }}</p>
+          {%- endif -%}
+
           {%- if section.settings.trust_text != blank -%}
             <div class="tkd-trust-line">{{ section.settings.trust_text | escape }}</div>
           {%- endif -%}
@@ -224,6 +261,24 @@
       "label": "Texto do botão de compra",
       "info": "O botão adiciona ao carrinho nativo da Shopify (abre o cart drawer).",
       "default": "▶ Buy Here"
+    },
+    {
+      "type": "text",
+      "id": "edition_label",
+      "label": "Rótulo do seletor de edição",
+      "default": "Edition"
+    },
+    {
+      "type": "text",
+      "id": "edition_note_base",
+      "label": "Nota — edição sem stems",
+      "default": "Includes every composition in WAV."
+    },
+    {
+      "type": "text",
+      "id": "edition_note_stems",
+      "label": "Nota — edição com stems",
+      "default": "Includes every composition plus the individual instrument stems, for full flexibility."
     },
     {
       "type": "text",

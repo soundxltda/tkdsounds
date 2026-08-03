@@ -1,0 +1,120 @@
+{% comment %}
+  TKD Archive Info — ficha técnica do arquivo, no espírito de etiqueta de
+  catálogo de biblioteca: rótulo pequeno em cima, valor embaixo. Discreto
+  de propósito; não compete com o produto.
+
+  O número do arquivo vem de tkd.archive_no (por produto). O resto são
+  settings da section, porque valem para o acervo inteiro.
+{% endcomment %}
+
+{%- liquid
+  assign archive_no = product.metafields.tkd.archive_no.value
+  assign processing = section.settings.processing | newline_to_br | strip_newlines | split: '<br />'
+-%}
+
+<div class="tkd-archive-info tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-card tkd-archive-info__card reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="tkd-eyebrow tkd-archive-info__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {%- endif -%}
+
+      <dl class="tkd-archive-info__grid">
+        {%- if archive_no != blank -%}
+          <div class="tkd-archive-info__item">
+            <dt>{{ section.settings.label_no | escape }}</dt>
+            <dd class="font-tkd-pixel tkd-archive-info__no">{{ archive_no | escape }}</dd>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.recorded != blank -%}
+          <div class="tkd-archive-info__item">
+            <dt>{{ section.settings.label_recorded | escape }}</dt>
+            <dd>{{ section.settings.recorded | escape }}</dd>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.format != blank -%}
+          <div class="tkd-archive-info__item">
+            <dt>{{ section.settings.label_format | escape }}</dt>
+            <dd>{{ section.settings.format | escape }}</dd>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.processing != blank -%}
+          <div class="tkd-archive-info__item">
+            <dt>{{ section.settings.label_processing | escape }}</dt>
+            <dd>
+              <ul class="tkd-archive-info__list">
+                {%- for line in processing -%}
+                  {%- assign clean = line | strip -%}
+                  {%- if clean != blank -%}<li>{{ clean | escape }}</li>{%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </dd>
+          </div>
+        {%- endif -%}
+      </dl>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Archive Info",
+  "tag": "section",
+  "class": "section-tkd-archive-info",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Archive record"
+    },
+    {
+      "type": "text",
+      "id": "label_no",
+      "label": "Rótulo — número",
+      "default": "Archive No."
+    },
+    {
+      "type": "text",
+      "id": "label_recorded",
+      "label": "Rótulo — gravado em",
+      "default": "Recorded"
+    },
+    {
+      "type": "text",
+      "id": "recorded",
+      "label": "Gravado em",
+      "default": "São Paulo, Brazil"
+    },
+    {
+      "type": "text",
+      "id": "label_format",
+      "label": "Rótulo — formato",
+      "default": "Format"
+    },
+    {
+      "type": "text",
+      "id": "format",
+      "label": "Formato",
+      "default": "24-bit WAV"
+    },
+    {
+      "type": "text",
+      "id": "label_processing",
+      "label": "Rótulo — processamento",
+      "default": "Processing"
+    },
+    {
+      "type": "textarea",
+      "id": "processing",
+      "label": "Processamento",
+      "info": "Uma linha por item.",
+      "default": "Analog instruments\nVintage pedals\nPremium outboard"
+    }
+  ],
+  "presets": [{ "name": "TKD Archive Info" }]
+}
+{% endschema %}
