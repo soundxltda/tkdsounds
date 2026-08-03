@@ -1507,3 +1507,65 @@ cart-drawer .cart__checkout-button:hover {
   border-top: 1px solid var(--line-h);
   box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.35), 0 -8px 30px rgba(0, 0, 0, 0.4);
 }
+
+/* ============================================================
+   13) CELULAR
+   ============================================================ */
+
+/* O brilho decorativo do hero tem 900px fixos. Na base ele ficava contido
+   porque .tkd-hero era overflow:hidden, mas .tkd-hero--centered troca pra
+   visible (a cena precisa vazar os gutters pro full-bleed da esteira) —
+   e aí ele esticava o documento pra 645px numa tela de 390. Celular não
+   mostra barra de rolagem nesse caso: o navegador dá zoom-out na página
+   inteira pra caber, e tudo aparecia encolhido. */
+.tkd-hero::before { max-width: 100vw; }
+
+@media screen and (max-width: 749px) {
+  /* Mesmo caso: o fundo ambiente sangra 20vw pra cada lado pra esconder
+     as bordas do blur. Ele tem overflow:hidden (corta os filhos), mas a
+     própria caixa continuava esticando o documento. No celular a sangria
+     lateral não faz falta — a foto tem scale(1.1) e cobre igual. */
+  .tkd-ambient-bg {
+    left: 0;
+    right: 0;
+  }
+
+  /* Alvos de toque: o dedo pede ~44px e vários itens ficavam entre 20 e
+     40px de altura — o carrinho, o hambúrguer, o "[VIEW ALL]" e os links
+     do rodapé eram fáceis de errar. Só cresce a área clicável; o texto
+     continua do mesmo tamanho. */
+  .tkd-header__cart { min-height: 44px; }
+  .tkd-header__menu-toggle { width: 44px; height: 44px; }
+  .tkd-kits-marquee__viewall,
+  .tkd-footer__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .tkd-global-player__toggle { width: 44px; height: 44px; }
+  .tkd-global-player__close { width: 44px; height: 44px; }
+
+  /* O rótulo "Featured Packs" encostava no botão do hero: sem a cena
+     travada (que só roda no desktop), os dois atos viram blocos empilhados
+     e ficavam sem respiro entre eles. */
+  .tkd-scene__layer--kits { margin-top: 44px; }
+}
+
+/* Sem hover não existe "passar o mouse": no celular o botão de play ficava
+   com opacity:0 e a prévia de áudio era simplesmente inalcançável. No
+   toque ele fica sempre visível, sem escurecer a capa; o véu escuro volta
+   só quando aquele kit está tocando. */
+@media (hover: none) {
+  .pack-tile__hover-layer {
+    opacity: 1;
+    background: none;
+  }
+  .pack-tile__hover-play {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .pack-tile:has([data-tkd-play][data-active="true"]) .pack-tile__hover-layer,
+  .tkd-strip-card:has([data-tkd-play][data-active="true"]) .pack-tile__hover-layer {
+    background: rgba(9, 18, 32, 0.72);
+  }
+}
