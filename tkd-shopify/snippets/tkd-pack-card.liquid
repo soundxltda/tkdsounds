@@ -47,6 +47,19 @@
     endfor
   endif
 
+  # Kits antigos guardam a prévia no metafield legado product.audio
+  # (file_reference único) em vez de tkd.preview_files. Sem este fallback
+  # eles ficavam sem botão de play mesmo tendo áudio cadastrado.
+  if preview_url == blank
+    assign legacy_audio = card_product.metafields.product.audio.value
+    if legacy_audio != blank
+      assign preview_url = legacy_audio.url
+      # o legado não tem nome de faixa; sem isto o player repetia o nome
+      # do kit em cima e embaixo ("Cerberus Vol. 1 / > Cerberus Vol. 1")
+      assign preview_name = 'Pack Preview'
+    endif
+  endif
+
   if lazy == false
     assign img_loading = 'eager'
   else

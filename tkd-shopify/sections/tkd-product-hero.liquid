@@ -23,10 +23,25 @@
     assign midx = 0
   endif
 
+  # Lista de metafield não aceita indexação por posição (previews[midx]
+  # devolve nil) — só dá pra percorrer com for. Aqui era acesso direto,
+  # então a prévia da página do produto nunca resolvia.
   assign master_url = ''
   if psize > 0
-    assign master_file = previews[midx]
-    assign master_url = master_file.url
+    for preview_file in previews
+      if forloop.index0 == midx
+        assign master_url = preview_file.url
+      endif
+    endfor
+  endif
+
+  # Kits antigos guardam a prévia no metafield legado product.audio
+  # (file_reference único) em vez de tkd.preview_files.
+  if master_url == blank
+    assign legacy_audio = product.metafields.product.audio.value
+    if legacy_audio != blank
+      assign master_url = legacy_audio.url
+    endif
   endif
 
   assign back_url = section.settings.back_link

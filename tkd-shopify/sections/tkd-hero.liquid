@@ -138,6 +138,15 @@
                         endif
                       endfor
                     endif
+                    # Kits antigos guardam a prévia no metafield legado
+                    # product.audio em vez de tkd.preview_files
+                    if strip_preview_url == blank
+                      assign strip_legacy_audio = product.metafields.product.audio.value
+                      if strip_legacy_audio != blank
+                        assign strip_preview_url = strip_legacy_audio.url
+                        assign strip_preview_name = 'Pack Preview'
+                      endif
+                    endif
                     assign strip_accent = product.metafields.tkd.accent_color.value | default: '#5fb2e6'
                   -%}
                   <div class="tkd-marquee__card">
