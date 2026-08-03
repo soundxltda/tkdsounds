@@ -404,20 +404,24 @@ h1, h2, h3, h4, h5,
   pointer-events: none;
   overflow: hidden;
 }
-/* Foto de fundo: repete verticalmente (repeat-y) do topo ao rodapé,
-   em vez de esticar uma cópia única (que ficaria zoomada/distorcida
-   numa página tão mais alta que larga). background-size: 100% auto
-   mantém a proporção original do quadrado da foto, só escalando pela
-   largura. O blur/escurecido é só nesta div (não vaza pro conteúdo,
-   que mora em outra camada, com z-index acima).
-   display:block explícito é NECESSÁRIO: o base.css da loja tem uma
-   regra genérica "div:empty { display: none }" que, por não ter
-   filhos, esconde essa div (e por tabela, a .tkd-ambient-bg__shape
-   também — daí o display:block nela mais abaixo). Como div:empty tem
-   mais especificidade que uma classe sozinha, precisa do seletor
-   com "div." na frente pra realmente vencer. */
+/* Foto de fundo DESLIGADA.
+   Ela repetia verticalmente a página inteira, em todas as páginas, e o
+   trecho claro do meio da imagem (o palco, entre os dois pedestais)
+   caía sempre na parte de baixo da tela desenhando um retângulo mais
+   claro de bordas retas — lia como um quadrado fantasma no rodapé.
+   Aumentar o blur não resolvia: sumiam os pedestais, mas o clarão do
+   miolo continuava (medido: diferença de luminância entre o miolo e as
+   laterais caía de 16 pra 8, contra 3 sem a foto).
+   O fundo continua com o degradê ambiente, o grão e a textura de
+   papel, então não fica chapado. Pra trazer a foto de volta é só
+   voltar o display pra block aqui embaixo — o resto das regras dela
+   segue intacto logo abaixo.
+
+   display explícito é NECESSÁRIO nos dois sentidos: o base.css da loja
+   tem "div:empty { display: none }", que tem mais especificidade que
+   uma classe sozinha — por isso o seletor precisa do "div." na frente. */
 div.tkd-ambient-bg__photo {
-  display: block;
+  display: none;
 }
 .tkd-ambient-bg__photo {
   position: absolute;
