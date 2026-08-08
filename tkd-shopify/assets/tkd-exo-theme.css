@@ -1850,7 +1850,7 @@ cart-drawer .cart__checkout-button:hover {
   border: none;
   border-radius: 0;
   padding-left: 0;
-  padding-right: 0;
+  padding-right: 6px;
 }
 .tkd-master-preview:hover { background: transparent; }
 
