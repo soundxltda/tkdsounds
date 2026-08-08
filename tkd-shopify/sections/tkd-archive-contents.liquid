@@ -24,6 +24,17 @@
   if product.featured_image
     assign cover_small = product.featured_image | image_url: width: 144
   endif
+
+  # Título dinâmico: "Listen to every composition" só é verdade quando o
+  # pack inteiro tem preview. Quando o total do pack (tkd.composition_count)
+  # é maior que o número de faixas com áudio cadastrado, o título vira
+  # "Listen to X of Y compositions" pra deixar claro que é uma amostra —
+  # em vez do texto fixo da section, que assumiria o pack inteiro.
+  assign total_compositions = product.metafields.tkd.composition_count.value
+  assign contents_title = section.settings.title
+  if total_compositions and total_compositions > tcount
+    assign contents_title = 'Listen to ' | append: tcount | append: ' of ' | append: total_compositions | append: ' compositions'
+  endif
 -%}
 
 {%- if tcount > 0 -%}
@@ -33,8 +44,8 @@
         {%- if section.settings.eyebrow != blank -%}
           <div class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</div>
         {%- endif -%}
-        {%- if section.settings.title != blank -%}
-          <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+        {%- if contents_title != blank -%}
+          <h2 class="tkd-h2">{{ contents_title | escape }}</h2>
         {%- endif -%}
       </div>
 
