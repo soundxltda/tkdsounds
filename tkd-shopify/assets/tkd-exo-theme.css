@@ -2195,3 +2195,18 @@ cart-drawer .cart__checkout-button:hover {
 #MainContent:has(.tkd-product-hero) .tkd-track__name { font-size: 16px; }
 #MainContent:has(.tkd-product-hero) .tkd-track__meta { font-size: 12px; }
 #MainContent:has(.tkd-product-hero) .tkd-track__num { font-size: 13px; }
+
+/* ============================================================
+   17) PÁGINA DE PRODUTO — respiro lateral no celular
+   O grid do hero (capa, título, preço, edição, botão, preview) nunca
+   teve padding — no desktop isso não aparece porque o card fica bem
+   mais estreito que a tela, sobra folga grande nas laterais por causa
+   da centralização. No celular o card ocupa quase a largura inteira,
+   então o padding zero virava tudo grudado na própria borda do card
+   (e essa borda já está a só ~20px da borda da tela). Rótulo da barra
+   de título já tinha 20px de respiro — o grid ganha o mesmo, pra
+   alinhar os dois.
+   ============================================================ */
+@media screen and (max-width: 749px) {
+  .tkd-product-hero__grid { padding: 0 20px 20px; }
+}
