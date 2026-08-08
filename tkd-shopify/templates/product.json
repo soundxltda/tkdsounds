@@ -18,8 +18,8 @@
         "edition_note_base": "Includes every composition in WAV.",
         "edition_note_stems": "Includes every composition plus the individual instrument stems, for full flexibility.",
         "previews_label": "Listen to previews",
-        "stamp_text": "Royalty-free",
-        "trust_text": "Instant download · Secure checkout · Royalty-free license"
+        "stamp_text": "Royalty-free for sales",
+        "trust_text": "Instant download · Secure checkout · Royalty-free for sales"
       }
     },
     "tkd_properties": {
@@ -49,7 +49,7 @@
         "inc_lic": {
           "type": "item",
           "settings": {
-            "text": "Royalty-free license",
+            "text": "Royalty-free for sales",
             "stems_only": false
           }
         },
@@ -94,7 +94,7 @@
         "eyebrow": "Ready when you are",
         "title": "Add to your collection",
         "buy_label": "Add to cart",
-        "trust_text": "Instant download · Secure checkout · Royalty-free license"
+        "trust_text": "Instant download · Secure checkout · Royalty-free for sales"
       }
     },
     "tkd_newsletter": {

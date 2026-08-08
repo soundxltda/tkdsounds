@@ -2125,7 +2125,7 @@ cart-drawer .cart__checkout-button:hover {
 }
 #MainContent:has(.tkd-product-hero) .tkd-included__item {
   flex: 0 0 auto;
-  font-size: 16px;
+  font-size: 19px;
 }
 /* No celular cada item cai numa linha só. Centralizar linha a linha
    deixaria a coluna dos ✓ em zigue-zague; então a lista vira bloco de
@@ -2168,7 +2168,11 @@ cart-drawer .cart__checkout-button:hover {
   max-width: none;
   text-align: center;
 }
-#MainContent:has(.tkd-product-hero) .tkd-product-description { text-align: center; }
+#MainContent:has(.tkd-product-hero) .tkd-product-description {
+  text-align: center;
+  font-size: 17px;
+  line-height: 1.75;
+}
 
 /* Previews em duas colunas: preenche coluna a coluna (1–5 à esquerda,
    6–10 à direita), com o número de linhas vindo do Liquid — assim a
