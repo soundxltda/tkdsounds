@@ -1,0 +1,81 @@
+{% comment %}
+  TKD Vault — How It Works. Processo em 3 passos com a mesma cara de
+  terminal do resto do site (linha de status PURCHASE → VERIFY →
+  ACCESS GRANTED em cima, degraus numerados embaixo).
+{% endcomment %}
+
+<div class="tkd-vault-how tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-vault-how__head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.flow_text != blank -%}
+        <p class="tkd-vault-how__flow font-tkd-pixel">{{ section.settings.flow_text | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tkd-vault-how__grid">
+      {%- for block in section.blocks -%}
+        <div class="tkd-vault-step reveal" style="transition-delay: {{ forloop.index0 | times: 60 }}ms;" {{ block.shopify_attributes }}>
+          <div class="tkd-vault-step__num font-tkd-pixel">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <h3 class="tkd-vault-step__title">{{ block.settings.title | escape }}</h3>
+          <p class="tkd-vault-step__desc">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Vault — How It Works",
+  "tag": "section",
+  "class": "section-tkd-vault-how",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Three steps in"
+    },
+    {
+      "type": "text",
+      "id": "flow_text",
+      "label": "Linha de terminal",
+      "info": "Vazio = oculta.",
+      "default": "PURCHASE → VERIFY → ACCESS GRANTED"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Passo",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Join" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Subscribe to TKD VAULT for $14.99/month." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "TKD Vault — How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Join", "text": "Subscribe to TKD VAULT for $14.99/month." } },
+        { "type": "step", "settings": { "title": "Unlock", "text": "After checkout, open the TKD VAULT Telegram bot and verify the same email used for your purchase." } },
+        { "type": "step", "settings": { "title": "Enter the Vault", "text": "Receive your private access link and start downloading the latest drops." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

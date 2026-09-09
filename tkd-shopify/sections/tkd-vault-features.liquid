@@ -1,0 +1,72 @@
+{% comment %}
+  TKD Vault — What's Inside. Grade de cards (não checklist): cada um é
+  um benefício da assinatura, não um dado técnico de arquivo — por isso
+  não reaproveita o .tkd-included do "What's included" dos packs.
+{% endcomment %}
+
+<div class="tkd-vault-features tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1300">
+    <div class="tkd-vault-features__head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="tkd-eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="tkd-h2">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="tkd-vault-features__grid">
+      {%- for block in section.blocks -%}
+        <div class="tkd-vault-feature tkd-card reveal" style="transition-delay: {{ forloop.index0 | times: 60 }}ms;" {{ block.shopify_attributes }}>
+          <div class="tkd-vault-feature__tag font-tkd-pixel">0{{ forloop.index }}</div>
+          <h3 class="tkd-vault-feature__title">{{ block.settings.title | escape }}</h3>
+          <p class="tkd-vault-feature__desc">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Vault — What's Inside",
+  "tag": "section",
+  "class": "section-tkd-vault-features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "What's inside"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "What's inside the Vault"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Exclusive samples" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Loops and compositions made exclusively for TKD VAULT." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "TKD Vault — What's Inside",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Exclusive samples", "text": "Loops and compositions made exclusively for TKD VAULT." } },
+        { "type": "feature", "settings": { "title": "Weekly drops", "text": "New sounds added directly to the Vault every week." } },
+        { "type": "feature", "settings": { "title": "Private Telegram access", "text": "Everything is delivered through a private members-only Telegram channel." } },
+        { "type": "feature", "settings": { "title": "Royalty-free for beat sales", "text": "Use the samples in beats you sell without additional sample fees. Major placements are subject to clearance/splits." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

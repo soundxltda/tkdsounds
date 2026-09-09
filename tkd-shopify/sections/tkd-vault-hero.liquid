@@ -1,0 +1,153 @@
+{% comment %}
+  TKD Vault — Hero. Landing de assinatura, não de pack: sem seletor de
+  edição, sem preview de faixa — só o preço recorrente bem claro e o
+  botão de assinar. O form nativo da Shopify manda o selling_plan fixo
+  (produto só tem um plano), do mesmo jeito que o hero de produto normal
+  já faz — o subscribe continua sendo o checkout real da Shopify.
+{% endcomment %}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="tkd-vault-hero tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w900">
+    <a href="{{ section.settings.back_link | default: routes.all_products_collection_url }}" class="tkd-backlink">&lt; {{ section.settings.back_label | escape }}</a>
+
+    <div class="win tkd-vault-hero__win reveal">
+      <div class="win-title">
+        <span>C:\ARCHIVE\TKD_VAULT\ACCESS.SYS</span>
+        <span class="win-controls"><span>_</span><span>&#9633;</span><span>&times;</span></span>
+      </div>
+
+      <div class="tkd-vault-hero__pad">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="tkd-eyebrow tkd-vault-hero__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+        {%- endif -%}
+
+        <h1 class="tkd-vault-hero__title">{{ section.settings.title | escape }}</h1>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="tkd-vault-hero__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="tkd-vault-hero__desc">{{ section.settings.description | escape }}</p>
+        {%- endif -%}
+
+        <div class="tkd-vault-price">
+          <span class="tkd-vault-price__amount">{{ product.price | money_without_trailing_zeros }}</span>
+          <span class="tkd-vault-price__period">/ {{ section.settings.period_label | escape }}</span>
+          {%- if section.settings.billing_stamp != blank -%}
+            <span class="stamp stamp-olive tkd-vault-price__stamp">{{ section.settings.billing_stamp | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        <div class="tkd-vault-hero__actions">
+          <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
+            {%- form 'product', product, id: 'tkd-vault-form-hero', class: 'tkd-product-form tkd-product-form--center', novalidate: 'novalidate' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              {%- if product.requires_selling_plan and product.selling_plan_groups.size > 0 -%}
+                <input
+                  type="hidden"
+                  name="selling_plan"
+                  value="{{ product.selling_plan_groups.first.selling_plans.first.id }}"
+                >
+              {%- endif -%}
+              <button
+                type="submit"
+                name="add"
+                class="tkd-btn tkd-btn-solid tkd-buy-btn tkd-buy-btn--wide"
+                {% unless product.available %}disabled aria-disabled="true"{% endunless %}
+              >
+                <span>
+                  {%- if product.available -%}
+                    {{ section.settings.buy_label | escape }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
+              <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
+                <span class="product-form__error-message"></span>
+              </div>
+            {%- endform -%}
+          </product-form>
+        </div>
+
+        {%- if section.settings.trust_text != blank -%}
+          <p class="tkd-trust-line tkd-trust-line--center">{{ section.settings.trust_text | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Vault — Hero",
+  "tag": "section",
+  "class": "section-tkd-vault-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Texto do link de volta",
+      "default": "back to all sounds"
+    },
+    {
+      "type": "url",
+      "id": "back_link",
+      "label": "Link de volta"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Members only · Private archive"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "TKD VAULT"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Private access to my unreleased sample archive."
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Descrição",
+      "default": "Exclusive loops & samples delivered directly to a private Telegram channel."
+    },
+    {
+      "type": "text",
+      "id": "period_label",
+      "label": "Período do preço",
+      "default": "month"
+    },
+    {
+      "type": "text",
+      "id": "billing_stamp",
+      "label": "Carimbo ao lado do preço",
+      "info": "Vazio = oculta.",
+      "default": "Billed monthly"
+    },
+    {
+      "type": "text",
+      "id": "buy_label",
+      "label": "Texto do botão",
+      "default": "Get access to TKD Vault"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Linha de confiança",
+      "default": "New drops every week · Royalty-free for beat sales · Cancel anytime"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,176 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "vault_hero": {
+      "type": "tkd-vault-hero",
+      "settings": {
+        "back_label": "back to all sounds",
+        "eyebrow": "Members only · Private archive",
+        "title": "TKD VAULT",
+        "subtitle": "Private access to my unreleased sample archive.",
+        "description": "Exclusive loops & samples delivered directly to a private Telegram channel.",
+        "period_label": "month",
+        "billing_stamp": "Billed monthly",
+        "buy_label": "Get access to TKD Vault",
+        "trust_text": "New drops every week · Royalty-free for beat sales · Cancel anytime"
+      }
+    },
+    "vault_features": {
+      "type": "tkd-vault-features",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "title": "Exclusive samples",
+            "text": "Loops and compositions made exclusively for TKD VAULT."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "title": "Weekly drops",
+            "text": "New sounds added directly to the Vault every week."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "title": "Private Telegram access",
+            "text": "Everything is delivered through a private members-only Telegram channel."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "title": "Royalty-free for beat sales",
+            "text": "Use the samples in beats you sell without additional sample fees. Major placements are subject to clearance/splits."
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "eyebrow": "What's inside",
+        "title": "What's inside the Vault"
+      }
+    },
+    "vault_how": {
+      "type": "tkd-vault-how-it-works",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Join",
+            "text": "Subscribe to TKD VAULT for $14.99/month."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Unlock",
+            "text": "After checkout, open the TKD VAULT Telegram bot and verify the same email used for your purchase."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Enter the Vault",
+            "text": "Receive your private access link and start downloading the latest drops."
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "How it works",
+        "title": "Three steps in",
+        "flow_text": "PURCHASE → VERIFY → ACCESS GRANTED"
+      }
+    },
+    "vault_why": {
+      "type": "tkd-vault-why",
+      "settings": {
+        "eyebrow": "Why the Vault exists",
+        "text": "I make more samples than I could ever fit into regular packs. TKD VAULT is where I share the sounds I want producers to hear first — unreleased ideas, exclusive compositions and new experiments straight from my studio.",
+        "signature": "— TKD"
+      }
+    },
+    "vault_cta": {
+      "type": "tkd-vault-cta",
+      "blocks": {
+        "c1": { "type": "item", "settings": { "text": "Exclusive samples." } },
+        "c2": { "type": "item", "settings": { "text": "Weekly drops." } },
+        "c3": { "type": "item", "settings": { "text": "Private Telegram access." } }
+      },
+      "block_order": ["c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "TKD Vault",
+        "title": "TKD VAULT",
+        "period_label": "month",
+        "buy_label": "Enter the Vault",
+        "trust_text": "Cancel anytime."
+      }
+    },
+    "vault_faq": {
+      "type": "tkd-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I access TKD VAULT?",
+            "answer": "<p>After subscribing, you'll receive a link to open the TKD VAULT Telegram bot. Enter the same email used during checkout and the bot will unlock your private channel access.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "How often are new samples added?",
+            "answer": "<p>New drops are added every week.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the samples royalty-free?",
+            "answer": "<p>They are royalty-free for beat sales. Major artist/label placements may require clearance and splits.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "What happens if I cancel?",
+            "answer": "<p>Your Telegram access is automatically removed when your subscription is cancelled. Anything already downloaded remains subject to the license/terms that applied while your membership was active.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I cancel anytime?",
+            "answer": "<p>Yes. The subscription can be cancelled anytime.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {
+        "eyebrow": "FAQ",
+        "title": "Questions, answered",
+        "padding_top": 64,
+        "padding_bottom": 96
+      }
+    }
+  },
+  "order": [
+    "vault_hero",
+    "vault_features",
+    "vault_how",
+    "vault_why",
+    "vault_cta",
+    "vault_faq"
+  ]
+}

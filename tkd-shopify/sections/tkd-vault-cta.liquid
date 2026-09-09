@@ -1,0 +1,128 @@
+{% comment %}
+  TKD Vault — CTA final de assinatura. Espelha o tkd-product-cta, mas
+  com o hidden input de selling_plan (o produto exige plano — sem isso
+  o form tentaria uma compra avulsa e o checkout rejeitaria) e a
+  recapitulação dos benefícios no lugar do preço "de/por".
+{% endcomment %}
+
+<div class="tkd-product-cta tkd-vault-cta tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w1200">
+    <div class="tkd-card tkd-product-cta__pad reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tkd-eyebrow tkd-product-cta__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      <h2 class="tkd-product-cta__title">{{ section.settings.title | escape }}</h2>
+
+      <div class="tkd-price-row tkd-price-row--center">
+        <span class="tkd-price-row__price tkd-price-row__price--lg">{{ product.price | money_without_trailing_zeros }}</span>
+        <span class="tkd-price-row__was tkd-vault-cta__period">/ {{ section.settings.period_label | escape }}</span>
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="tkd-included tkd-vault-cta__list">
+          {%- for block in section.blocks -%}
+            <li class="tkd-included__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="tkd-product-cta__action">
+        <product-form data-section-id="{{ section.id }}" data-hide-errors="false">
+          {%- form 'product', product, id: 'tkd-vault-form-cta', class: 'tkd-product-form tkd-product-form--center', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            {%- if product.requires_selling_plan and product.selling_plan_groups.size > 0 -%}
+              <input
+                type="hidden"
+                name="selling_plan"
+                value="{{ product.selling_plan_groups.first.selling_plans.first.id }}"
+              >
+            {%- endif -%}
+            <button
+              type="submit"
+              name="add"
+              class="tkd-btn tkd-btn-solid tkd-buy-btn tkd-buy-btn--wide"
+              {% unless product.available %}disabled aria-disabled="true"{% endunless %}
+            >
+              <span>
+                {%- if product.available -%}
+                  {{ section.settings.buy_label | escape }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+              {%- render 'loading-spinner' -%}
+            </button>
+            <div class="product-form__error-message-wrapper tkd-form-error" role="alert" hidden>
+              <span class="product-form__error-message"></span>
+            </div>
+          {%- endform -%}
+        </product-form>
+      </div>
+
+      {%- if section.settings.trust_text != blank -%}
+        <p class="tkd-trust-line tkd-trust-line--center">{{ section.settings.trust_text | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Vault — CTA",
+  "tag": "section",
+  "class": "section-tkd-vault-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "TKD Vault"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "TKD VAULT"
+    },
+    {
+      "type": "text",
+      "id": "period_label",
+      "label": "Período do preço",
+      "default": "month"
+    },
+    {
+      "type": "text",
+      "id": "buy_label",
+      "label": "Texto do botão",
+      "default": "Enter the Vault"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Linha de confiança",
+      "default": "Cancel anytime."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item da lista",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Exclusive samples." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "TKD Vault — CTA",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Exclusive samples." } },
+        { "type": "item", "settings": { "text": "Weekly drops." } },
+        { "type": "item", "settings": { "text": "Private Telegram access." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

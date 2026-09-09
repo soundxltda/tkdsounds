@@ -1,0 +1,49 @@
+{% comment %}
+  TKD Vault — Why it exists. Texto curto, sem card, pra ler como recado
+  pessoal do TKD e não como bloco de marketing.
+{% endcomment %}
+
+<div class="tkd-vault-why tkd-section">
+  <div class="tkd-section__inner tkd-section__inner--w720">
+    <div class="tkd-vault-why__inner reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="tkd-eyebrow tkd-vault-why__eyebrow">{{ section.settings.eyebrow | escape }}</div>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="tkd-vault-why__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.signature != blank -%}
+        <p class="tkd-vault-why__signature font-tkd-pixel">{{ section.settings.signature | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "TKD Vault — Why",
+  "tag": "section",
+  "class": "section-tkd-vault-why",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rótulo",
+      "default": "Why the Vault exists"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "I make more samples than I could ever fit into regular packs. TKD VAULT is where I share the sounds I want producers to hear first — unreleased ideas, exclusive compositions and new experiments straight from my studio."
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Assinatura",
+      "default": "— TKD"
+    }
+  ],
+  "presets": [{ "name": "TKD Vault — Why" }]
+}
+{% endschema %}
