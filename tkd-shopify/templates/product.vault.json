@@ -20,7 +20,7 @@
         "period_label": "month",
         "billing_stamp": "Billed monthly",
         "buy_label": "Get access to TKD Vault",
-        "trust_text": "New drops every week · Royalty-free for beat sales · Cancel anytime"
+        "trust_text": "New drops every day · Royalty-free for beat sales · Cancel anytime"
       }
     },
     "vault_features": {
@@ -36,8 +36,8 @@
         "f2": {
           "type": "feature",
           "settings": {
-            "title": "Weekly drops",
-            "text": "New sounds added directly to the Vault every week."
+            "title": "Daily drops",
+            "text": "New exclusive loops and samples added to the Vault every day."
           }
         },
         "f3": {
@@ -105,7 +105,7 @@
       "type": "tkd-vault-cta",
       "blocks": {
         "c1": { "type": "item", "settings": { "text": "Exclusive samples." } },
-        "c2": { "type": "item", "settings": { "text": "Weekly drops." } },
+        "c2": { "type": "item", "settings": { "text": "Daily drops." } },
         "c3": { "type": "item", "settings": { "text": "Private Telegram access." } }
       },
       "block_order": ["c1", "c2", "c3"],
@@ -131,7 +131,7 @@
           "type": "faq",
           "settings": {
             "question": "How often are new samples added?",
-            "answer": "<p>New drops are added every week.</p>"
+            "answer": "<p>New loops and samples are added to TKD VAULT every day.</p>"
           }
         },
         "q3": {
